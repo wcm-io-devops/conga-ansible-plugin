@@ -1,0 +1,8 @@
+# Defines an environment
+
+nodes:
+
+# Example node
+- node: ansible-example
+  roles:
+  - role: ansible
