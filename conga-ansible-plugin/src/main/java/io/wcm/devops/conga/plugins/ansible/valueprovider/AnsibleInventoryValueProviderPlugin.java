@@ -21,10 +21,10 @@ package io.wcm.devops.conga.plugins.ansible.valueprovider;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.CharEncoding;
@@ -85,7 +85,7 @@ public class AnsibleInventoryValueProviderPlugin implements ValueProviderPlugin 
     try {
       String inventoryContent = FileUtils.readFileToString(file, CharEncoding.UTF_8);
       AnsibleInventory inventory = AnsibleInventoryReader.read(inventoryContent);
-      Map<String, Set<String>> config = inventoryToConfig(inventory, groupName);
+      Map<String, List<String>> config = inventoryToConfig(inventory, groupName);
       if (config == null) {
         throw new GeneratorException("No group '" + groupName + "' in Ansible Inventory file: " + FileUtil.getCanonicalPath(file));
       }
@@ -96,23 +96,25 @@ public class AnsibleInventoryValueProviderPlugin implements ValueProviderPlugin 
     }
   }
 
-  private Map<String, Set<String>> inventoryToConfig(AnsibleInventory inventory, String groupName) {
+  private Map<String, List<String>> inventoryToConfig(AnsibleInventory inventory, String groupName) {
     AnsibleGroup group = inventory.getGroup(groupName);
     if (group == null) {
       return null;
     }
-    Map<String, Set<String>> config = new HashMap<>();
+    Map<String, List<String>> config = new HashMap<>();
     for (AnsibleHost host : group.getHosts()) {
       String hostName = host.getName();
       AnsibleVariable congaNodeVariable = host.getVariable(INVENTORY_VARIABLE_CONGA_NODE);
       if (congaNodeVariable != null) {
         String congaNode = (String)congaNodeVariable.getValue();
         if (StringUtils.isNoneBlank(hostName, congaNode)) {
-          Set<String> hostNames = config.get(congaNode);
+          List<String> hostNames = config.get(congaNode);
           if (hostNames == null) {
-            hostNames = new TreeSet<>();
+            hostNames = new ArrayList<>();
           }
-          hostNames.add(hostName);
+          if (!hostNames.contains(hostName)) {
+            hostNames.add(hostName);
+          }
           config.put(congaNode, hostNames);
         }
       }

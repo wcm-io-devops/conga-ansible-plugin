@@ -30,8 +30,8 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.slf4j.Logger;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
 
 import io.wcm.devops.conga.generator.GeneratorException;
 import io.wcm.devops.conga.generator.spi.ValueProviderPlugin;
@@ -86,8 +86,8 @@ public class AnsibleInventoryValueProviderPluginTest {
         ImmutableMap.<String, Object>of(
             AnsibleInventoryValueProviderPlugin.PARAM_FILE, "src/test/resources/inventory-example",
             AnsibleInventoryValueProviderPlugin.PARAM_GROUP, "test-group")));
-    assertEquals(ImmutableSet.of("host-01"), underTest.resolve("aem-author", context));
-    assertEquals(ImmutableSet.of("host-02", "host-03"), underTest.resolve("aem-publish", context));
+    assertEquals(ImmutableList.of("host-01"), underTest.resolve("aem-author", context));
+    assertEquals(ImmutableList.of("host-02", "host-03"), underTest.resolve("aem-publish", context));
   }
 
 }
