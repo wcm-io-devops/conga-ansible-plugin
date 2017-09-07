@@ -20,7 +20,6 @@
 package io.wcm.devops.conga.plugins.ansible.valueprovider;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 import java.util.Map;
 
@@ -58,9 +57,9 @@ public class AnsibleInventoryValueProviderPluginTest {
     underTest = pluginManager.get(AnsibleInventoryValueProviderPlugin.NAME, ValueProviderPlugin.class);
   }
 
-  @Test
+  @Test(expected = GeneratorException.class)
   public void testNoConfig() {
-    assertNull(underTest.resolve("var1", context));
+    underTest.resolve("var1", context);
   }
 
   @Test(expected = GeneratorException.class)
@@ -69,6 +68,15 @@ public class AnsibleInventoryValueProviderPluginTest {
         ImmutableMap.<String, Object>of(
             AnsibleInventoryValueProviderPlugin.PARAM_FILE, "src/test/resources/nonexisting-file",
             AnsibleInventoryValueProviderPlugin.PARAM_GROUP, "test-group")));
+    underTest.resolve("var1", context);
+  }
+
+  @Test(expected = GeneratorException.class)
+  public void testInvalidGroup() {
+    context.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleInventoryValueProviderPlugin.NAME,
+        ImmutableMap.<String, Object>of(
+            AnsibleInventoryValueProviderPlugin.PARAM_FILE, "src/test/resources/inventory-example",
+            AnsibleInventoryValueProviderPlugin.PARAM_GROUP, "non-existing-group")));
     underTest.resolve("var1", context);
   }
 

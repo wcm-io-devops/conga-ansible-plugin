@@ -73,9 +73,8 @@ public class AnsibleInventoryValueProviderPlugin implements ValueProviderPlugin 
     String filePath = (String)valueProviderConfig.get(PARAM_FILE);
     String groupName = (String)valueProviderConfig.get(PARAM_GROUP);
 
-    if (StringUtils.isBlank(filePath) || StringUtils.isBlank(groupName)) {
-      context.getLogger().warn("No file or group parameter set for value provider '" + NAME + "'.");
-      return null;
+    if (StringUtils.isAnyBlank(filePath, groupName)) {
+      throw new GeneratorException("Config parameters '" + PARAM_FILE + "' or '" + PARAM_GROUP + "' missing for valuep provider '" + NAME + "'.");
     }
 
     File file = new File(filePath);
