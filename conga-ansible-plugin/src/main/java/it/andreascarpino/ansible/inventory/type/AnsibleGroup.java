@@ -15,6 +15,7 @@
  * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+//CHECKSTYLE:OFF
 package it.andreascarpino.ansible.inventory.type;
 
 import java.util.Collection;
@@ -25,6 +26,7 @@ import java.util.Map;
 /**
  * @author Andrea Scarpino
  */
+@SuppressWarnings("hiding")
 public class AnsibleGroup {
 
 	private String name;
@@ -131,10 +133,12 @@ public class AnsibleGroup {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if ((o == null) || (getClass() != o.getClass()))
-			return false;
+		if (this == o) {
+      return true;
+    }
+		if ((o == null) || (getClass() != o.getClass())) {
+      return false;
+    }
 
 		AnsibleGroup group = (AnsibleGroup) o;
 

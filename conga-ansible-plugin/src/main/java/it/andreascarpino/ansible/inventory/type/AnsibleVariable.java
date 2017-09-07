@@ -15,6 +15,7 @@
  * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+//CHECKSTYLE:OFF
 package it.andreascarpino.ansible.inventory.type;
 
 import java.lang.reflect.Field;
@@ -28,6 +29,7 @@ import org.apache.commons.lang3.ClassUtils;
  * @author Andrea Scarpino
  * @see AnsibleConstants
  */
+@SuppressWarnings("hiding")
 public class AnsibleVariable {
 
 	private String name;
@@ -66,18 +68,23 @@ public class AnsibleVariable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		if (this == obj) {
+      return true;
+    }
+		if (obj == null) {
+      return false;
+    }
+		if (getClass() != obj.getClass()) {
+      return false;
+    }
 		AnsibleVariable other = (AnsibleVariable) obj;
 		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
+			if (other.name != null) {
+        return false;
+      }
+		} else if (!name.equals(other.name)) {
+      return false;
+    }
 		return true;
 	}
 
