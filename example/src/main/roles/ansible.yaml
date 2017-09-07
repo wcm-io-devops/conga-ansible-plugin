@@ -1,1 +1,12 @@
 templateDir: ansible
+
+files:
+
+# Define a single file to be generated for all role variants
+- file: host-names.json
+  template: host-names.json.hbs
+
+
+config:
+  # Hostname list
+  #hostNames:

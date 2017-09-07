@@ -1,0 +1,10 @@
+{
+  "hosts": {
+    {{#each hostNames ~}}
+    "{{this.host}}": {
+      "var1": "{{this.var1}}"
+    }{{#unless @last}},
+    {{/unless~}}
+    {{~/each}}
+  }
+}

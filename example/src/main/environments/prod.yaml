@@ -2,7 +2,20 @@
 
 nodes:
 
-# Example node
-- node: ansible-example
+- node: aem-author
   roles:
   - role: ansible
+  config:
+    hostNames:
+      _iterate_: ${ansible-inventory:aem-author}
+      host: ${_item_}
+      var1: value${_itemIndex_}
+
+- node: aem-publish
+  roles:
+  - role: ansible
+  config:
+    hostNames:
+      _iterate_: ${ansible-inventory:aem-publish}
+      host: ${_item_}
+      var1: value${_itemIndex_}
