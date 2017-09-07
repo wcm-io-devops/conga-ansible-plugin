@@ -19,7 +19,7 @@
 package it.andreascarpino.ansible.inventory.type;
 
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -40,9 +40,9 @@ public class AnsibleGroup {
 	public AnsibleGroup(String name) {
 		super();
 		this.name = name;
-		this.hosts = new HashMap<>();
-		this.subgroups = new HashMap<>();
-		this.variables = new HashMap<>();
+    this.hosts = new LinkedHashMap<>();
+    this.subgroups = new LinkedHashMap<>();
+    this.variables = new LinkedHashMap<>();
 	}
 
 	public AnsibleGroup(String name, List<AnsibleHost> hosts) {

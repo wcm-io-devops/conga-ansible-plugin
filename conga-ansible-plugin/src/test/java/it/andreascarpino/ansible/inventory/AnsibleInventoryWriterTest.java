@@ -63,7 +63,7 @@ public class AnsibleInventoryWriterTest {
 		String inventoryText = AnsibleInventoryWriter.write(inventory);
 
 		Assert.assertEquals(
-				"mail.example.com\n[dbservers]\nthree.example.com\none.example.com\ntwo.example.com\n[webservers]\nfoo.example.com\nbar.example.com\n",
+        "mail.example.com\n[webservers]\nfoo.example.com\nbar.example.com\n[dbservers]\none.example.com\ntwo.example.com\nthree.example.com\n",
 				inventoryText);
 	}
 
@@ -118,7 +118,7 @@ public class AnsibleInventoryWriterTest {
 		String inventoryText = AnsibleInventoryWriter.write(inventory);
 
 		Assert.assertEquals(
-				"[atlanta]\nhost1\nhost2\n[atlanta:vars]\nproxy=proxy.atlanta.example.com\nntp_server=ntp.atlanta.example.com\n",
+        "[atlanta]\nhost1\nhost2\n[atlanta:vars]\nntp_server=ntp.atlanta.example.com\nproxy=proxy.atlanta.example.com\n",
 				inventoryText);
 	}
 
@@ -167,7 +167,11 @@ public class AnsibleInventoryWriterTest {
 		String inventoryText = AnsibleInventoryWriter.write(inventory);
 
 		Assert.assertEquals(
-				"[usa:children]\nsouthwest\nnorthwest\nnortheast\nsoutheast\n[atlanta]\nhost1\nhost2\n[southeast:children]\natlanta\nraleigh\n[southeast:vars]\nself_destruct_countdown=60\nhalon_system_timeout=30\nsome_server=foo.southeast.example.com\nescape_pods=2\n[raleigh]\nhost3\nhost2\n",
+        "[atlanta]\nhost1\nhost2\n" +
+            "[raleigh]\nhost2\nhost3\n" +
+            "[southeast:children]\nraleigh\natlanta\n" +
+            "[southeast:vars]\nsome_server=foo.southeast.example.com\nhalon_system_timeout=30\nself_destruct_countdown=60\nescape_pods=2\n" +
+            "[usa:children]\nsoutheast\nnortheast\nsouthwest\nnorthwest\n",
 				inventoryText);
 	}
 
