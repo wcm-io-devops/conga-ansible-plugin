@@ -49,7 +49,7 @@
         <extensions>true</extensions>
         <configuration>
           <valueProvider>
-            ansible-inventory;file=inventory/inventory-example;group=test-group
+            ansible-inventory;file=${project.basedir}/inventory/inventory-example;group=test-group
           </valueProvider>
         </configuration>
         <dependencies>
