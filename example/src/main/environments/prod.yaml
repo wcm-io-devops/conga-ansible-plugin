@@ -7,7 +7,7 @@ nodes:
   - role: ansible
   config:
     hostNames:
-      _iterate_: ${ansible-inventory:aem-author}
+      _iterate_: ${ansible-inventory::aem-author}
       host: ${_item_}
       var1: value${_itemIndex_}
 
@@ -16,6 +16,6 @@ nodes:
   - role: ansible
   config:
     hostNames:
-      _iterate_: ${ansible-inventory:aem-publish}
+      _iterate_: ${ansible-inventory::aem-publish}
       host: ${_item_}
       var1: value${_itemIndex_}
