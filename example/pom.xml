@@ -47,6 +47,11 @@
         <artifactId>conga-maven-plugin</artifactId>
         <version>1.3.5-SNAPSHOT</version>
         <extensions>true</extensions>
+        <configuration>
+          <valueProvider>
+            ansible-inventory;file=inventory/inventory-example;group=test-group
+          </valueProvider>
+        </configuration>
         <dependencies>
 
           <!-- Activate further CONGA plugins for special file types -->
