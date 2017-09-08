@@ -69,6 +69,19 @@ public class AnsibleInventoryValueProviderPlugin implements ValueProviderPlugin 
 
   @Override
   public Object resolve(String variableName, ValueProviderContext context) {
+    Map<String, List<String>> content = getInventoryContent(context);
+    return content.get(variableName);
+  }
+
+  private Map<String, List<String>> getInventoryContent(ValueProviderContext context) {
+
+    // try to get from cache
+    Map<String, List<String>> content = context.getValueProviderCache(NAME);
+    if (content != null) {
+      return content;
+    }
+
+    // read from inventory file
     Map<String, Object> valueProviderConfig = context.getValueProviderConfig(NAME);
     String filePath = (String)valueProviderConfig.get(PARAM_FILE);
     String groupName = (String)valueProviderConfig.get(PARAM_GROUP);
@@ -85,11 +98,14 @@ public class AnsibleInventoryValueProviderPlugin implements ValueProviderPlugin 
     try {
       String inventoryContent = FileUtils.readFileToString(file, CharEncoding.UTF_8);
       AnsibleInventory inventory = AnsibleInventoryReader.read(inventoryContent);
-      Map<String, List<String>> config = inventoryToConfig(inventory, groupName);
-      if (config == null) {
+      content = inventoryToConfig(inventory, groupName);
+      if (content == null) {
         throw new GeneratorException("No group '" + groupName + "' in Ansible Inventory file: " + FileUtil.getCanonicalPath(file));
       }
-      return config.get(variableName);
+
+      // put to cache
+      context.setValueProviderCache(NAME, content);
+      return content;
     }
     catch (IOException ex) {
       throw new GeneratorException("Error reading Ansible Inventory file: " + FileUtil.getCanonicalPath(file));
