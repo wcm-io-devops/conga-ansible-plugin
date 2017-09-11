@@ -17,7 +17,7 @@ wcm.io DevOps CONGA Plugin for [Ansible][ansible].
 
 This plugin extends [CONGA][conga] with:
 
-* TBD
+* Value Provider Plugin to read [Ansible Inventory][ansible-inventory] files.
 
 
 
@@ -27,3 +27,4 @@ This plugin extends [CONGA][conga] with:
 [changelog]: changes-report.html
 [conga]: http://devops.wcm.io/conga/
 [ansible]: https://www.ansible.com/
+[ansible-inventory]: http://docs.ansible.com/ansible/latest/intro_inventory.html
