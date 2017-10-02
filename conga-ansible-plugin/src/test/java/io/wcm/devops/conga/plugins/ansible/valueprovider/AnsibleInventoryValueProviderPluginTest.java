@@ -65,27 +65,16 @@ public class AnsibleInventoryValueProviderPluginTest {
   @Test(expected = GeneratorException.class)
   public void testInvalidFile() {
     context.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleInventoryValueProviderPlugin.NAME,
-        ImmutableMap.<String, Object>of(
-            AnsibleInventoryValueProviderPlugin.PARAM_FILE, "src/test/resources/nonexisting-file",
-            AnsibleInventoryValueProviderPlugin.PARAM_GROUP, "test-group")));
-    underTest.resolve("var1", context);
-  }
-
-  @Test(expected = GeneratorException.class)
-  public void testInvalidGroup() {
-    context.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleInventoryValueProviderPlugin.NAME,
-        ImmutableMap.<String, Object>of(
-            AnsibleInventoryValueProviderPlugin.PARAM_FILE, "src/test/resources/inventory-example",
-            AnsibleInventoryValueProviderPlugin.PARAM_GROUP, "non-existing-group")));
+        ImmutableMap.<String, Object>of(AnsibleInventoryValueProviderPlugin.PARAM_FILE, "src/test/resources/nonexisting-file")));
     underTest.resolve("var1", context);
   }
 
   @Test
   public void testFile() {
     context.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleInventoryValueProviderPlugin.NAME,
-        ImmutableMap.<String, Object>of(
-            AnsibleInventoryValueProviderPlugin.PARAM_FILE, "src/test/resources/inventory-example",
-            AnsibleInventoryValueProviderPlugin.PARAM_GROUP, "test-group")));
+        ImmutableMap.<String, Object>of(AnsibleInventoryValueProviderPlugin.PARAM_FILE, "src/test/resources/inventory-example")));
+
+    assertEquals(ImmutableList.of("host-01", "host-02", "host-03"), underTest.resolve("test-group", context));
     assertEquals(ImmutableList.of("host-01"), underTest.resolve("aem-author", context));
     assertEquals(ImmutableList.of("host-02", "host-03"), underTest.resolve("aem-publish", context));
   }

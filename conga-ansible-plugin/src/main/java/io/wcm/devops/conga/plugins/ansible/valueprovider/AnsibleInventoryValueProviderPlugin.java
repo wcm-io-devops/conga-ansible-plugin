@@ -21,10 +21,10 @@ package io.wcm.devops.conga.plugins.ansible.valueprovider;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.CharEncoding;
@@ -35,9 +35,7 @@ import io.wcm.devops.conga.generator.spi.ValueProviderPlugin;
 import io.wcm.devops.conga.generator.spi.context.ValueProviderContext;
 import io.wcm.devops.conga.generator.util.FileUtil;
 import it.andreascarpino.ansible.inventory.type.AnsibleGroup;
-import it.andreascarpino.ansible.inventory.type.AnsibleHost;
 import it.andreascarpino.ansible.inventory.type.AnsibleInventory;
-import it.andreascarpino.ansible.inventory.type.AnsibleVariable;
 import it.andreascarpino.ansible.inventory.util.AnsibleInventoryReader;
 
 /**
@@ -54,13 +52,6 @@ public class AnsibleInventoryValueProviderPlugin implements ValueProviderPlugin 
    * Parameter: Path to inventory file
    */
   public static final String PARAM_FILE = "file";
-
-  /**
-   * Parameter: Primary inventory group
-   */
-  public static final String PARAM_GROUP = "group";
-
-  private static final String INVENTORY_VARIABLE_CONGA_NODE = "conga_node";
 
   @Override
   public String getName() {
@@ -84,10 +75,9 @@ public class AnsibleInventoryValueProviderPlugin implements ValueProviderPlugin 
     // read from inventory file
     Map<String, Object> valueProviderConfig = context.getValueProviderConfig(NAME);
     String filePath = (String)valueProviderConfig.get(PARAM_FILE);
-    String groupName = (String)valueProviderConfig.get(PARAM_GROUP);
 
-    if (StringUtils.isAnyBlank(filePath, groupName)) {
-      throw new GeneratorException("Config parameters '" + PARAM_FILE + "' or '" + PARAM_GROUP + "' missing for value provider '" + NAME + "'.");
+    if (StringUtils.isBlank(filePath)) {
+      throw new GeneratorException("Config parameters '" + PARAM_FILE + "' missing for value provider '" + NAME + "'.");
     }
 
     File file = new File(filePath);
@@ -98,10 +88,7 @@ public class AnsibleInventoryValueProviderPlugin implements ValueProviderPlugin 
     try {
       String inventoryContent = FileUtils.readFileToString(file, CharEncoding.UTF_8);
       AnsibleInventory inventory = AnsibleInventoryReader.read(inventoryContent);
-      content = inventoryToConfig(inventory, groupName);
-      if (content == null) {
-        throw new GeneratorException("No group '" + groupName + "' in Ansible Inventory file: " + FileUtil.getCanonicalPath(file));
-      }
+      content = inventoryToConfig(inventory);
 
       // put to cache
       context.setValueProviderCache(NAME, content);
@@ -112,28 +99,17 @@ public class AnsibleInventoryValueProviderPlugin implements ValueProviderPlugin 
     }
   }
 
-  private Map<String, List<String>> inventoryToConfig(AnsibleInventory inventory, String groupName) {
-    AnsibleGroup group = inventory.getGroup(groupName);
-    if (group == null) {
-      return null;
-    }
+  /**
+   * Builds a map with group name as key, and a list of associated host names as value.
+   * @param inventory Ansible inventory
+   * @return Group/hostname map
+   */
+  private Map<String, List<String>> inventoryToConfig(AnsibleInventory inventory) {
     Map<String, List<String>> config = new HashMap<>();
-    for (AnsibleHost host : group.getHosts()) {
-      String hostName = host.getName();
-      AnsibleVariable congaNodeVariable = host.getVariable(INVENTORY_VARIABLE_CONGA_NODE);
-      if (congaNodeVariable != null) {
-        String congaNode = (String)congaNodeVariable.getValue();
-        if (StringUtils.isNoneBlank(hostName, congaNode)) {
-          List<String> hostNames = config.get(congaNode);
-          if (hostNames == null) {
-            hostNames = new ArrayList<>();
-          }
-          if (!hostNames.contains(hostName)) {
-            hostNames.add(hostName);
-          }
-          config.put(congaNode, hostNames);
-        }
-      }
+    for (AnsibleGroup group : inventory.getGroups()) {
+      config.put(group.getName(), group.getHosts().stream()
+          .map(host -> host.getName())
+          .collect(Collectors.toList()));
     }
     return config;
   }
