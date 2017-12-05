@@ -35,6 +35,13 @@
   <name>CONGA Ansible Plugin</name>
   <description>Root POM for wcm.io CONGA Plugins for Ansible.</description>
 
+  <scm>
+    <connection>scm:git:https://github.com/wcm-io-devops/conga-ansible-plugin.git</connection>
+    <developerConnection>scm:git:https://github.com/wcm-io-devops/conga-ansible-plugin.git</developerConnection>
+    <url>https://github.com/wcm-io-devops/conga-ansible-plugin</url>
+    <tag>HEAD</tag>
+  </scm>
+
   <properties>
     <site.url.module.prefix>conga/plugins/ansible</site.url.module.prefix>
   </properties>
