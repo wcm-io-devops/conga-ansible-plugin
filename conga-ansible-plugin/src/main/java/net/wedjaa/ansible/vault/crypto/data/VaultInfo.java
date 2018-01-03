@@ -24,7 +24,7 @@ import net.wedjaa.ansible.vault.crypto.decoders.inter.CypherInterface;
 
 public class VaultInfo {
 
-  Logger logger = LoggerFactory.getLogger(VaultInfo.class);
+  private static final Logger logger = LoggerFactory.getLogger(VaultInfo.class);
 
   public final static String INFO_SEPARATOR = ";";
   public final static int INFO_ELEMENTS = 3;

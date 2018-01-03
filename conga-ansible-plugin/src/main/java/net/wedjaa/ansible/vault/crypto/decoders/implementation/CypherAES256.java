@@ -35,7 +35,7 @@ import net.wedjaa.ansible.vault.crypto.decoders.inter.CypherInterface;
 
 public class CypherAES256 implements CypherInterface {
 
-  Logger logger = LoggerFactory.getLogger(CypherAES256.class);
+  private static final Logger logger = LoggerFactory.getLogger(CypherAES256.class);
 
   public final static String CYPHER_ID = "AES256";
   public final static int AES_KEYLEN = 256;

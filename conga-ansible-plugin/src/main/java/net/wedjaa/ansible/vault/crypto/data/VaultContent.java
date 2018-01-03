@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 
 public class VaultContent {
 
-  Logger logger = LoggerFactory.getLogger(VaultContent.class);
+  private static final Logger logger = LoggerFactory.getLogger(VaultContent.class);
 
   private final static String CHAR_ENCODING = "UTF-8";
 
