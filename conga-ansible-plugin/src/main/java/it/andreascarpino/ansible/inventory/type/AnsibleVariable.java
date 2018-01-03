@@ -32,63 +32,63 @@ import org.apache.commons.lang3.ClassUtils;
 @SuppressWarnings("hiding")
 public class AnsibleVariable {
 
-	private String name;
+  private String name;
 
-	private Object value;
+  private Object value;
 
-	public AnsibleVariable(String name) {
-		super();
-		this.name = name;
-	}
+  public AnsibleVariable(String name) {
+    super();
+    this.name = name;
+  }
 
-	public AnsibleVariable(String name, Object value) {
-		this(name);
-		this.value = value;
-	}
+  public AnsibleVariable(String name, Object value) {
+    this(name);
+    this.value = value;
+  }
 
-	public String getName() {
-		return name;
-	}
+  public String getName() {
+    return name;
+  }
 
-	public Object getValue() {
-		return value;
-	}
+  public Object getValue() {
+    return value;
+  }
 
-	public void setValue(Object value) {
-		this.value = value;
-	}
+  public void setValue(Object value) {
+    this.value = value;
+  }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = (prime * result) + ((name == null) ? 0 : name.hashCode());
-		return result;
-	}
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = (prime * result) + ((name == null) ? 0 : name.hashCode());
+    return result;
+  }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
       return true;
     }
-		if (obj == null) {
+    if (obj == null) {
       return false;
     }
-		if (getClass() != obj.getClass()) {
+    if (getClass() != obj.getClass()) {
       return false;
     }
-		AnsibleVariable other = (AnsibleVariable) obj;
-		if (name == null) {
-			if (other.name != null) {
+    AnsibleVariable other = (AnsibleVariable) obj;
+    if (name == null) {
+      if (other.name != null) {
         return false;
       }
-		} else if (!name.equals(other.name)) {
+    } else if (!name.equals(other.name)) {
       return false;
     }
-		return true;
-	}
+    return true;
+  }
 
-	@Override
+  @Override
     public String toString() {
         if (this.value == null) {
             return "";

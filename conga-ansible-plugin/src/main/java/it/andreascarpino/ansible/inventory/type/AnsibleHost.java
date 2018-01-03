@@ -28,78 +28,78 @@ import java.util.Set;
 @SuppressWarnings("hiding")
 public class AnsibleHost {
 
-	private String name;
+  private String name;
 
-	private Set<AnsibleVariable> variables;
+  private Set<AnsibleVariable> variables;
 
-	public AnsibleHost(String name) {
-		super();
-		this.name = name;
-		this.variables = new HashSet<>();
-	}
+  public AnsibleHost(String name) {
+    super();
+    this.name = name;
+    this.variables = new HashSet<>();
+  }
 
-	public AnsibleHost(String name, List<AnsibleVariable> variables) {
-		this(name);
+  public AnsibleHost(String name, List<AnsibleVariable> variables) {
+    this(name);
 
-		if (variables != null) {
-			for (AnsibleVariable v : variables) {
-				this.variables.add(v);
-			}
-		}
-	}
+    if (variables != null) {
+      for (AnsibleVariable v : variables) {
+        this.variables.add(v);
+      }
+    }
+  }
 
-	public String getName() {
-		return name;
-	}
+  public String getName() {
+    return name;
+  }
 
-	public Set<AnsibleVariable> getVariables() {
-		return this.variables;
-	}
+  public Set<AnsibleVariable> getVariables() {
+    return this.variables;
+  }
 
-	public void addVariable(AnsibleVariable variable) {
-		this.variables.add(variable);
-	}
+  public void addVariable(AnsibleVariable variable) {
+    this.variables.add(variable);
+  }
 
-	public void addVariables(List<AnsibleVariable> variables) {
-		for (AnsibleVariable v : variables) {
-			addVariable(v);
-		}
-	}
+  public void addVariables(List<AnsibleVariable> variables) {
+    for (AnsibleVariable v : variables) {
+      addVariable(v);
+    }
+  }
 
-	public AnsibleVariable getVariable(String variableName) {
-		for (AnsibleVariable v : variables) {
-			if (v.getName().equals(variableName)) {
-				return v;
-			}
-		}
+  public AnsibleVariable getVariable(String variableName) {
+    for (AnsibleVariable v : variables) {
+      if (v.getName().equals(variableName)) {
+        return v;
+      }
+    }
 
-		return null;
-	}
+    return null;
+  }
 
-	public void removeVariable(String variableName) {
-		this.variables.remove(variableName);
-	}
+  public void removeVariable(String variableName) {
+    this.variables.remove(variableName);
+  }
 
-	public void clear() {
-		this.variables.clear();
-	}
+  public void clear() {
+    this.variables.clear();
+  }
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
       return true;
     }
-		if ((o == null) || (getClass() != o.getClass())) {
+    if ((o == null) || (getClass() != o.getClass())) {
       return false;
     }
 
-		AnsibleHost host = (AnsibleHost) o;
+    AnsibleHost host = (AnsibleHost) o;
 
-		return name.equals(host.name);
-	}
+    return name.equals(host.name);
+  }
 
-	@Override
-	public int hashCode() {
-		return name.hashCode();
-	}
+  @Override
+  public int hashCode() {
+    return name.hashCode();
+  }
 }

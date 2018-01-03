@@ -47,7 +47,7 @@
   <properties>
     <site.url.module.prefix>conga/plugins/ansible/conga-ansible-plugin</site.url.module.prefix>
   </properties>
-  
+
   <dependencies>
 
     <dependency>
