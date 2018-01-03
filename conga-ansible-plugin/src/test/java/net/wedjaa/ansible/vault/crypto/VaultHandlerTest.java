@@ -76,7 +76,7 @@ public class VaultHandlerTest {
     logger.info("Testing decoding vault Stream - Valid password ");
     try {
       ByteArrayOutputStream decodedStream = new ByteArrayOutputStream();
-      InputStream encodedStream = getClass().getClassLoader().getResourceAsStream("test-vault.yml");
+      InputStream encodedStream = getClass().getClassLoader().getResourceAsStream("vault-sample-wedjaa/test-vault.yml");
       VaultHandler.decrypt(encodedStream, decodedStream, TEST_PASSWORD);
       String decoded = new String(decodedStream.toByteArray());
       assertEquals(DECODED_VAULT, decoded);
@@ -91,7 +91,7 @@ public class VaultHandlerTest {
     logger.info("Testing decoding vault Stream - Invalid password ");
     try {
       ByteArrayOutputStream decodedStream = new ByteArrayOutputStream();
-      InputStream encodedStream = getClass().getClassLoader().getResourceAsStream("test-vault.yml");
+      InputStream encodedStream = getClass().getClassLoader().getResourceAsStream("vault-sample-wedjaa/test-vault.yml");
       VaultHandler.decrypt(encodedStream, decodedStream, TEST_WRONG_PASSWORD);
       new String(decodedStream.toByteArray());
       fail("Should not be able to decrypt text with the wrong password");
