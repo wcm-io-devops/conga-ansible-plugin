@@ -72,7 +72,7 @@ public class AnsibleInventoryValueProviderPluginTest {
   @Test
   public void testFile() {
     context.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleInventoryValueProviderPlugin.NAME,
-        ImmutableMap.<String, Object>of(AnsibleInventoryValueProviderPlugin.PARAM_FILE, "src/test/resources/inventory-example")));
+        ImmutableMap.<String, Object>of(AnsibleInventoryValueProviderPlugin.PARAM_FILE, "src/test/resources/inventory-sample/inventory-ini-style")));
 
     assertEquals(ImmutableList.of("host-01", "host-02", "host-03"), underTest.resolve("test-group", context));
     assertEquals(ImmutableList.of("host-01"), underTest.resolve("aem-author", context));
