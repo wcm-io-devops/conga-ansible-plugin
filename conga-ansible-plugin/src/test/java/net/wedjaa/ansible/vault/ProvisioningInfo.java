@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+//CHECKSTYLE:OFF
 package net.wedjaa.ansible.vault;
 
 public class ProvisioningInfo
@@ -58,6 +58,7 @@ public class ProvisioningInfo
             this.apiPassword = apiPassword;
         }
 
+        @Override
         public String toString()
         {
             return apiUser + "@" + apiClientId + " - " + apiPassword;

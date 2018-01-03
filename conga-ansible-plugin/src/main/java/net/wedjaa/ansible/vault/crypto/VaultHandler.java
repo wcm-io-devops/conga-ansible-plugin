@@ -13,19 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+//CHECKSTYLE:OFF
 package net.wedjaa.ansible.vault.crypto;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import org.apache.commons.io.IOUtils;
+
 import net.wedjaa.ansible.vault.crypto.data.Util;
 import net.wedjaa.ansible.vault.crypto.data.VaultInfo;
 import net.wedjaa.ansible.vault.crypto.decoders.CypherFactory;
 import net.wedjaa.ansible.vault.crypto.decoders.implementation.CypherAES256;
 import net.wedjaa.ansible.vault.crypto.decoders.inter.CypherInterface;
-import org.apache.commons.io.IOUtils;
 
 /**
  * Created by mrwho on 03/06/15.

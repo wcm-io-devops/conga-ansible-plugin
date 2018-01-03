@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+//CHECKSTYLE:OFF
 package net.wedjaa.ansible.vault.crypto.decoders.implementation;
-
-import de.rtner.security.auth.spi.PBKDF2Engine;
-import de.rtner.security.auth.spi.PBKDF2Parameters;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Random;
+
+import de.rtner.security.auth.spi.PBKDF2Engine;
+import de.rtner.security.auth.spi.PBKDF2Parameters;
 
 
 public class EncryptionKeychain

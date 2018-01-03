@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+//CHECKSTYLE:OFF
 package net.wedjaa.ansible.vault.crypto.data;
+
+import java.util.Arrays;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Arrays;
 
 
 public class Util
@@ -27,7 +27,7 @@ public class Util
 
     private static final int DEFAULT_LINE_LENGTH = 80;
 
-    private static Logger logger = LoggerFactory.getLogger(Util.class);
+  private static Logger logger = LoggerFactory.getLogger(Util.class);
 
     final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
     final protected static String LINE_BREAK = "\n";

@@ -13,12 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+//CHECKSTYLE:OFF
 package net.wedjaa.ansible.vault.crypto;
-
-import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -26,8 +22,9 @@ import static org.junit.Assert.fail;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
-
-import static org.junit.Assert.*;
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class VaultHandlerTest

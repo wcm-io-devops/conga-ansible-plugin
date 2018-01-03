@@ -13,23 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+//CHECKSTYLE:OFF
 package net.wedjaa.ansible.vault.crypto.decoders.implementation;
 
-import net.wedjaa.ansible.vault.crypto.data.Util;
-import net.wedjaa.ansible.vault.crypto.data.VaultContent;
-import net.wedjaa.ansible.vault.crypto.data.VaultInfo;
-import net.wedjaa.ansible.vault.crypto.decoders.inter.CypherInterface;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Arrays;
 
 import javax.crypto.Cipher;
 import javax.crypto.Mac;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Arrays;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import net.wedjaa.ansible.vault.crypto.data.Util;
+import net.wedjaa.ansible.vault.crypto.data.VaultContent;
+import net.wedjaa.ansible.vault.crypto.data.VaultInfo;
+import net.wedjaa.ansible.vault.crypto.decoders.inter.CypherInterface;
 
 public class CypherAES256 implements CypherInterface
 {
@@ -176,6 +178,7 @@ public class CypherAES256 implements CypherInterface
         }
     }
 
+    @Override
     public byte[] decrypt(byte[] encryptedData, String password) throws IOException
     {
         byte[] decrypted = null;
@@ -218,21 +221,25 @@ public class CypherAES256 implements CypherInterface
         return decrypted;
     }
 
+    @Override
     public void decrypt(OutputStream decodedStream, byte[] encryptedData, String password) throws IOException
     {
         decodedStream.write(decrypt(encryptedData, password));
     }
 
+    @Override
     public void encrypt(OutputStream encodedStream, byte[] data, String password) throws IOException
     {
         encodedStream.write(encrypt(data, password));
     }
 
+    @Override
     public String infoLine()
     {
         return VaultInfo.vaultInfoForCypher(CYPHER_ID);
     }
 
+    @Override
     public byte[] encrypt(byte[] data, String password) throws IOException
     {
         EncryptionKeychain keys = new EncryptionKeychain(SALT_LENGTH, password, KEYLEN, IVLEN, ITERATIONS, KEYGEN_ALGO);

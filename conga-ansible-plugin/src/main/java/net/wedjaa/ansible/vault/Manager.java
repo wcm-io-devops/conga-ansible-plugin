@@ -13,19 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+//CHECKSTYLE:OFF
 package net.wedjaa.ansible.vault;
-
-import com.esotericsoftware.yamlbeans.YamlException;
-import com.esotericsoftware.yamlbeans.YamlReader;
-import com.esotericsoftware.yamlbeans.YamlWriter;
-import net.wedjaa.ansible.vault.crypto.VaultHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.esotericsoftware.yamlbeans.YamlException;
+import com.esotericsoftware.yamlbeans.YamlReader;
+import com.esotericsoftware.yamlbeans.YamlWriter;
+
+import net.wedjaa.ansible.vault.crypto.VaultHandler;
 
 public class Manager
 {

@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+//CHECKSTYLE:OFF
 package net.wedjaa.ansible.vault.crypto.data;
+
+import java.io.IOException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
 
 public class VaultContent
 {
@@ -51,6 +51,7 @@ public class VaultContent
         return toString().getBytes();
     }
 
+    @Override
     public String toString()
     {
         logger.debug("Salt: {} - HMAC: {} - Data: {} - TargetLen: {}"

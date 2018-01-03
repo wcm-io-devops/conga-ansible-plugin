@@ -13,13 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+//CHECKSTYLE:OFF
 package net.wedjaa.ansible.vault.crypto.data;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import net.wedjaa.ansible.vault.crypto.decoders.CypherFactory;
 import net.wedjaa.ansible.vault.crypto.decoders.inter.CypherInterface;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class VaultInfo
 {
