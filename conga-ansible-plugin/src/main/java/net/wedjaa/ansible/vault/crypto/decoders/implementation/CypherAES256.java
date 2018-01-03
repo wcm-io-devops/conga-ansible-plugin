@@ -86,7 +86,6 @@ public class CypherAES256 implements CypherInterface {
   }
 
   public boolean verifyHMAC(byte[] hmac, byte[] key, byte[] data) throws IOException {
-    boolean matches = false;
     byte[] calculated = calculateHMAC(key, data);
     return Arrays.equals(hmac, calculated);
   }
@@ -106,7 +105,7 @@ public class CypherAES256 implements CypherInterface {
     return Arrays.copyOfRange(decrypted, 0, length);
   }
 
-  public byte[] pad(byte[] cleartext) throws IOException {
+  public byte[] pad(byte[] cleartext) {
     byte[] padded = null;
 
     try {

@@ -96,9 +96,9 @@ public class EncryptionKeychain {
   }
 
   private byte[] generateSalt(int length) {
-    byte[] salt = new byte[length];
-    new Random().nextBytes(salt);
-    return salt;
+    byte[] thesalt = new byte[length];
+    new Random().nextBytes(thesalt);
+    return thesalt;
   }
 
 

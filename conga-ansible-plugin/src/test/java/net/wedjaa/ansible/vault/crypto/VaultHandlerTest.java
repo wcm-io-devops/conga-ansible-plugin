@@ -93,7 +93,7 @@ public class VaultHandlerTest {
       ByteArrayOutputStream decodedStream = new ByteArrayOutputStream();
       InputStream encodedStream = getClass().getClassLoader().getResourceAsStream("test-vault.yml");
       VaultHandler.decrypt(encodedStream, decodedStream, TEST_WRONG_PASSWORD);
-      String decoded = new String(decodedStream.toByteArray());
+      new String(decodedStream.toByteArray());
       fail("Should not be able to decrypt text with the wrong password");
 
     }

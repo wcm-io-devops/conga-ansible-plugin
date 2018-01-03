@@ -18,15 +18,10 @@ package net.wedjaa.ansible.vault.crypto.data;
 
 import java.util.Arrays;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 
 public class Util {
 
   private static final int DEFAULT_LINE_LENGTH = 80;
-
-  private static Logger logger = LoggerFactory.getLogger(Util.class);
 
   final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
   final protected static String LINE_BREAK = "\n";

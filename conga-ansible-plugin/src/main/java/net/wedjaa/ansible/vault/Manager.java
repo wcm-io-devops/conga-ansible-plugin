@@ -37,7 +37,7 @@ public class Manager {
 
   }
 
-  public Object getFromYaml(Class objectClass, String yaml) throws YamlException {
+  public Object getFromYaml(Class<?> objectClass, String yaml) throws YamlException {
     YamlReader reader = new YamlReader(new StringReader(yaml));
     return reader.read(objectClass);
   }
