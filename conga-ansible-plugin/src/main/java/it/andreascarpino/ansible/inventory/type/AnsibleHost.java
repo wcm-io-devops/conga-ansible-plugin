@@ -19,8 +19,11 @@
 package it.andreascarpino.ansible.inventory.type;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author Andrea Scarpino
@@ -77,7 +80,13 @@ public class AnsibleHost {
   }
 
   public void removeVariable(String variableName) {
-    this.variables.remove(variableName);
+    Iterator<AnsibleVariable> variableIterator = variables.iterator();
+    while (variableIterator.hasNext()) {
+      AnsibleVariable v = variableIterator.next();
+      if (StringUtils.equals(v.getName(), variableName)) {
+        variableIterator.remove();
+      }
+    }
   }
 
   public void clear() {
