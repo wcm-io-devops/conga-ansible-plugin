@@ -2,11 +2,11 @@ templateDir: ansible
 
 files:
 
-# Define a single file to be generated for all role variants
-- file: host-names.json
-  template: host-names.json.hbs
+- file: output.json
+  template: output.json.hbs
 
 
 config:
-  # Hostname list
-  #hostNames:
+  password1: ${ansible-vault::pwd1}
+  password2: ${ansible-vault::group1.pwd2}
+  password3: ${ansible-vault::group1.pwd3}

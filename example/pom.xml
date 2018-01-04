@@ -45,11 +45,12 @@
       <plugin>
         <groupId>io.wcm.devops.conga</groupId>
         <artifactId>conga-maven-plugin</artifactId>
-        <version>1.4.0</version>
+        <version>1.4.5-SNAPSHOT</version>
         <extensions>true</extensions>
         <configuration>
           <valueProvider>
-            ansible-inventory;file=${project.basedir}/inventory/inventory-example;group=test-group
+            ansible-inventory;file=${project.basedir}/inventory/inventory-example,
+            ansible-vault;file=${project.basedir}/vault/test-encrypted.yml;password=test123
           </valueProvider>
         </configuration>
         <dependencies>
