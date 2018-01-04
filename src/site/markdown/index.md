@@ -22,7 +22,10 @@ This plugin extends [CONGA][conga] with:
 
 ### Acknowledgments
 
-For reading Ansible Inventory files we are using the code developed by Andrea Scarpino provided on [GitHub][ansible-inventory-java].
+This plugins uses (and embeds) code from the following projects:
+
+* [ansible-inventory-java][ansible-inventory-java] developed by Andrea Scarpino
+* [JavaAnsibleVault][ansible-vault-java] developed by Wedjaa
 
 
 
@@ -34,3 +37,4 @@ For reading Ansible Inventory files we are using the code developed by Andrea Sc
 [ansible]: https://www.ansible.com/
 [ansible-inventory]: http://docs.ansible.com/ansible/latest/intro_inventory.html
 [ansible-inventory-java]: https://github.com/ilpianista/ansible-inventory-java
+[ansible-vault-java]: https://github.com/Wedjaa/JavaAnsibleVault

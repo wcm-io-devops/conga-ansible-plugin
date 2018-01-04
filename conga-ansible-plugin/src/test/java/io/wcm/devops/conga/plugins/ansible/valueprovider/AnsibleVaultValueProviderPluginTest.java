@@ -1,0 +1,82 @@
+/*
+ * #%L
+ * wcm.io
+ * %%
+ * Copyright (C) 2018 wcm.io
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package io.wcm.devops.conga.plugins.ansible.valueprovider;
+
+import static org.junit.Assert.assertEquals;
+
+import java.util.Map;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.slf4j.Logger;
+
+import com.google.common.collect.ImmutableMap;
+
+import io.wcm.devops.conga.generator.GeneratorException;
+import io.wcm.devops.conga.generator.spi.ValueProviderPlugin;
+import io.wcm.devops.conga.generator.spi.context.ValueProviderContext;
+import io.wcm.devops.conga.generator.util.PluginManager;
+import io.wcm.devops.conga.generator.util.PluginManagerImpl;
+
+@RunWith(MockitoJUnitRunner.class)
+public class AnsibleVaultValueProviderPluginTest {
+
+  @Mock
+  private Logger logger;
+
+  private ValueProviderContext context;
+  private ValueProviderPlugin underTest;
+
+  @Before
+  public void setUp() {
+    PluginManager pluginManager = new PluginManagerImpl();
+    context = new ValueProviderContext()
+        .pluginManager(pluginManager)
+        .logger(logger);
+    underTest = pluginManager.get(AnsibleVaultValueProviderPlugin.NAME, ValueProviderPlugin.class);
+  }
+
+  @Test(expected = GeneratorException.class)
+  public void testNoConfig() {
+    underTest.resolve("var1", context);
+  }
+
+  @Test(expected = GeneratorException.class)
+  public void testInvalidFile() {
+    context.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleVaultValueProviderPlugin.NAME,
+        ImmutableMap.<String, Object>of(AnsibleVaultValueProviderPlugin.PARAM_FILE, "src/test/resources/nonexisting-file")));
+    underTest.resolve("var1", context);
+  }
+
+  @Test
+  public void testFile() {
+    context.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleVaultValueProviderPlugin.NAME,
+        ImmutableMap.<String, Object>of(
+            AnsibleVaultValueProviderPlugin.PARAM_FILE, "src/test/resources/vault-sample/test-encrypted.yml",
+            AnsibleVaultValueProviderPlugin.PARAM_PASSWORD, "test123")));
+
+    assertEquals("abc", underTest.resolve("pwd1", context));
+    assertEquals(ImmutableMap.of("pwd2", "def", "pwd3", "ghi"), underTest.resolve("group1", context));
+  }
+
+}

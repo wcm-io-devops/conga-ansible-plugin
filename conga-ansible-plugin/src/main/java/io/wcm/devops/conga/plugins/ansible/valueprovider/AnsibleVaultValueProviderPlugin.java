@@ -2,7 +2,7 @@
  * #%L
  * wcm.io
  * %%
- * Copyright (C) 2017 wcm.io
+ * Copyright (C) 2018 wcm.io
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,10 +21,7 @@ package io.wcm.devops.conga.plugins.ansible.valueprovider;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.CharEncoding;
@@ -34,24 +31,27 @@ import io.wcm.devops.conga.generator.GeneratorException;
 import io.wcm.devops.conga.generator.spi.ValueProviderPlugin;
 import io.wcm.devops.conga.generator.spi.context.ValueProviderContext;
 import io.wcm.devops.conga.generator.util.FileUtil;
-import it.andreascarpino.ansible.inventory.type.AnsibleGroup;
-import it.andreascarpino.ansible.inventory.type.AnsibleInventory;
-import it.andreascarpino.ansible.inventory.util.AnsibleInventoryReader;
+import net.wedjaa.ansible.vault.Manager;
 
 /**
- * Gets host names from ansible inventory.
+ * Gets variables from Ansible Vault-encrypted YAML files.
  */
-public class AnsibleInventoryValueProviderPlugin implements ValueProviderPlugin {
+public class AnsibleVaultValueProviderPlugin implements ValueProviderPlugin {
 
   /**
    * Plugin name
    */
-  public static final String NAME = "ansible-inventory";
+  public static final String NAME = "ansible-vault";
 
   /**
    * Parameter: Path to inventory file
    */
   public static final String PARAM_FILE = "file";
+
+  /**
+   * Parameter: Vault password
+   */
+  public static final String PARAM_PASSWORD = "password";
 
   @Override
   public String getName() {
@@ -60,17 +60,21 @@ public class AnsibleInventoryValueProviderPlugin implements ValueProviderPlugin 
 
   @Override
   public Object resolve(String variableName, ValueProviderContext context) {
-    Map<String, List<String>> content = getInventoryContent(context);
-    return content.get(variableName);
+    Map<String, Object> vars = getVaultContent(context);
+    return vars.get(variableName);
   }
 
-  private Map<String, List<String>> getInventoryContent(ValueProviderContext context) {
+  @SuppressWarnings("unchecked")
+  private Map<String, Object> getVaultContent(ValueProviderContext context) {
 
     // try to get from cache
-    Map<String, List<String>> content = context.getValueProviderCache(NAME);
+    Map<String, Object> content = context.getValueProviderCache(NAME);
     if (content != null) {
       return content;
     }
+
+    // get vault password
+    String password = getVaultPassword(context);
 
     // read from inventory file
     Map<String, Object> valueProviderConfig = context.getValueProviderConfig(NAME);
@@ -82,36 +86,31 @@ public class AnsibleInventoryValueProviderPlugin implements ValueProviderPlugin 
 
     File file = new File(filePath);
     if (!(file.exists() && file.isFile())) {
-      throw new GeneratorException("Ansible Inventory file does not exist: " + FileUtil.getCanonicalPath(file));
+      throw new GeneratorException("Ansible Vault file does not exist: " + FileUtil.getCanonicalPath(file));
     }
 
     try {
-      String inventoryContent = FileUtils.readFileToString(file, CharEncoding.UTF_8);
-      AnsibleInventory inventory = AnsibleInventoryReader.read(inventoryContent);
-      content = inventoryToConfig(inventory);
+      String encryptedContent = FileUtils.readFileToString(file, CharEncoding.UTF_8);
+      content = (Map<String, Object>)new Manager().getFromVault(Map.class, encryptedContent, password);
 
       // put to cache
       context.setValueProviderCache(NAME, content);
       return content;
     }
     catch (IOException ex) {
-      throw new GeneratorException("Error reading Ansible Inventory file: " + FileUtil.getCanonicalPath(file), ex);
+      throw new GeneratorException("Error reading Ansible Vault file: " + FileUtil.getCanonicalPath(file), ex);
     }
   }
 
-  /**
-   * Builds a map with group name as key, and a list of associated host names as value.
-   * @param inventory Ansible inventory
-   * @return Group/hostname map
-   */
-  private Map<String, List<String>> inventoryToConfig(AnsibleInventory inventory) {
-    Map<String, List<String>> config = new HashMap<>();
-    for (AnsibleGroup group : inventory.getGroups()) {
-      config.put(group.getName(), group.getHosts().stream()
-          .map(host -> host.getName())
-          .collect(Collectors.toList()));
+  private String getVaultPassword(ValueProviderContext context) {
+    Map<String, Object> valueProviderConfig = context.getValueProviderConfig(NAME);
+    String password = (String)valueProviderConfig.get(PARAM_PASSWORD);
+
+    if (StringUtils.isBlank(password)) {
+      throw new GeneratorException("Config parameters '" + PARAM_PASSWORD + "' missing for value provider '" + NAME + "'.");
     }
-    return config;
+
+    return password;
   }
 
 }
