@@ -54,6 +54,8 @@ Example:
 
 ### Reading variables from Ansible Vault files
 
+_**Please note:** You need to install the [Java Cryptography Extension (JCE) Unlimited Strength policy files][jce-policy] from Oracle, because Ansible uses 256 bit keys to handle encryption and decryption of the vault files._
+
 Ansible Vault files are YAML files encrypted with a password using [Ansible Vault][ansible-vault].
 
 Example YAML file *before encryption*:
@@ -92,3 +94,4 @@ You should not include the vault password in plain text as shown in this example
 [ansible-vault]: https://docs.ansible.com/ansible/latest/vault.html
 [conga-maven-plugin]: http://devops.wcm.io/conga/tooling/conga-maven-plugin/plugin-info.html
 [conga-maven-plugin-valueprovider]: http://devops.wcm.io/conga/tooling/conga-maven-plugin/generate-mojo.html#valueProvider
+[jce-policy]: http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html

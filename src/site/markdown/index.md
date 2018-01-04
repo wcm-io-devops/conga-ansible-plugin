@@ -20,6 +20,8 @@ This plugin extends [CONGA][conga] with:
 * Ability to read [Ansible Inventory][ansible-inventory] files.
 * Ability to read encrypted [Ansible Vault][ansible-vault] files.
 
+_**Please note:** You need to install the [Java Cryptography Extension (JCE) Unlimited Strength policy files][jce-policy] from Oracle, because Ansible uses 256 bit keys to handle encryption and decryption of the vault files._
+
 
 ### Acknowledgments
 
@@ -40,3 +42,4 @@ This plugins uses (and embeds) code from the following projects:
 [ansible-inventory-java]: https://github.com/ilpianista/ansible-inventory-java
 [ansible-vault]: https://docs.ansible.com/ansible/latest/vault.html
 [ansible-vault-java]: https://github.com/Wedjaa/JavaAnsibleVault
+[jce-policy]: http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html
