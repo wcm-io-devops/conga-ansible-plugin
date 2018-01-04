@@ -17,7 +17,8 @@ wcm.io DevOps CONGA Plugin for [Ansible][ansible].
 
 This plugin extends [CONGA][conga] with:
 
-* Value Provider Plugin to read [Ansible Inventory][ansible-inventory] files.
+* Ability to read [Ansible Inventory][ansible-inventory] files.
+* Ability to read encrypted [Ansible Vault][ansible-vault] files.
 
 
 ### Acknowledgments
@@ -37,4 +38,5 @@ This plugins uses (and embeds) code from the following projects:
 [ansible]: https://www.ansible.com/
 [ansible-inventory]: http://docs.ansible.com/ansible/latest/intro_inventory.html
 [ansible-inventory-java]: https://github.com/ilpianista/ansible-inventory-java
+[ansible-vault]: https://docs.ansible.com/ansible/latest/vault.html
 [ansible-vault-java]: https://github.com/Wedjaa/JavaAnsibleVault

@@ -74,11 +74,22 @@ public class AnsibleVaultValueProviderPluginTest {
   }
 
   @Test
-  public void testFile() {
+  public void testWithPassword() {
     globalContext.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleVaultValueProviderPlugin.NAME,
         ImmutableMap.<String, Object>of(
             AnsibleVaultValueProviderPlugin.PARAM_FILE, "src/test/resources/vault-sample/test-encrypted.yml",
             AnsibleVaultValueProviderPlugin.PARAM_PASSWORD, "test123")));
+
+    assertEquals("abc", underTest.resolve("pwd1", context));
+    assertEquals(ImmutableMap.of("pwd2", "def", "pwd3", "ghi"), underTest.resolve("group1", context));
+  }
+
+  @Test
+  public void testWithPasswordFile() {
+    globalContext.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleVaultValueProviderPlugin.NAME,
+        ImmutableMap.<String, Object>of(
+            AnsibleVaultValueProviderPlugin.PARAM_FILE, "src/test/resources/vault-sample/test-encrypted.yml",
+            AnsibleVaultValueProviderPlugin.PARAM_PASSWORD_FILE, "src/test/resources/vault-sample/passwordFile")));
 
     assertEquals("abc", underTest.resolve("pwd1", context));
     assertEquals(ImmutableMap.of("pwd2", "def", "pwd3", "ghi"), underTest.resolve("group1", context));

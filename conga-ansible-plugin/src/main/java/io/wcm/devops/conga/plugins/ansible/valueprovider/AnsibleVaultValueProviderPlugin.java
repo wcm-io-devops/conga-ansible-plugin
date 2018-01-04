@@ -53,6 +53,16 @@ public class AnsibleVaultValueProviderPlugin implements ValueProviderPlugin {
    */
   public static final String PARAM_PASSWORD = "password";
 
+  /**
+   * Parameter: Vault password file.
+   */
+  public static final String PARAM_PASSWORD_FILE = "passwordFile";
+
+  /**
+   * System environment variable pointing to a file containing the vault password.
+   */
+  public static final String ENVIRONMENT_VARIABLE_PASSWORD_FILE = "ANSIBLE_VAULT_PASSWORD_FILE";
+
   @Override
   public String getName() {
     return NAME;
@@ -104,11 +114,40 @@ public class AnsibleVaultValueProviderPlugin implements ValueProviderPlugin {
   private String getVaultPassword(ValueProviderContext context) {
     String password = (String)context.getValueProviderConfig(PARAM_PASSWORD);
 
+    // if not password given try to read from password file
+    if (StringUtils.isBlank(password)) {
+      password = getVaultPasswordFromFile(context);
+    }
+
     if (StringUtils.isBlank(password)) {
       throw new GeneratorException("Config parameters '" + PARAM_PASSWORD + "' missing for value provider '" + NAME + "'.");
     }
 
     return password;
+  }
+
+  private String getVaultPasswordFromFile(ValueProviderContext context) {
+    String passwordFilePath = (String)context.getValueProviderConfig(PARAM_PASSWORD_FILE);
+
+    if (StringUtils.isBlank(passwordFilePath)) {
+      // if not password file given, try to read file path from the usual ansible environment variable
+      passwordFilePath = System.getenv(ENVIRONMENT_VARIABLE_PASSWORD_FILE);
+    }
+
+    if (StringUtils.isBlank(passwordFilePath)) {
+      return null;
+    }
+
+    File passwordFile = new File(passwordFilePath);
+    if (!(passwordFile.exists() && passwordFile.isFile())) {
+      throw new GeneratorException("Ansible Vault password file does not exist: " + FileUtil.getCanonicalPath(passwordFile));
+    }
+    try {
+      return FileUtils.readFileToString(passwordFile, CharEncoding.UTF_8);
+    }
+    catch (IOException ex) {
+      throw new GeneratorException("Error reading Ansible Vault password file: " + FileUtil.getCanonicalPath(passwordFile), ex);
+    }
   }
 
 }
