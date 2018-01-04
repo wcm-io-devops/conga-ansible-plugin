@@ -2,7 +2,7 @@
  * #%L
  * wcm.io
  * %%
- * Copyright (C) 2017 wcm.io
+ * Copyright (C) 2018 wcm.io
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +30,6 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.slf4j.Logger;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 
 import io.wcm.devops.conga.generator.GeneratorException;
@@ -41,7 +40,7 @@ import io.wcm.devops.conga.generator.util.PluginManager;
 import io.wcm.devops.conga.generator.util.PluginManagerImpl;
 
 @RunWith(MockitoJUnitRunner.class)
-public class AnsibleInventoryValueProviderPluginTest {
+public class AnsibleVaultValueProviderPluginTest {
 
   @Mock
   private Logger logger;
@@ -58,8 +57,8 @@ public class AnsibleInventoryValueProviderPluginTest {
         .logger(logger);
     context = new ValueProviderContext()
         .valueProviderGlobalContext(globalContext)
-        .valueProviderName(AnsibleInventoryValueProviderPlugin.NAME);
-    underTest = pluginManager.get(AnsibleInventoryValueProviderPlugin.NAME, ValueProviderPlugin.class);
+        .valueProviderName(AnsibleVaultValueProviderPlugin.NAME);
+    underTest = pluginManager.get(AnsibleVaultValueProviderPlugin.NAME, ValueProviderPlugin.class);
   }
 
   @Test(expected = GeneratorException.class)
@@ -69,19 +68,31 @@ public class AnsibleInventoryValueProviderPluginTest {
 
   @Test(expected = GeneratorException.class)
   public void testInvalidFile() {
-    globalContext.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleInventoryValueProviderPlugin.NAME,
-        ImmutableMap.<String, Object>of(AnsibleInventoryValueProviderPlugin.PARAM_FILE, "src/test/resources/nonexisting-file")));
+    globalContext.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleVaultValueProviderPlugin.NAME,
+        ImmutableMap.<String, Object>of(AnsibleVaultValueProviderPlugin.PARAM_FILE, "src/test/resources/nonexisting-file")));
     underTest.resolve("var1", context);
   }
 
   @Test
-  public void testFile() {
-    globalContext.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleInventoryValueProviderPlugin.NAME,
-        ImmutableMap.<String, Object>of(AnsibleInventoryValueProviderPlugin.PARAM_FILE, "src/test/resources/inventory-sample/inventory-ini-style")));
+  public void testWithPassword() {
+    globalContext.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleVaultValueProviderPlugin.NAME,
+        ImmutableMap.<String, Object>of(
+            AnsibleVaultValueProviderPlugin.PARAM_FILE, "src/test/resources/vault-sample/test-encrypted.yml",
+            AnsibleVaultValueProviderPlugin.PARAM_PASSWORD, "test123")));
 
-    assertEquals(ImmutableList.of("host-01", "host-02", "host-03"), underTest.resolve("test-group", context));
-    assertEquals(ImmutableList.of("host-01"), underTest.resolve("aem-author", context));
-    assertEquals(ImmutableList.of("host-02", "host-03"), underTest.resolve("aem-publish", context));
+    assertEquals("abc", underTest.resolve("pwd1", context));
+    assertEquals(ImmutableMap.of("pwd2", "def", "pwd3", "ghi"), underTest.resolve("group1", context));
+  }
+
+  @Test
+  public void testWithPasswordFile() {
+    globalContext.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleVaultValueProviderPlugin.NAME,
+        ImmutableMap.<String, Object>of(
+            AnsibleVaultValueProviderPlugin.PARAM_FILE, "src/test/resources/vault-sample/test-encrypted.yml",
+            AnsibleVaultValueProviderPlugin.PARAM_PASSWORD_FILE, "src/test/resources/vault-sample/passwordFile")));
+
+    assertEquals("abc", underTest.resolve("pwd1", context));
+    assertEquals(ImmutableMap.of("pwd2", "def", "pwd3", "ghi"), underTest.resolve("group1", context));
   }
 
 }

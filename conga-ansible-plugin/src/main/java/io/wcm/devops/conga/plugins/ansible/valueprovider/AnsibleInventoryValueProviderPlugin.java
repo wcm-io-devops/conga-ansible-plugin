@@ -21,13 +21,13 @@ package io.wcm.devops.conga.plugins.ansible.valueprovider;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.CharEncoding;
 import org.apache.commons.lang3.StringUtils;
 
 import io.wcm.devops.conga.generator.GeneratorException;
@@ -67,14 +67,14 @@ public class AnsibleInventoryValueProviderPlugin implements ValueProviderPlugin 
   private Map<String, List<String>> getInventoryContent(ValueProviderContext context) {
 
     // try to get from cache
-    Map<String, List<String>> content = context.getValueProviderCache(NAME);
+    @SuppressWarnings("unchecked")
+    Map<String, List<String>> content = (Map<String, List<String>>)context.getValueProviderCache();
     if (content != null) {
       return content;
     }
 
     // read from inventory file
-    Map<String, Object> valueProviderConfig = context.getValueProviderConfig(NAME);
-    String filePath = (String)valueProviderConfig.get(PARAM_FILE);
+    String filePath = (String)context.getValueProviderConfig(PARAM_FILE);
 
     if (StringUtils.isBlank(filePath)) {
       throw new GeneratorException("Config parameters '" + PARAM_FILE + "' missing for value provider '" + NAME + "'.");
@@ -86,16 +86,16 @@ public class AnsibleInventoryValueProviderPlugin implements ValueProviderPlugin 
     }
 
     try {
-      String inventoryContent = FileUtils.readFileToString(file, CharEncoding.UTF_8);
+      String inventoryContent = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
       AnsibleInventory inventory = AnsibleInventoryReader.read(inventoryContent);
       content = inventoryToConfig(inventory);
 
       // put to cache
-      context.setValueProviderCache(NAME, content);
+      context.setValueProviderCache(content);
       return content;
     }
     catch (IOException ex) {
-      throw new GeneratorException("Error reading Ansible Inventory file: " + FileUtil.getCanonicalPath(file));
+      throw new GeneratorException("Error reading Ansible Inventory file: " + FileUtil.getCanonicalPath(file), ex);
     }
   }
 
