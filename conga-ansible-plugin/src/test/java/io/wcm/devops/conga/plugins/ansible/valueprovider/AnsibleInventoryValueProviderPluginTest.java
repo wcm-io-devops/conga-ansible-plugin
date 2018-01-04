@@ -36,6 +36,7 @@ import com.google.common.collect.ImmutableMap;
 import io.wcm.devops.conga.generator.GeneratorException;
 import io.wcm.devops.conga.generator.spi.ValueProviderPlugin;
 import io.wcm.devops.conga.generator.spi.context.ValueProviderContext;
+import io.wcm.devops.conga.generator.spi.context.ValueProviderGlobalContext;
 import io.wcm.devops.conga.generator.util.PluginManager;
 import io.wcm.devops.conga.generator.util.PluginManagerImpl;
 
@@ -45,15 +46,19 @@ public class AnsibleInventoryValueProviderPluginTest {
   @Mock
   private Logger logger;
 
+  private ValueProviderGlobalContext globalContext;
   private ValueProviderContext context;
   private ValueProviderPlugin underTest;
 
   @Before
   public void setUp() {
     PluginManager pluginManager = new PluginManagerImpl();
-    context = new ValueProviderContext()
+    globalContext = new ValueProviderGlobalContext()
         .pluginManager(pluginManager)
         .logger(logger);
+    context = new ValueProviderContext()
+        .valueProviderGlobalContext(globalContext)
+        .valueProviderName(AnsibleInventoryValueProviderPlugin.NAME);
     underTest = pluginManager.get(AnsibleInventoryValueProviderPlugin.NAME, ValueProviderPlugin.class);
   }
 
@@ -64,14 +69,14 @@ public class AnsibleInventoryValueProviderPluginTest {
 
   @Test(expected = GeneratorException.class)
   public void testInvalidFile() {
-    context.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleInventoryValueProviderPlugin.NAME,
+    globalContext.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleInventoryValueProviderPlugin.NAME,
         ImmutableMap.<String, Object>of(AnsibleInventoryValueProviderPlugin.PARAM_FILE, "src/test/resources/nonexisting-file")));
     underTest.resolve("var1", context);
   }
 
   @Test
   public void testFile() {
-    context.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleInventoryValueProviderPlugin.NAME,
+    globalContext.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleInventoryValueProviderPlugin.NAME,
         ImmutableMap.<String, Object>of(AnsibleInventoryValueProviderPlugin.PARAM_FILE, "src/test/resources/inventory-sample/inventory-ini-style")));
 
     assertEquals(ImmutableList.of("host-01", "host-02", "host-03"), underTest.resolve("test-group", context));

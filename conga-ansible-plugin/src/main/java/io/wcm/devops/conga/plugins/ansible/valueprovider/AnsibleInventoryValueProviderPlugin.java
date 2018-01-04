@@ -67,14 +67,14 @@ public class AnsibleInventoryValueProviderPlugin implements ValueProviderPlugin 
   private Map<String, List<String>> getInventoryContent(ValueProviderContext context) {
 
     // try to get from cache
-    Map<String, List<String>> content = context.getValueProviderCache(NAME);
+    @SuppressWarnings("unchecked")
+    Map<String, List<String>> content = (Map<String, List<String>>)context.getValueProviderCache();
     if (content != null) {
       return content;
     }
 
     // read from inventory file
-    Map<String, Object> valueProviderConfig = context.getValueProviderConfig(NAME);
-    String filePath = (String)valueProviderConfig.get(PARAM_FILE);
+    String filePath = (String)context.getValueProviderConfig(PARAM_FILE);
 
     if (StringUtils.isBlank(filePath)) {
       throw new GeneratorException("Config parameters '" + PARAM_FILE + "' missing for value provider '" + NAME + "'.");
@@ -91,7 +91,7 @@ public class AnsibleInventoryValueProviderPlugin implements ValueProviderPlugin 
       content = inventoryToConfig(inventory);
 
       // put to cache
-      context.setValueProviderCache(NAME, content);
+      context.setValueProviderCache(content);
       return content;
     }
     catch (IOException ex) {

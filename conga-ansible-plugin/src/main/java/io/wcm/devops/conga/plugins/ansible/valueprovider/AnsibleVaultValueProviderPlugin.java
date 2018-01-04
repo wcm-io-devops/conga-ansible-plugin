@@ -68,7 +68,7 @@ public class AnsibleVaultValueProviderPlugin implements ValueProviderPlugin {
   private Map<String, Object> getVaultContent(ValueProviderContext context) {
 
     // try to get from cache
-    Map<String, Object> content = context.getValueProviderCache(NAME);
+    Map<String, Object> content = (Map<String, Object>)context.getValueProviderCache();
     if (content != null) {
       return content;
     }
@@ -77,8 +77,7 @@ public class AnsibleVaultValueProviderPlugin implements ValueProviderPlugin {
     String password = getVaultPassword(context);
 
     // read from inventory file
-    Map<String, Object> valueProviderConfig = context.getValueProviderConfig(NAME);
-    String filePath = (String)valueProviderConfig.get(PARAM_FILE);
+    String filePath = (String)context.getValueProviderConfig(PARAM_FILE);
 
     if (StringUtils.isBlank(filePath)) {
       throw new GeneratorException("Config parameters '" + PARAM_FILE + "' missing for value provider '" + NAME + "'.");
@@ -94,7 +93,7 @@ public class AnsibleVaultValueProviderPlugin implements ValueProviderPlugin {
       content = (Map<String, Object>)new Manager().getFromVault(Map.class, encryptedContent, password);
 
       // put to cache
-      context.setValueProviderCache(NAME, content);
+      context.setValueProviderCache(content);
       return content;
     }
     catch (IOException ex) {
@@ -103,8 +102,7 @@ public class AnsibleVaultValueProviderPlugin implements ValueProviderPlugin {
   }
 
   private String getVaultPassword(ValueProviderContext context) {
-    Map<String, Object> valueProviderConfig = context.getValueProviderConfig(NAME);
-    String password = (String)valueProviderConfig.get(PARAM_PASSWORD);
+    String password = (String)context.getValueProviderConfig(PARAM_PASSWORD);
 
     if (StringUtils.isBlank(password)) {
       throw new GeneratorException("Config parameters '" + PARAM_PASSWORD + "' missing for value provider '" + NAME + "'.");
