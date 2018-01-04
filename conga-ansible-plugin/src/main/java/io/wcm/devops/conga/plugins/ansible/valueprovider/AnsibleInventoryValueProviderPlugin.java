@@ -21,13 +21,13 @@ package io.wcm.devops.conga.plugins.ansible.valueprovider;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.CharEncoding;
 import org.apache.commons.lang3.StringUtils;
 
 import io.wcm.devops.conga.generator.GeneratorException;
@@ -86,7 +86,7 @@ public class AnsibleInventoryValueProviderPlugin implements ValueProviderPlugin 
     }
 
     try {
-      String inventoryContent = FileUtils.readFileToString(file, CharEncoding.UTF_8);
+      String inventoryContent = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
       AnsibleInventory inventory = AnsibleInventoryReader.read(inventoryContent);
       content = inventoryToConfig(inventory);
 

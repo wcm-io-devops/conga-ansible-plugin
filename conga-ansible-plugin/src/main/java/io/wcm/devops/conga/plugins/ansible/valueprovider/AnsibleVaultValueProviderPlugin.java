@@ -21,10 +21,10 @@ package io.wcm.devops.conga.plugins.ansible.valueprovider;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.CharEncoding;
 import org.apache.commons.lang3.StringUtils;
 
 import io.wcm.devops.conga.generator.GeneratorException;
@@ -99,7 +99,7 @@ public class AnsibleVaultValueProviderPlugin implements ValueProviderPlugin {
     }
 
     try {
-      String encryptedContent = FileUtils.readFileToString(file, CharEncoding.UTF_8);
+      String encryptedContent = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
       content = (Map<String, Object>)new Manager().getFromVault(Map.class, encryptedContent, password);
 
       // put to cache
@@ -143,7 +143,7 @@ public class AnsibleVaultValueProviderPlugin implements ValueProviderPlugin {
       throw new GeneratorException("Ansible Vault password file does not exist: " + FileUtil.getCanonicalPath(passwordFile));
     }
     try {
-      return FileUtils.readFileToString(passwordFile, CharEncoding.UTF_8);
+      return FileUtils.readFileToString(passwordFile, StandardCharsets.UTF_8);
     }
     catch (IOException ex) {
       throw new GeneratorException("Error reading Ansible Vault password file: " + FileUtil.getCanonicalPath(passwordFile), ex);
