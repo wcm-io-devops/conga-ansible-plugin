@@ -58,12 +58,6 @@
     </dependency>
 
     <dependency>
-      <groupId>commons-io</groupId>
-      <artifactId>commons-io</artifactId>
-      <version>2.6</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
       <groupId>de.rtner</groupId>
       <artifactId>PBKDF2</artifactId>
       <version>1.1.2</version>
@@ -78,12 +72,6 @@
           <artifactId>jboss-logging</artifactId>
         </exclusion>
       </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>com.esotericsoftware.yamlbeans</groupId>
-      <artifactId>yamlbeans</artifactId>
-      <version>1.13</version>
-      <scope>compile</scope>
     </dependency>
 
     <dependency>

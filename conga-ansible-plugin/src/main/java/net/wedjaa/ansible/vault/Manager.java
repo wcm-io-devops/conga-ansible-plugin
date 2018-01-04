@@ -17,28 +17,29 @@
 package net.wedjaa.ansible.vault;
 
 import java.io.IOException;
-import java.io.StringReader;
 import java.io.StringWriter;
 
-import com.esotericsoftware.yamlbeans.YamlException;
-import com.esotericsoftware.yamlbeans.YamlReader;
-import com.esotericsoftware.yamlbeans.YamlWriter;
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.Constructor;
 
 import net.wedjaa.ansible.vault.crypto.VaultHandler;
 
 public class Manager {
 
-  public Object getFromYaml(Class<?> objectClass, String yaml) throws YamlException {
-    YamlReader reader = new YamlReader(new StringReader(yaml));
-    return reader.read(objectClass);
+  public Object getFromYaml(Class<?> objectClass, String yaml) {
+    Yaml reader = new Yaml(new Constructor(objectClass));
+    return reader.load(yaml);
   }
 
-  public String writeToYaml(Object object) throws YamlException {
-    StringWriter resultWriter = new StringWriter();
-    YamlWriter writer = new YamlWriter(resultWriter);
-    writer.write(object);
-    writer.close();
-    return resultWriter.getBuffer().toString();
+  public String writeToYaml(Object object) {
+    try (StringWriter resultWriter = new StringWriter()) {
+      Yaml writer = new Yaml();
+      writer.dump(object, resultWriter);
+      return resultWriter.getBuffer().toString();
+    }
+    catch (IOException ex) {
+      throw new RuntimeException(ex);
+    }
   }
 
   public Object getFromVault(Class objectClass, String yaml, String password) throws IOException {
