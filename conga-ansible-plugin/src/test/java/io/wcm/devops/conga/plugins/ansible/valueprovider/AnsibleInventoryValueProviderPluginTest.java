@@ -75,9 +75,19 @@ public class AnsibleInventoryValueProviderPluginTest {
   }
 
   @Test
-  public void testFile() {
+  public void testInventoryIniStyle() {
     globalContext.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleInventoryValueProviderPlugin.NAME,
         ImmutableMap.<String, Object>of(AnsibleInventoryValueProviderPlugin.PARAM_FILE, "src/test/resources/inventory-sample/inventory-ini-style")));
+
+    assertEquals(ImmutableList.of("host-01", "host-02", "host-03"), underTest.resolve("test-group", context));
+    assertEquals(ImmutableList.of("host-01"), underTest.resolve("aem-author", context));
+    assertEquals(ImmutableList.of("host-02", "host-03"), underTest.resolve("aem-publish", context));
+  }
+
+  @Test
+  public void testInventoryJsonStyle() {
+    globalContext.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleInventoryValueProviderPlugin.NAME,
+        ImmutableMap.<String, Object>of(AnsibleInventoryValueProviderPlugin.PARAM_FILE, "src/test/resources/inventory-sample/inventory-json-style.json")));
 
     assertEquals(ImmutableList.of("host-01", "host-02", "host-03"), underTest.resolve("test-group", context));
     assertEquals(ImmutableList.of("host-01"), underTest.resolve("aem-author", context));

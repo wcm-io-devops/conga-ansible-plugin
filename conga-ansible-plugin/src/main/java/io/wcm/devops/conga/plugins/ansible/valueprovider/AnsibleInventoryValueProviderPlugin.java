@@ -22,6 +22,7 @@ package io.wcm.devops.conga.plugins.ansible.valueprovider;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,13 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
+
+import com.google.common.collect.ImmutableMap;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 
 import io.wcm.devops.conga.generator.GeneratorException;
 import io.wcm.devops.conga.generator.spi.ValueProviderPlugin;
@@ -52,6 +60,8 @@ public class AnsibleInventoryValueProviderPlugin implements ValueProviderPlugin 
    * Parameter: Path to inventory file
    */
   public static final String PARAM_FILE = "file";
+
+  private final JsonParser jsonParser = new JsonParser();
 
   @Override
   public String getName() {
@@ -87,8 +97,19 @@ public class AnsibleInventoryValueProviderPlugin implements ValueProviderPlugin 
 
     try {
       String inventoryContent = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
-      AnsibleInventory inventory = AnsibleInventoryReader.read(inventoryContent);
-      content = inventoryToConfig(inventory);
+
+      // try to read as JSON
+      content = tryReadJsonStyle(inventoryContent, file, context);
+
+      // try to read INI style
+      if (content == null) {
+        content = tryReadInitStyle(inventoryContent);
+      }
+
+      // fallback to empty map
+      if (content == null) {
+        content = ImmutableMap.of();
+      }
 
       // put to cache
       context.setValueProviderCache(content);
@@ -97,6 +118,53 @@ public class AnsibleInventoryValueProviderPlugin implements ValueProviderPlugin 
     catch (IOException ex) {
       throw new GeneratorException("Error reading Ansible Inventory file: " + FileUtil.getCanonicalPath(file), ex);
     }
+  }
+
+  private Map<String, List<String>> tryReadJsonStyle(String inventoryContent, File file, ValueProviderContext context) {
+    try {
+      JsonElement root = jsonParser.parse(inventoryContent);
+      if (root instanceof JsonObject) {
+        return jsonToConfig((JsonObject)root);
+      }
+    }
+    catch (JsonSyntaxException ex) {
+      context.getLogger().debug("Failed to parse Ansible inventory " + FileUtil.getCanonicalPath(file) + " as JSON string "
+          + "- assuming not JSON style.", ex);
+    }
+    return null;
+  }
+
+  private Map<String, List<String>> jsonToConfig(JsonObject root) {
+    Map<String, List<String>> content = new HashMap<>();
+    for (Map.Entry<String, JsonElement> entry : root.entrySet()) {
+      if (!StringUtils.equals(entry.getKey(), "_meta")) {
+        JsonArray hostNamesArray = null;
+        if (entry.getValue() instanceof JsonArray) {
+          hostNamesArray = (JsonArray)entry.getValue();
+        }
+        else if (entry.getValue() instanceof JsonObject) {
+          JsonObject entryObject = (JsonObject)entry.getValue();
+          JsonElement hostsElement = entryObject.get("hosts");
+          if (hostsElement instanceof JsonArray) {
+            hostNamesArray = (JsonArray)hostsElement;
+          }
+        }
+
+        if (hostNamesArray != null) {
+          List<String> hostNames = new ArrayList<>();
+          for (JsonElement item : hostNamesArray) {
+            hostNames.add(item.getAsString());
+          }
+          content.put(entry.getKey(), hostNames);
+        }
+      }
+    }
+    return content;
+  }
+
+  private Map<String, List<String>> tryReadInitStyle(String inventoryContent) {
+    AnsibleInventory inventory = AnsibleInventoryReader.read(inventoryContent);
+    return inventoryToConfig(inventory);
   }
 
   /**

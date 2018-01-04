@@ -52,6 +52,9 @@ Example:
 </plugin>
 ```
 
+The implementation supports both the "INI-style" inventory format as shown above, as well as JSON-style inventories as [documented here][ansible-inventory-developing].
+
+
 ### Reading variables from Ansible Vault files
 
 _**Please note:** You need to install the [Java Cryptography Extension (JCE) Unlimited Strength policy files][jce-policy] from Oracle, because Ansible uses 256 bit keys to handle encryption and decryption of the vault files._
@@ -91,6 +94,7 @@ You should not include the vault password in plain text as shown in this example
 
 [conga-extensibility]: http://devops.wcm.io/conga/extensibility.html
 [ansible-inventory]: http://docs.ansible.com/ansible/latest/intro_inventory.html
+[ansible-inventory-developing]: http://docs.ansible.com/ansible/latest/dev_guide/developing_inventory.html
 [ansible-vault]: https://docs.ansible.com/ansible/latest/vault.html
 [conga-maven-plugin]: http://devops.wcm.io/conga/tooling/conga-maven-plugin/plugin-info.html
 [conga-maven-plugin-valueprovider]: http://devops.wcm.io/conga/tooling/conga-maven-plugin/generate-mojo.html#valueProvider
