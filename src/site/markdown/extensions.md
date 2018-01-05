@@ -57,7 +57,7 @@ The implementation supports both the "INI-style" inventory format as shown above
 
 ### Reading variables from Ansible Vault files
 
-_**Please note:** You need to install the [Java Cryptography Extension (JCE) Unlimited Strength policy files][jce-policy] from Oracle, because Ansible uses 256 bit keys to handle encryption and decryption of the vault files._
+_**Please note:** You need to install the [Java Cryptography Extension (JCE) Unlimited Strength policy files][jce-policy] from Oracle, because Ansible uses 256 bit keys to handle encryption and decryption of the vault files. If you are using Java 8u162 or higher they are already active by default._
 
 Ansible Vault files are YAML files encrypted with a password using [Ansible Vault][ansible-vault].
 
