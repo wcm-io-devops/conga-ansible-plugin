@@ -41,19 +41,14 @@ public class VaultHandlerTest {
   Logger logger = LoggerFactory.getLogger(VaultHandlerTest.class);
 
   @Test
-  public void testByteArrayValidVault() {
+  public void testByteArrayValidVault() throws Exception {
     logger.info("Testing Byte Array decryption - Valid Password");
-    try {
-      byte[] encryptedTest = VaultHandler.encrypt(TEST_STRING.getBytes(), TEST_PASSWORD);
-      logger.debug("Encrypted vault:\n{}", new String(encryptedTest));
-      byte[] decryptedTest = VaultHandler.decrypt(encryptedTest, TEST_PASSWORD);
-      logger.debug("Decrypted vault:\n{}", new String(decryptedTest));
-      assertEquals(TEST_STRING, new String(decryptedTest));
 
-    }
-    catch (Exception ex) {
-      fail("Failed to decode the test vault: " + ex.getMessage());
-    }
+    byte[] encryptedTest = VaultHandler.encrypt(TEST_STRING.getBytes(), TEST_PASSWORD);
+    logger.debug("Encrypted vault:\n{}", new String(encryptedTest));
+    byte[] decryptedTest = VaultHandler.decrypt(encryptedTest, TEST_PASSWORD);
+    logger.debug("Decrypted vault:\n{}", new String(decryptedTest));
+    assertEquals(TEST_STRING, new String(decryptedTest));
   }
 
   @Test
@@ -72,18 +67,14 @@ public class VaultHandlerTest {
   }
 
   @Test
-  public void testStreamValidVault() {
+  public void testStreamValidVault() throws Exception {
     logger.info("Testing decoding vault Stream - Valid password ");
-    try {
-      ByteArrayOutputStream decodedStream = new ByteArrayOutputStream();
-      InputStream encodedStream = getClass().getClassLoader().getResourceAsStream("vault-sample-wedjaa/test-vault.yml");
-      VaultHandler.decrypt(encodedStream, decodedStream, TEST_PASSWORD);
-      String decoded = new String(decodedStream.toByteArray());
-      assertEquals(DECODED_VAULT, decoded);
-    }
-    catch (Exception ex) {
-      fail("Failed to decode the test vault from stream: " + ex.getMessage());
-    }
+
+    ByteArrayOutputStream decodedStream = new ByteArrayOutputStream();
+    InputStream encodedStream = getClass().getClassLoader().getResourceAsStream("vault-sample-wedjaa/test-vault.yml");
+    VaultHandler.decrypt(encodedStream, decodedStream, TEST_PASSWORD);
+    String decoded = new String(decodedStream.toByteArray());
+    assertEquals(DECODED_VAULT, decoded);
   }
 
   @Test

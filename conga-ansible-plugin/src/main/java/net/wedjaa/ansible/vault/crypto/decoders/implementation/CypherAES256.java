@@ -79,7 +79,7 @@ public class CypherAES256 implements CypherInterface {
       computedMac = mac.doFinal(data);
     }
     catch (Exception ex) {
-      throw new IOException("Error decrypting HMAC hash: " + ex.getMessage());
+      throw new IOException("Error decrypting HMAC hash: " + ex.getMessage(), ex);
     }
 
     return computedMac;
@@ -137,7 +137,7 @@ public class CypherAES256 implements CypherInterface {
       return unpad(decrypted);
     }
     catch (Exception ex) {
-      throw new IOException("Failed to decrypt data: " + ex.getMessage());
+      throw new IOException("Failed to decrypt data: " + ex.getMessage(), ex);
     }
   }
 
@@ -151,7 +151,7 @@ public class CypherAES256 implements CypherInterface {
       return encrypted;
     }
     catch (Exception ex) {
-      throw new IOException("Failed to encrypt data: " + ex.getMessage());
+      throw new IOException("Failed to encrypt data: " + ex.getMessage(), ex);
     }
   }
 
