@@ -30,8 +30,10 @@ _**Please note:** You need to install the [Java Cryptography Extension (JCE) Unl
 
 Ansible Vault files are files encrypted with [Ansible Vault][ansible-vault]. Ansible Vault requires a vault password to be set in the environment to decrypt the files. You can set the vault password by either:
 
-* Setting the password via the system property: `-Dansible.password=mypassword`
-* Setting the password via the system property pointing to a password file: `-Dansible.password.file=/path/to/password-file`
+* Setting the password via the system property:<br/>
+  `-Dansible.password=mypassword`
+* Setting the password via the system property pointing to a password file:<br/>
+  `-Dansible.password.file=/path/to/password-file`
 * Setting the system environment variable `ANSIBLE_VAULT_PASSWORD_FILE` pointing to the vault password file. This variable is used by Ansible itself as well.
 
 
@@ -70,14 +72,13 @@ Example:
 
 #### Reading and decrypting Ansible Vault-encrypted files
 
-Additional a URL File plugin for Ansible Vault is provided. This allows to access (and decrypt) Ansible Vault-encrpyted files anywhere in CONGA where a URL path to a file can be given - e.g. in file definitions for roles. This can be combined with other URL file plugins, e.g. getting an encrypted file from classpath, HTTP or other sources and then decrypting it.
+The URL File plugin for Ansible Vault allows to access (and decrypt) Ansible Vault-encrpyted files anywhere in CONGA where a URL path to a file can be given - e.g. in file definitions for roles. This can be combined with other URL file plugins, e.g. getting an encrypted file from classpath, HTTP or other sources and then decrypting it.
 
 Example:
 
 ```yaml
 # Copy file from classpath and decrypt it
 - file: mysample.txt
-  dir: download
   url: ansible-vault:classpath:/sample.txt
 ```
 

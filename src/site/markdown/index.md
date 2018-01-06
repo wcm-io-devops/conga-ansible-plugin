@@ -17,8 +17,8 @@ wcm.io DevOps CONGA Plugin for [Ansible][ansible].
 
 This plugin extends [CONGA][conga] with:
 
-* Ability to read [Ansible Inventory][ansible-inventory] files.
 * Ability to read encrypted [Ansible Vault][ansible-vault] files.
+* Ability to read [Ansible Inventory][ansible-inventory] files.
 
 _**Please note:** You need to install the [Java Cryptography Extension (JCE) Unlimited Strength policy files][jce-policy] from Oracle, because Ansible uses 256 bit keys to handle encryption and decryption of the vault files. If you are using Java 8u162 or higher they are already active by default._
 
@@ -27,8 +27,8 @@ _**Please note:** You need to install the [Java Cryptography Extension (JCE) Unl
 
 This plugins uses (and embeds) code from the following projects:
 
-* [ansible-inventory-java][ansible-inventory-java] developed by Andrea Scarpino
 * [JavaAnsibleVault][ansible-vault-java] developed by Wedjaa
+* [ansible-inventory-java][ansible-inventory-java] developed by Andrea Scarpino
 
 
 ### Further Resources
