@@ -41,6 +41,26 @@
   <build>
 
     <plugins>
+    
+      <!-- only for this example: set systeem property via maven plugin -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>properties-maven-plugin</artifactId>
+        <version>1.0.0</version>
+        <executions>
+          <execution>
+            <id>set-properties</id>
+            <goals>
+              <goal>set-system-properties</goal>
+            </goals>
+            <configuration>
+              <properties>
+                <ansible.password>test123</ansible.password>
+              </properties>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
 
       <plugin>
         <groupId>io.wcm.devops.conga</groupId>
@@ -50,7 +70,7 @@
         <configuration>
           <valueProvider>
             ansible-inventory;file=${project.basedir}/inventory/inventory-example,
-            ansible-vault;file=${project.basedir}/vault/test-encrypted.yml;password=test123
+            ansible-vault;file=${project.basedir}/vault/test-encrypted.yml
           </valueProvider>
         </configuration>
         <dependencies>
