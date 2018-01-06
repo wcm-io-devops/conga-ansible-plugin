@@ -38,6 +38,7 @@ import io.wcm.devops.conga.generator.spi.context.ValueProviderContext;
 import io.wcm.devops.conga.generator.spi.context.ValueProviderGlobalContext;
 import io.wcm.devops.conga.generator.util.PluginManager;
 import io.wcm.devops.conga.generator.util.PluginManagerImpl;
+import io.wcm.devops.conga.plugins.ansible.util.AnsibleVaultPassword;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AnsibleVaultValueProviderPluginTest {
@@ -59,6 +60,8 @@ public class AnsibleVaultValueProviderPluginTest {
         .valueProviderGlobalContext(globalContext)
         .valueProviderName(AnsibleVaultValueProviderPlugin.NAME);
     underTest = pluginManager.get(AnsibleVaultValueProviderPlugin.NAME, ValueProviderPlugin.class);
+
+    System.setProperty(AnsibleVaultPassword.SYSTEM_PROPERTY_PASSWORD_FILE, "src/test/resources/vault-sample/passwordFile");
   }
 
   @Test(expected = GeneratorException.class)
@@ -76,20 +79,7 @@ public class AnsibleVaultValueProviderPluginTest {
   @Test
   public void testWithPassword() {
     globalContext.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleVaultValueProviderPlugin.NAME,
-        ImmutableMap.<String, Object>of(
-            AnsibleVaultValueProviderPlugin.PARAM_FILE, "src/test/resources/vault-sample/test-encrypted.yml",
-            AnsibleVaultValueProviderPlugin.PARAM_PASSWORD, "test123")));
-
-    assertEquals("abc", underTest.resolve("pwd1", context));
-    assertEquals(ImmutableMap.of("pwd2", "def", "pwd3", "ghi"), underTest.resolve("group1", context));
-  }
-
-  @Test
-  public void testWithPasswordFile() {
-    globalContext.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleVaultValueProviderPlugin.NAME,
-        ImmutableMap.<String, Object>of(
-            AnsibleVaultValueProviderPlugin.PARAM_FILE, "src/test/resources/vault-sample/test-encrypted.yml",
-            AnsibleVaultValueProviderPlugin.PARAM_PASSWORD_FILE, "src/test/resources/vault-sample/passwordFile")));
+        ImmutableMap.<String, Object>of(AnsibleVaultValueProviderPlugin.PARAM_FILE, "src/test/resources/vault-sample/test-encrypted.yml")));
 
     assertEquals("abc", underTest.resolve("pwd1", context));
     assertEquals(ImmutableMap.of("pwd2", "def", "pwd3", "ghi"), underTest.resolve("group1", context));
