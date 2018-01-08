@@ -34,6 +34,7 @@ import com.google.common.collect.ImmutableMap;
 
 import io.wcm.devops.conga.generator.GeneratorException;
 import io.wcm.devops.conga.generator.spi.ValueProviderPlugin;
+import io.wcm.devops.conga.generator.spi.context.PluginContextOptions;
 import io.wcm.devops.conga.generator.spi.context.ValueProviderContext;
 import io.wcm.devops.conga.generator.spi.context.ValueProviderGlobalContext;
 import io.wcm.devops.conga.generator.util.PluginManager;
@@ -53,9 +54,11 @@ public class AnsibleVaultValueProviderPluginTest {
   @Before
   public void setUp() {
     PluginManager pluginManager = new PluginManagerImpl();
-    globalContext = new ValueProviderGlobalContext()
+    PluginContextOptions pluginContextOptions = new PluginContextOptions()
         .pluginManager(pluginManager)
         .logger(logger);
+    globalContext = new ValueProviderGlobalContext()
+        .pluginContextOptions(pluginContextOptions);
     context = new ValueProviderContext()
         .valueProviderGlobalContext(globalContext)
         .valueProviderName(AnsibleVaultValueProviderPlugin.NAME);

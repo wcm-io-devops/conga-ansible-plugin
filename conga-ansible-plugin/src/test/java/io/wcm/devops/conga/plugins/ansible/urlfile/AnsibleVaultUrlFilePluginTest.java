@@ -31,6 +31,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import io.wcm.devops.conga.generator.UrlFileManager;
+import io.wcm.devops.conga.generator.spi.context.PluginContextOptions;
 import io.wcm.devops.conga.generator.spi.context.UrlFilePluginContext;
 import io.wcm.devops.conga.generator.util.PluginManager;
 import io.wcm.devops.conga.generator.util.PluginManagerImpl;
@@ -45,8 +46,10 @@ public class AnsibleVaultUrlFilePluginTest {
   @Before
   public void setUp() {
     PluginManager pluginManager = new PluginManagerImpl();
-    context = new UrlFilePluginContext()
+    PluginContextOptions pluginContextOptions = new PluginContextOptions()
         .pluginManager(pluginManager);
+    context = new UrlFilePluginContext()
+        .pluginContextOptions(pluginContextOptions);
     urlFileManager = new UrlFileManager(pluginManager, context);
 
     System.setProperty(AnsibleVaultPassword.SYSTEM_PROPERTY_PASSWORD_FILE, "src/test/resources/vault-sample/passwordFile");
