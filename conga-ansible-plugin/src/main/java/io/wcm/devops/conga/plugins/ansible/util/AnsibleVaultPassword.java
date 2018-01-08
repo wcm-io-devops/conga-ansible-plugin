@@ -26,7 +26,6 @@ import java.nio.charset.StandardCharsets;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import io.wcm.devops.conga.generator.GeneratorException;
 import io.wcm.devops.conga.generator.util.FileUtil;
 
 /**
@@ -66,7 +65,7 @@ public final class AnsibleVaultPassword {
     }
 
     if (StringUtils.isBlank(password)) {
-      throw new GeneratorException("No Ansible Vault password set. Either specify " + SYSTEM_PROPERTY_PASSWORD + " "
+      throw new AnsibleVaultPasswordMissing("No Ansible Vault password set. Either specify " + SYSTEM_PROPERTY_PASSWORD + " "
           + "or " + SYSTEM_PROPERTY_PASSWORD_FILE + " system parameter, "
           + " or set the " + ENVIRONMENT_VARIABLE_PASSWORD_FILE + " system environment variable.");
     }
@@ -88,13 +87,13 @@ public final class AnsibleVaultPassword {
 
     File passwordFile = new File(passwordFilePath);
     if (!(passwordFile.exists() && passwordFile.isFile())) {
-      throw new GeneratorException("Ansible Vault password file does not exist: " + FileUtil.getCanonicalPath(passwordFile));
+      throw new AnsibleVaultPasswordMissing("Ansible Vault password file does not exist: " + FileUtil.getCanonicalPath(passwordFile));
     }
     try {
       return FileUtils.readFileToString(passwordFile, StandardCharsets.UTF_8);
     }
     catch (IOException ex) {
-      throw new GeneratorException("Error reading Ansible Vault password file: " + FileUtil.getCanonicalPath(passwordFile), ex);
+      throw new AnsibleVaultPasswordMissing("Error reading Ansible Vault password file: " + FileUtil.getCanonicalPath(passwordFile), ex);
     }
   }
 
