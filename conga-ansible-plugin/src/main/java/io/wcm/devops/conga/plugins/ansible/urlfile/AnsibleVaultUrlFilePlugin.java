@@ -54,26 +54,31 @@ public class AnsibleVaultUrlFilePlugin implements UrlFilePlugin {
   }
 
   @Override
-  public String getFileName(String url, UrlFilePluginContext context) {
-    return StringUtils.substringAfter(url, PREFIX);
+  public String getFileName(String url, UrlFilePluginContext context) throws IOException {
+    String innerUrl = getInnerUrl(url);
+    return context.getUrlFileManager().getFileName(innerUrl);
   }
 
   @Override
   public InputStream getFile(String url, UrlFilePluginContext context) throws IOException {
-    String fileName = getFileName(url, context);
-    try (InputStream is = context.getUrlFileManager().getFile(fileName)) {
+    String innerUrl = getInnerUrl(url);
+    try (InputStream is = context.getUrlFileManager().getFile(innerUrl)) {
       byte[] encryptedData = IOUtils.toByteArray(is);
       byte[] decryptedData = decryptFile(encryptedData);
       return new ByteArrayInputStream(decryptedData);
     }
     catch (IOException ex) {
-      throw new IOException("Unable do decrypt file: " + fileName, ex);
+      throw new IOException("Unable do decrypt file: " + innerUrl, ex);
     }
   }
 
   private byte[] decryptFile(byte[] encrpytedData) throws IOException {
     String password = AnsibleVaultPassword.get();
     return VaultHandler.decrypt(encrpytedData, password);
+  }
+
+  private String getInnerUrl(String url) {
+    return StringUtils.substringAfter(url, PREFIX);
   }
 
 }

@@ -20,6 +20,7 @@
 package io.wcm.devops.conga.plugins.ansible.urlfile;
 
 import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,7 +37,6 @@ import io.wcm.devops.conga.generator.spi.context.UrlFilePluginContext;
 import io.wcm.devops.conga.generator.util.PluginManager;
 import io.wcm.devops.conga.generator.util.PluginManagerImpl;
 import io.wcm.devops.conga.plugins.ansible.util.AnsibleVaultPassword;
-
 
 public class AnsibleVaultUrlFilePluginTest {
 
@@ -67,6 +67,11 @@ public class AnsibleVaultUrlFilePluginTest {
   @Test(expected = IOException.class)
   public void testInvalidFile() throws Exception {
     urlFileManager.getFile("ansible-vault:classpath:/vault-sample/nonexisting-file");
+  }
+
+  @Test
+  public void testGetFileName() throws Exception {
+    assertEquals("test-encrypted.yml", urlFileManager.getFileName("ansible-vault:classpath:/vault-sample/test-encrypted.yml"));
   }
 
 }
