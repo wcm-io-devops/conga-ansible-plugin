@@ -48,7 +48,6 @@ public class AnsibleVaultUrlFilePluginTest {
     context = new UrlFilePluginContext()
         .pluginManager(pluginManager);
     urlFileManager = new UrlFileManager(pluginManager, context);
-    context.urlFileManager(urlFileManager);
 
     System.setProperty(AnsibleVaultPassword.SYSTEM_PROPERTY_PASSWORD_FILE, "src/test/resources/vault-sample/passwordFile");
   }
