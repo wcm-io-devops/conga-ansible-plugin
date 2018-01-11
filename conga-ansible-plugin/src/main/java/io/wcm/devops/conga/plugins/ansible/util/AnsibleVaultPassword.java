@@ -38,14 +38,14 @@ public final class AnsibleVaultPassword {
   }
 
   /**
-   * System property with ansible password.
+   * System property with ansible vault password.
    */
-  public static final String SYSTEM_PROPERTY_PASSWORD = "ansible.password";
+  public static final String SYSTEM_PROPERTY_PASSWORD = "ansible.vault.password";
 
   /**
-   * System property with path to ansible password file.
+   * System property with path to ansible vault password file.
    */
-  public static final String SYSTEM_PROPERTY_PASSWORD_FILE = "ansible.password.file";
+  public static final String SYSTEM_PROPERTY_PASSWORD_FILE = "ansible.vault.password.file";
 
   /**
    * System environment variable pointing to a file containing the vault password.

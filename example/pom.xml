@@ -55,7 +55,7 @@
             </goals>
             <configuration>
               <properties>
-                <ansible.password>test123</ansible.password>
+                <ansible.vault.password>test123</ansible.vault.password>
               </properties>
             </configuration>
           </execution>
