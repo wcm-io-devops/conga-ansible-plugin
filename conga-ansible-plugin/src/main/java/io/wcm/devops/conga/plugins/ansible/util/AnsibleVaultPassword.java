@@ -90,7 +90,7 @@ public final class AnsibleVaultPassword {
       throw new AnsibleVaultPasswordMissing("Ansible Vault password file does not exist: " + FileUtil.getCanonicalPath(passwordFile));
     }
     try {
-      return FileUtils.readFileToString(passwordFile, StandardCharsets.UTF_8);
+      return FileUtils.readFileToString(passwordFile, StandardCharsets.UTF_8).trim();
     }
     catch (IOException ex) {
       throw new AnsibleVaultPasswordMissing("Error reading Ansible Vault password file: " + FileUtil.getCanonicalPath(passwordFile), ex);
