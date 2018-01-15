@@ -1,1 +1,17 @@
 templateDir: ansible
+
+files:
+
+# Example JSON file using Ansible value providers
+- file: output.json
+  template: output.json.hbs
+
+# Example for decrypting and copying a file
+- file: decrypted-file.yaml
+  url: ansible-vault:vault/test-encrypted.yml
+
+
+config:
+  password1: ${ansible-vault::pwd1}
+  password2: ${ansible-vault::group1.pwd2}
+  password3: ${ansible-vault::group1.pwd3}

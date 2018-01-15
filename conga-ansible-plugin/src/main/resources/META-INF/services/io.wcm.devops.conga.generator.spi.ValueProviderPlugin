@@ -1,0 +1,2 @@
+io.wcm.devops.conga.plugins.ansible.valueprovider.AnsibleInventoryValueProviderPlugin
+io.wcm.devops.conga.plugins.ansible.valueprovider.AnsibleVaultValueProviderPlugin

@@ -25,13 +25,13 @@
   <parent>
     <groupId>io.wcm.devops</groupId>
     <artifactId>io.wcm.devops.parent_toplevel</artifactId>
-    <version>1.0.6</version>
+    <version>1.0.10</version>
     <relativePath />
   </parent>
 
   <groupId>io.wcm.devops.conga.plugins</groupId>
   <artifactId>io.wcm.devops.conga.plugins.ansible</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0</version>
   <packaging>jar</packaging>
 
   <name>CONGA Ansible Plugin</name>
@@ -47,14 +47,31 @@
   <properties>
     <site.url.module.prefix>conga/plugins/ansible/conga-ansible-plugin</site.url.module.prefix>
   </properties>
-  
+
   <dependencies>
 
     <dependency>
       <groupId>io.wcm.devops.conga</groupId>
       <artifactId>io.wcm.devops.conga.generator</artifactId>
-      <version>1.3.5-SNAPSHOT</version>
+      <version>1.5.0</version>
       <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>de.rtner</groupId>
+      <artifactId>PBKDF2</artifactId>
+      <version>1.1.2</version>
+      <scope>compile</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>org.picketbox</groupId>
+          <artifactId>picketbox</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.jboss.logging</groupId>
+          <artifactId>jboss-logging</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <dependency>

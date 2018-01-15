@@ -1,0 +1,15 @@
+{
+  "hosts": {
+    {{#each hostNames ~}}
+    "{{this.host}}": {
+      "var1": "{{this.var1}}"
+    }{{#unless @last}},
+    {{/unless~}}
+    {{~/each}}
+  },
+  "passwords": {
+    "password1": "{{password1}}",
+    "password2": "{{password2}}",
+    "password3": "{{password3}}"
+  }
+}

@@ -20,3 +20,10 @@ Then you can build using
 ```
 mvn clean install
 ```
+
+
+## Included Sources
+
+This plugin includes sources from
+
+* https://github.com/ilpianista/ansible-inventory-java (MIT license)

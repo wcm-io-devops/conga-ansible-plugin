@@ -23,17 +23,25 @@
   <parent>
     <groupId>io.wcm.devops</groupId>
     <artifactId>io.wcm.devops.parent_toplevel</artifactId>
-    <version>1.0.6</version>
+    <version>1.0.10</version>
     <relativePath />
   </parent>
 
   <groupId>io.wcm.devops.conga.plugins</groupId>
   <artifactId>io.wcm.devops.conga.plugins.ansible.root</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0</version>
   <packaging>pom</packaging>
 
   <name>CONGA Ansible Plugin</name>
   <description>Root POM for wcm.io CONGA Plugins for Ansible.</description>
+  <url>${site.url}/${site.url.module.prefix}/</url>
+
+  <scm>
+    <connection>scm:git:https://github.com/wcm-io-devops/conga-ansible-plugin.git</connection>
+    <developerConnection>scm:git:https://github.com/wcm-io-devops/conga-ansible-plugin.git</developerConnection>
+    <url>https://github.com/wcm-io-devops/conga-ansible-plugin</url>
+    <tag>HEAD</tag>
+  </scm>
 
   <properties>
     <site.url.module.prefix>conga/plugins/ansible</site.url.module.prefix>
