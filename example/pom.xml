@@ -41,7 +41,7 @@
   <build>
 
     <plugins>
-    
+
       <!-- only for this example: set systeem property via maven plugin -->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
