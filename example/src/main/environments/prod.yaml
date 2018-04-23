@@ -19,3 +19,8 @@ nodes:
       _iterate_: ${ansible-inventory::aem-publish}
       host: ${_item_}
       var1: value${_itemIndex_}
+
+config:
+  password1: ${ansible-vault::pwd1}
+  password2: ${ansible-vault::group1.pwd2}
+  password3: ${ansible-vault::group1.pwd3}

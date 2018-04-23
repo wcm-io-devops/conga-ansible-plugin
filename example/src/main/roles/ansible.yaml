@@ -12,6 +12,6 @@ files:
 
 
 config:
-  password1: ${ansible-vault::pwd1}
-  password2: ${ansible-vault::group1.pwd2}
-  password3: ${ansible-vault::group1.pwd3}
+  password1:
+  password2:
+  password3:

@@ -47,6 +47,7 @@ public class AnsibleInventoryValueProviderPluginTest {
   @Mock
   private Logger logger;
 
+  private PluginContextOptions pluginContextOptions;
   private ValueProviderGlobalContext globalContext;
   private ValueProviderContext context;
   private ValueProviderPlugin underTest;
@@ -54,7 +55,7 @@ public class AnsibleInventoryValueProviderPluginTest {
   @Before
   public void setUp() {
     PluginManager pluginManager = new PluginManagerImpl();
-    PluginContextOptions pluginContextOptions = new PluginContextOptions()
+    pluginContextOptions = new PluginContextOptions()
         .pluginManager(pluginManager)
         .logger(logger);
     globalContext = new ValueProviderGlobalContext()
@@ -72,14 +73,14 @@ public class AnsibleInventoryValueProviderPluginTest {
 
   @Test(expected = GeneratorException.class)
   public void testInvalidFile() {
-    globalContext.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleInventoryValueProviderPlugin.NAME,
+    pluginContextOptions.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleInventoryValueProviderPlugin.NAME,
         ImmutableMap.<String, Object>of(AnsibleInventoryValueProviderPlugin.PARAM_FILE, "src/test/resources/nonexisting-file")));
     underTest.resolve("var1", context);
   }
 
   @Test
   public void testInventoryIniStyle() {
-    globalContext.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleInventoryValueProviderPlugin.NAME,
+    pluginContextOptions.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleInventoryValueProviderPlugin.NAME,
         ImmutableMap.<String, Object>of(AnsibleInventoryValueProviderPlugin.PARAM_FILE, "src/test/resources/inventory-sample/inventory-ini-style")));
 
     assertEquals(ImmutableList.of("host-01", "host-02", "host-03"), underTest.resolve("test-group", context));
@@ -89,7 +90,7 @@ public class AnsibleInventoryValueProviderPluginTest {
 
   @Test
   public void testInventoryJsonStyle() {
-    globalContext.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleInventoryValueProviderPlugin.NAME,
+    pluginContextOptions.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleInventoryValueProviderPlugin.NAME,
         ImmutableMap.<String, Object>of(AnsibleInventoryValueProviderPlugin.PARAM_FILE, "src/test/resources/inventory-sample/inventory-json-style.json")));
 
     assertEquals(ImmutableList.of("host-01", "host-02", "host-03"), underTest.resolve("test-group", context));
