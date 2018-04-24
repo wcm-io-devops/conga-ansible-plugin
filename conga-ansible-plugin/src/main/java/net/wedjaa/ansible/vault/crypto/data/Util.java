@@ -16,8 +16,9 @@
 //CHECKSTYLE:OFF
 package net.wedjaa.ansible.vault.crypto.data;
 
-import java.util.Arrays;
+import static net.wedjaa.ansible.vault.crypto.VaultHandler.CHAR_ENCODING;
 
+import java.util.Arrays;
 
 public class Util {
 
@@ -25,7 +26,6 @@ public class Util {
 
   final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
   final protected static String LINE_BREAK = "\n";
-  final protected static String CHAR_ENCODING = "UTF-8";
 
   public static String join(String[] datalines) {
     return String.join("", Arrays.asList(datalines));
@@ -66,7 +66,7 @@ public class Util {
   }
 
   public static VaultInfo getVaultInfo(byte[] vaultData) {
-    return getVaultInfo(new String(vaultData));
+    return getVaultInfo(new String(vaultData, CHAR_ENCODING));
   }
 
   public static String cleanupData(String vaultData) {
@@ -79,7 +79,7 @@ public class Util {
   }
 
   public static byte[] getVaultData(byte[] vaultData) {
-    String rawData = join(cleanupData(new String(vaultData)).split(LINE_BREAK));
+    String rawData = join(cleanupData(new String(vaultData, CHAR_ENCODING)).split(LINE_BREAK));
     return unhex(rawData);
   }
 

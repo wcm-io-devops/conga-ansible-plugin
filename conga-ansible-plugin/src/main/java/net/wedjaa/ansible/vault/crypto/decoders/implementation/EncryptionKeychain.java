@@ -16,6 +16,8 @@
 //CHECKSTYLE:OFF
 package net.wedjaa.ansible.vault.crypto.decoders.implementation;
 
+import static net.wedjaa.ansible.vault.crypto.VaultHandler.CHAR_ENCODING;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Random;
@@ -23,10 +25,7 @@ import java.util.Random;
 import de.rtner.security.auth.spi.PBKDF2Engine;
 import de.rtner.security.auth.spi.PBKDF2Parameters;
 
-
 public class EncryptionKeychain {
-
-  private static final String CHAR_ENCODING = "UTF-8";
 
   private final String password;
   private final byte[] salt;
@@ -61,7 +60,7 @@ public class EncryptionKeychain {
 
   private byte[] createRawKey() throws IOException {
     try {
-      PBKDF2Parameters params = new PBKDF2Parameters(algo, CHAR_ENCODING, salt, iterations);
+      PBKDF2Parameters params = new PBKDF2Parameters(algo, CHAR_ENCODING.name(), salt, iterations);
       int keylength = ivlen + 2 * keylen;
       PBKDF2Engine pbkdf2Engine = new PBKDF2Engine(params);
       byte[] keys = pbkdf2Engine.deriveKey(password, keylength);
@@ -118,6 +117,5 @@ public class EncryptionKeychain {
   public byte[] getIv() {
     return iv;
   }
-
 
 }

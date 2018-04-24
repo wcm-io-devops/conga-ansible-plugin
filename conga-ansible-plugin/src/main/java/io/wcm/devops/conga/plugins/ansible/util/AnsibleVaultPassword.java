@@ -55,19 +55,39 @@ public final class AnsibleVaultPassword {
   /**
    * Get Ansible Vault password.
    * @return Ansible Vault password.
+   * @throws AnsibleVaultPasswordMissing if no password is set
    */
   public static String get() {
-    String password = System.getProperty(SYSTEM_PROPERTY_PASSWORD);
-
-    // if not password given try to read from password file
-    if (StringUtils.isBlank(password)) {
-      password = getFromFile();
-    }
+    String password = getInternal();
 
     if (StringUtils.isBlank(password)) {
       throw new AnsibleVaultPasswordMissing("No Ansible Vault password set. Either specify " + SYSTEM_PROPERTY_PASSWORD + " "
           + "or " + SYSTEM_PROPERTY_PASSWORD_FILE + " system parameter, "
           + " or set the " + ENVIRONMENT_VARIABLE_PASSWORD_FILE + " system environment variable.");
+    }
+
+    return password;
+  }
+
+  /**
+   * Checks if an Ansible Vault password is set.
+   * @return true if password is present
+   */
+  public static boolean isPresent() {
+    String password = getInternal();
+    return StringUtils.isNotBlank(password);
+  }
+
+  /**
+   * Get Ansible Vault password.
+   * @return Ansible Vault password or null if it is not set
+   */
+  private static String getInternal() {
+    String password = System.getProperty(SYSTEM_PROPERTY_PASSWORD);
+
+    // if not password given try to read from password file
+    if (StringUtils.isBlank(password)) {
+      password = getFromFile();
     }
 
     return password;

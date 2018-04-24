@@ -15,3 +15,8 @@ config:
   password1:
   password2:
   password3:
+
+sensitiveConfigParameters:
+- password1
+- password2
+- password3
