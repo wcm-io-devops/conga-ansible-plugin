@@ -19,6 +19,8 @@ package net.wedjaa.ansible.vault.crypto;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.io.IOUtils;
 
@@ -35,15 +37,17 @@ public class VaultHandler {
 
   public final static String DEFAULT_CYPHER = CypherAES256.CYPHER_ID;
 
-  public final static String CHAR_ENCODING = "UTF-8";
-
+  /**
+   * Character encoding
+   */
+  public final static Charset CHAR_ENCODING = StandardCharsets.UTF_8;
 
   public static byte[] encrypt(byte[] cleartext, String password, String cypher) throws IOException {
     CypherInterface cypherInstance = CypherFactory.getCypher(cypher);
     byte[] vaultData = cypherInstance.encrypt(cleartext, password);
-    String vaultDataString = new String(vaultData);
+    String vaultDataString = new String(vaultData, CHAR_ENCODING);
     String vaultPackage = cypherInstance.infoLine() + "\n" + vaultDataString;
-    return vaultPackage.getBytes();
+    return vaultPackage.getBytes(CHAR_ENCODING);
   }
 
   public static byte[] encrypt(byte[] cleartext, String password) throws IOException {
@@ -52,7 +56,7 @@ public class VaultHandler {
 
   public static void encrypt(InputStream clearText, OutputStream cipherText, String password, String cypher) throws IOException {
     String clearTextValue = IOUtils.toString(clearText, CHAR_ENCODING);
-    cipherText.write(encrypt(clearTextValue.getBytes(), password, cypher));
+    cipherText.write(encrypt(clearTextValue.getBytes(CHAR_ENCODING), password, cypher));
   }
 
   public static void encrypt(InputStream clearText, OutputStream cipherText, String password) throws IOException {
@@ -61,7 +65,7 @@ public class VaultHandler {
 
   public static void decrypt(InputStream encryptedVault, OutputStream decryptedVault, String password) throws IOException {
     String encryptedValue = IOUtils.toString(encryptedVault, CHAR_ENCODING);
-    decryptedVault.write(decrypt(encryptedValue.getBytes(), password));
+    decryptedVault.write(decrypt(encryptedValue.getBytes(CHAR_ENCODING), password));
   }
 
   public static byte[] decrypt(byte[] encrypted, String password) throws IOException {

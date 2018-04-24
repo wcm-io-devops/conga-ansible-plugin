@@ -16,6 +16,8 @@
 //CHECKSTYLE:OFF
 package net.wedjaa.ansible.vault.crypto.data;
 
+import static net.wedjaa.ansible.vault.crypto.VaultHandler.CHAR_ENCODING;
+
 import java.io.IOException;
 
 import org.slf4j.Logger;
@@ -24,8 +26,6 @@ import org.slf4j.LoggerFactory;
 public class VaultContent {
 
   private static final Logger logger = LoggerFactory.getLogger(VaultContent.class);
-
-  private final static String CHAR_ENCODING = "UTF-8";
 
   private byte[] salt;
   private byte[] hmac;
@@ -45,7 +45,7 @@ public class VaultContent {
   }
 
   public byte[] toByteArray() {
-    return toString().getBytes();
+    return toString().getBytes(CHAR_ENCODING);
   }
 
   @Override
@@ -59,7 +59,7 @@ public class VaultContent {
     logger.debug("DATA String Length: {}", dataString.length());
     String complete = saltString + "\n" + hmacString + "\n" + dataString;
     logger.debug("Complete: {} \n{}", complete.length(), complete);
-    String result = Util.hexit(complete.getBytes(), 80);
+    String result = Util.hexit(complete.getBytes(CHAR_ENCODING), 80);
     logger.debug("Result: [{}] {}\n{}", complete.length() * 2, result.length(), result);
     return result;
   }

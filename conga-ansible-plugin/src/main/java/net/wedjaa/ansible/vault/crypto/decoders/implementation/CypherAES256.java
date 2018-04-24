@@ -16,6 +16,8 @@
 //CHECKSTYLE:OFF
 package net.wedjaa.ansible.vault.crypto.decoders.implementation;
 
+import static net.wedjaa.ansible.vault.crypto.VaultHandler.CHAR_ENCODING;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Arrays;
@@ -39,7 +41,6 @@ public class CypherAES256 implements CypherInterface {
 
   public final static String CYPHER_ID = "AES256";
   public final static int AES_KEYLEN = 256;
-  public final static String CHAR_ENCODING = "UTF-8";
   public final static String KEYGEN_ALGO = "HmacSHA256";
   public final static String CYPHER_KEY_ALGO = "AES";
   public static final String CYPHER_ALGO = "AES/CTR/NoPadding";
