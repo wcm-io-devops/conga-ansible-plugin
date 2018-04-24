@@ -26,19 +26,18 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 public class VaultHandlerTest {
 
-  final static String TEST_STRING = "This is a test";
-  final static String TEST_PASSWORD = "password";
-  final static String TEST_WRONG_PASSWORD = "not_this_one";
-  final static String WRONG_PASS_EX = "HMAC Digest doesn't match - possibly it's the wrong password.";
-  final static String DECODED_VAULT = "!net.wedjaa.ansible.vault.ProvisioningInfo\n"
+  private final static String TEST_STRING = "This is a test";
+  private final static String TEST_PASSWORD = "password";
+  private final static String TEST_WRONG_PASSWORD = "not_this_one";
+  private final static String WRONG_PASS_EX = "HMAC Digest doesn't match - possibly it's the wrong password.";
+  private final static String DECODED_VAULT = "!net.wedjaa.ansible.vault.ProvisioningInfo\n"
       + "apiClientId: The provisioner ClientId\n"
       + "apiPassword: The secret password\n"
       + "apiUser: Secret User\n";
 
-  Logger logger = LoggerFactory.getLogger(VaultHandlerTest.class);
+  private final static Logger logger = LoggerFactory.getLogger(VaultHandlerTest.class);
 
   @Test
   public void testByteArrayValidVault() throws Exception {
