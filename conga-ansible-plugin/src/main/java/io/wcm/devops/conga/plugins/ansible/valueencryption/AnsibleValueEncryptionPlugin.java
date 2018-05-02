@@ -39,11 +39,6 @@ public class AnsibleValueEncryptionPlugin implements ValueEncryptionPlugin {
    */
   public static final String NAME = "ansible-encryption";
 
-  /**
-   * Prefix that is prepended to the encrypted value.
-   */
-  public static final String ENCRYPTION_PREFIX = "!vault\n";
-
   @Override
   public String getName() {
     return NAME;
@@ -63,7 +58,8 @@ public class AnsibleValueEncryptionPlugin implements ValueEncryptionPlugin {
     // convert value to string and encrypt it
     try {
       byte[] encryptedData = VaultHandler.encrypt(value.toString().getBytes(CHAR_ENCODING), password);
-      return ENCRYPTION_PREFIX + new String(encryptedData, CHAR_ENCODING);
+      String encrypted = new String(encryptedData, CHAR_ENCODING);
+      return new YamlVaultValue(encrypted);
     }
     catch (IOException ex) {
       throw new GeneratorException("Unable to encrypt sensitive configuration value for parameter " + parameterName, ex);

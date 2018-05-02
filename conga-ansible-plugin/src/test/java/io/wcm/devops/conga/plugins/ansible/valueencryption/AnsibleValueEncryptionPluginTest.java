@@ -26,7 +26,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 
-import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -71,14 +70,13 @@ public class AnsibleValueEncryptionPluginTest {
 
   @Test
   public void testEncrypt() throws IOException {
-    String encrypted = underTest.encrypt("xyz", SAMPLE_VALUE, context).toString();
-    assertNotEquals(SAMPLE_VALUE, encrypted);
+    Object encrypted = underTest.encrypt("xyz", SAMPLE_VALUE, context);
+    assertNotEquals(SAMPLE_VALUE, encrypted.toString());
 
-    assertTrue(StringUtils.startsWith(encrypted, AnsibleValueEncryptionPlugin.ENCRYPTION_PREFIX));
+    assertTrue(encrypted instanceof YamlVaultValue);
 
     // decrypt again and validate
-    String encryptedValueWithoutPrefix = StringUtils.removeStart(encrypted, AnsibleValueEncryptionPlugin.ENCRYPTION_PREFIX);
-    String decrypted = new String(VaultHandler.decrypt(encryptedValueWithoutPrefix.toString().getBytes(CHAR_ENCODING),
+    String decrypted = new String(VaultHandler.decrypt(encrypted.toString().getBytes(CHAR_ENCODING),
         AnsibleVaultPassword.get()), CHAR_ENCODING);
     assertEquals(SAMPLE_VALUE, decrypted);
   }
