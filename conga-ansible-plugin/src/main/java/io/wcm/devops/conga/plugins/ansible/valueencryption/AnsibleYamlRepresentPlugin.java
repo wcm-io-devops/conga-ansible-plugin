@@ -19,8 +19,8 @@
  */
 package io.wcm.devops.conga.plugins.ansible.valueencryption;
 
-import io.wcm.devops.conga.generator.spi.export.YamlRepresentPlugin;
-import io.wcm.devops.conga.generator.spi.export.context.YamlRepresentContext;
+import io.wcm.devops.conga.generator.spi.yaml.YamlRepresentPlugin;
+import io.wcm.devops.conga.generator.spi.yaml.context.YamlRepresentContext;
 
 /**
  * Register YAML represent for rendering a !vault encrypted value.
