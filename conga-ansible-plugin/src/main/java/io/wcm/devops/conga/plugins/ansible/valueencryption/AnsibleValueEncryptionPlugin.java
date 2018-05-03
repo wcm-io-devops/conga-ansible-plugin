@@ -37,7 +37,7 @@ public class AnsibleValueEncryptionPlugin implements ValueEncryptionPlugin {
   /**
    * Plugin name
    */
-  public static final String NAME = "ansible-encryption";
+  public static final String NAME = "ansible-vault";
 
   @Override
   public String getName() {

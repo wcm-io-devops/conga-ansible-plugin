@@ -30,7 +30,7 @@ public class AnsibleYamlRepresentPlugin implements YamlRepresentPlugin {
   /**
    * Plugin name
    */
-  public static final String NAME = "ansible-yaml-represent";
+  public static final String NAME = "ansible-vault";
 
   @Override
   public String getName() {
