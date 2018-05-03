@@ -27,6 +27,9 @@
       <action type="update" dev="sseifert">
         Encrypt sensitive configuration parameter values in model export YAML file.
       </action>
+      <action type="fix" dev="sseifert">
+        Fix Ansible Vault decryption issue with Python libraries and invalid padding.
+      </action>
     </release>
 
     <release version="1.0.0" date="2018-01-15">

@@ -117,7 +117,9 @@ public class CypherAES256 implements CypherInterface {
         padding_length = blockSize;
       }
       padded = Arrays.copyOf(cleartext, cleartext.length + padding_length);
-      padded[padded.length - 1] = (byte)padding_length;
+      for (int i = 1; i <= padding_length; i++) {
+        padded[padded.length - i] = (byte)padding_length;
+      }
 
     }
     catch (Exception ex) {
