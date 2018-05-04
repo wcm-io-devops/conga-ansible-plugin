@@ -41,8 +41,8 @@
   <build>
 
     <plugins>
-    
-      <!-- only for this example: set systeem property via maven plugin -->
+
+      <!-- only for this example: set Ansible vault password as system property via maven plugin -->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>properties-maven-plugin</artifactId>
@@ -65,7 +65,7 @@
       <plugin>
         <groupId>io.wcm.devops.conga</groupId>
         <artifactId>conga-maven-plugin</artifactId>
-        <version>1.4.5-SNAPSHOT</version>
+        <version>1.8.1-SNAPSHOT</version>
         <extensions>true</extensions>
         <configuration>
           <valueProvider>
@@ -75,11 +75,10 @@
         </configuration>
         <dependencies>
 
-          <!-- Activate further CONGA plugins for special file types -->
           <dependency>
             <groupId>io.wcm.devops.conga.plugins</groupId>
             <artifactId>io.wcm.devops.conga.plugins.ansible</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>1.0.1-SNAPSHOT</version>
           </dependency>
 
         </dependencies>

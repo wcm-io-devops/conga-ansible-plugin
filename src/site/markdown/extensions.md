@@ -24,6 +24,20 @@ You can also define multiple value providers of the same plugin type. See [value
 | `ansible-vault`     | Decrypts a file encrypted with [Ansible Vault][ansible-vault. Can be combined with other URL file plugins.
 
 
+#### Value Encryption plugins
+
+| Plugin name         | Description
+|---------------------|-------------
+| `ansible-vault`     | Encrypts a single configuration parameter value with Ansible vault, to be stored as !vault tagged encrypted value in YAML file.
+
+
+#### YAML Represent plugins
+
+| Plugin name         | Description
+|---------------------|-------------
+| `ansible-vault`     | Registers a custom represent implementations that controls the rendering of !vault tagged encrypted values in the node model export YAML file.
+
+
 ### Ansible Vault
 
 _**Please note:** You need to install the [Java Cryptography Extension (JCE) Unlimited Strength policy files][jce-policy] from Oracle, because Ansible uses 256 bit keys to handle encryption and decryption of the vault files. If you are using Java 8u162 or higher they are already active by default._

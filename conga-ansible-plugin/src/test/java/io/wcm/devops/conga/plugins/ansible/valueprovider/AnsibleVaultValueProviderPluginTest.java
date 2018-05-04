@@ -47,6 +47,7 @@ public class AnsibleVaultValueProviderPluginTest {
   @Mock
   private Logger logger;
 
+  private PluginContextOptions pluginContextOptions;
   private ValueProviderGlobalContext globalContext;
   private ValueProviderContext context;
   private ValueProviderPlugin underTest;
@@ -54,7 +55,7 @@ public class AnsibleVaultValueProviderPluginTest {
   @Before
   public void setUp() {
     PluginManager pluginManager = new PluginManagerImpl();
-    PluginContextOptions pluginContextOptions = new PluginContextOptions()
+    pluginContextOptions = new PluginContextOptions()
         .pluginManager(pluginManager)
         .logger(logger);
     globalContext = new ValueProviderGlobalContext()
@@ -74,14 +75,14 @@ public class AnsibleVaultValueProviderPluginTest {
 
   @Test(expected = GeneratorException.class)
   public void testInvalidFile() {
-    globalContext.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleVaultValueProviderPlugin.NAME,
+    pluginContextOptions.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleVaultValueProviderPlugin.NAME,
         ImmutableMap.<String, Object>of(AnsibleVaultValueProviderPlugin.PARAM_FILE, "src/test/resources/nonexisting-file")));
     underTest.resolve("var1", context);
   }
 
   @Test
   public void testWithPassword() {
-    globalContext.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleVaultValueProviderPlugin.NAME,
+    pluginContextOptions.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleVaultValueProviderPlugin.NAME,
         ImmutableMap.<String, Object>of(AnsibleVaultValueProviderPlugin.PARAM_FILE, "src/test/resources/vault-sample/test-encrypted.yml")));
 
     assertEquals("abc", underTest.resolve("pwd1", context));

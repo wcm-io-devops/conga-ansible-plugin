@@ -16,6 +16,8 @@
 //CHECKSTYLE:OFF
 package net.wedjaa.ansible.vault;
 
+import static net.wedjaa.ansible.vault.crypto.VaultHandler.CHAR_ENCODING;
+
 import java.io.IOException;
 import java.io.StringWriter;
 
@@ -43,14 +45,14 @@ public class Manager {
   }
 
   public Object getFromVault(Class objectClass, String yaml, String password) throws IOException {
-    byte[] clearYaml = VaultHandler.decrypt(yaml.getBytes(), password);
-    return getFromYaml(objectClass, new String(clearYaml));
+    byte[] clearYaml = VaultHandler.decrypt(yaml.getBytes(CHAR_ENCODING), password);
+    return getFromYaml(objectClass, new String(clearYaml, CHAR_ENCODING));
   }
 
   public String writeToVault(Object object, String password) throws IOException {
     String clearYaml = writeToYaml(object);
-    byte[] yamlVault = VaultHandler.encrypt(clearYaml.getBytes(), password);
-    return new String(yamlVault);
+    byte[] yamlVault = VaultHandler.encrypt(clearYaml.getBytes(CHAR_ENCODING), password);
+    return new String(yamlVault, CHAR_ENCODING);
   }
 
 }
