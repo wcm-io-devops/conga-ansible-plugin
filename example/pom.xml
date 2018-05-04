@@ -78,7 +78,7 @@
           <dependency>
             <groupId>io.wcm.devops.conga.plugins</groupId>
             <artifactId>io.wcm.devops.conga.plugins.ansible</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
+            <version>1.1.1-SNAPSHOT</version>
           </dependency>
 
         </dependencies>
