@@ -19,21 +19,29 @@
  */
 package io.wcm.devops.conga.plugins.ansible.valueencryption;
 
-import org.yaml.snakeyaml.DumperOptions.ScalarStyle;
-import org.yaml.snakeyaml.nodes.Node;
-import org.yaml.snakeyaml.nodes.ScalarNode;
-import org.yaml.snakeyaml.nodes.Tag;
-import org.yaml.snakeyaml.representer.Represent;
+import org.yaml.snakeyaml.TypeDescription;
 
-class YamlVaultValueRepresent implements Represent {
+import io.wcm.devops.conga.generator.spi.yaml.YamlConstructorPlugin;
+import io.wcm.devops.conga.generator.spi.yaml.context.YamlConstructorContext;
 
-  public static final String VAULT_TAG = "!vault";
+/**
+ * Register YAML constructor modification for accepting a !vault tag in YAML files.
+ */
+public class AnsibleYamlConstructorPlugin implements YamlConstructorPlugin {
+
+  /**
+   * Plugin name
+   */
+  public static final String NAME = "ansible-vault";
 
   @Override
-  public Node representData(Object data) {
-    YamlVaultValue vaultValue = (YamlVaultValue)data;
-    return new ScalarNode(new Tag(VAULT_TAG), vaultValue.getValue(), null, null,
-        ScalarStyle.LITERAL.getChar());
+  public String getName() {
+    return NAME;
+  }
+
+  @Override
+  public void register(YamlConstructorContext context) {
+    context.getYamlConstructor().addTypeDescription(new TypeDescription(YamlVaultValue.class, YamlVaultValueRepresent.VAULT_TAG));
   }
 
 }
