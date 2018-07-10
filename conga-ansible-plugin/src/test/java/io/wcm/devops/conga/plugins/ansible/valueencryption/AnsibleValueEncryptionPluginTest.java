@@ -20,14 +20,14 @@
 package io.wcm.devops.conga.plugins.ansible.valueencryption;
 
 import static net.wedjaa.ansible.vault.crypto.VaultHandler.CHAR_ENCODING;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.slf4j.Logger;
 
@@ -50,7 +50,7 @@ public class AnsibleValueEncryptionPluginTest {
 
   private static final String SAMPLE_VALUE = "myValue1";
 
-  @Before
+  @BeforeEach
   public void setUp() {
     PluginManager pluginManager = new PluginManagerImpl();
     pluginContextOptions = new PluginContextOptions()

@@ -18,8 +18,9 @@
 //CHECKSTYLE:OFF
 package it.andreascarpino.ansible.inventory;
 
-import org.junit.Assert;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
 
 import it.andreascarpino.ansible.inventory.type.AnsibleGroup;
 import it.andreascarpino.ansible.inventory.type.AnsibleHost;
@@ -38,37 +39,37 @@ public class AnsibleInventoryReaderTest {
 
     AnsibleInventory inventory = AnsibleInventoryReader.read(inventoryText);
 
-    Assert.assertEquals(1, inventory.getGroups().size());
+    assertEquals(1, inventory.getGroups().size());
     AnsibleGroup group = inventory.getGroups().iterator().next();
-    Assert.assertEquals("group1", group.getName());
-    Assert.assertEquals(1, group.getHosts().size());
+    assertEquals("group1", group.getName());
+    assertEquals(1, group.getHosts().size());
 
     AnsibleHost host = group.getHosts().iterator().next();
-    Assert.assertEquals("host1", host.getName());
-    Assert.assertEquals(1, host.getVariables().size());
+    assertEquals("host1", host.getName());
+    assertEquals(1, host.getVariables().size());
 
     AnsibleVariable variable = host.getVariables().iterator().next();
-    Assert.assertEquals("var1", variable.getName());
-    Assert.assertEquals("value1", variable.getValue());
+    assertEquals("var1", variable.getName());
+    assertEquals("value1", variable.getValue());
 
     inventoryText = "[group1]\nhost1 var1=value1 var2=value2 var3=value3\nhost2\nhost3 var1=value1";
 
     inventory = AnsibleInventoryReader.read(inventoryText);
     group = inventory.getGroups().iterator().next();
 
-    Assert.assertEquals(1, inventory.getGroups().size());
-    Assert.assertEquals(3, group.getHosts().size());
+    assertEquals(1, inventory.getGroups().size());
+    assertEquals(3, group.getHosts().size());
 
     for (AnsibleHost h : group.getHosts()) {
       switch (h.getName()) {
       case "host1":
-        Assert.assertEquals(3, h.getVariables().size());
+          assertEquals(3, h.getVariables().size());
         break;
       case "host2":
-        Assert.assertEquals(0, h.getVariables().size());
+          assertEquals(0, h.getVariables().size());
         break;
       case "host3":
-        Assert.assertEquals(1, h.getVariables().size());
+          assertEquals(1, h.getVariables().size());
         break;
       }
     }
@@ -77,9 +78,9 @@ public class AnsibleInventoryReaderTest {
 
     inventory = AnsibleInventoryReader.read(inventoryText);
 
-    Assert.assertEquals(0, inventory.getGroups().size());
-    Assert.assertEquals(1, inventory.getHosts().size());
-    Assert.assertEquals(1, inventory.getHosts().iterator().next().getVariables().size());
+    assertEquals(0, inventory.getGroups().size());
+    assertEquals(1, inventory.getHosts().size());
+    assertEquals(1, inventory.getHosts().iterator().next().getVariables().size());
   }
 
   @Test
@@ -88,7 +89,7 @@ public class AnsibleInventoryReaderTest {
 
     AnsibleInventory inventory = AnsibleInventoryReader.read(inventoryText);
 
-    Assert.assertEquals(0, inventory.getGroups().size());
+    assertEquals(0, inventory.getGroups().size());
   }
 
   @Test
@@ -97,7 +98,7 @@ public class AnsibleInventoryReaderTest {
 
     AnsibleInventory inventory = AnsibleInventoryReader.read(inventoryText);
 
-    Assert.assertEquals(0, inventory.getGroups().size());
+    assertEquals(0, inventory.getGroups().size());
   }
 
   @Test
@@ -106,8 +107,8 @@ public class AnsibleInventoryReaderTest {
 
     AnsibleInventory inventory = AnsibleInventoryReader.read(inventoryText);
 
-    Assert.assertEquals(1, inventory.getGroups().size());
-    Assert.assertEquals(0, inventory.getGroups().iterator().next().getHosts().size());
+    assertEquals(1, inventory.getGroups().size());
+    assertEquals(0, inventory.getGroups().iterator().next().getHosts().size());
   }
 
   @Test
@@ -116,11 +117,11 @@ public class AnsibleInventoryReaderTest {
 
     AnsibleInventory inventory = AnsibleInventoryReader.read(inventoryText);
 
-    Assert.assertEquals(3, inventory.getGroups().size());
+    assertEquals(3, inventory.getGroups().size());
 
     for (AnsibleGroup group : inventory.getGroups()) {
       if (group.getName().equals("group1")) {
-        Assert.assertEquals(2, group.getSubgroups().size());
+        assertEquals(2, group.getSubgroups().size());
       }
     }
   }
@@ -131,13 +132,13 @@ public class AnsibleInventoryReaderTest {
 
     AnsibleInventory inventory = AnsibleInventoryReader.read(inventoryText);
 
-    Assert.assertEquals(3, inventory.getGroups().size());
+    assertEquals(3, inventory.getGroups().size());
 
     for (AnsibleGroup group : inventory.getGroups()) {
       if (group.getName().equals("group1")) {
-        Assert.assertEquals("var1", group.getSubgroups().iterator().next().getHosts().iterator().next()
+        assertEquals("var1", group.getSubgroups().iterator().next().getHosts().iterator().next()
             .getVariables().iterator().next().getName());
-        Assert.assertEquals("value1", group.getSubgroups().iterator().next().getHosts().iterator().next()
+        assertEquals("value1", group.getSubgroups().iterator().next().getHosts().iterator().next()
             .getVariables().iterator().next().getValue());
       }
     }
@@ -152,11 +153,11 @@ public class AnsibleInventoryReaderTest {
 
     AnsibleInventory inventory = AnsibleInventoryReader.read(inventoryText);
 
-    Assert.assertEquals(4, inventory.getGroups().size());
+    assertEquals(4, inventory.getGroups().size());
 
     for (AnsibleGroup group : inventory.getGroups()) {
       if (group.getName().equals("southeast")) {
-        Assert.assertEquals(4,
+        assertEquals(4,
             group.getSubgroups().iterator().next().getHosts().iterator().next().getVariables().size());
       }
     }

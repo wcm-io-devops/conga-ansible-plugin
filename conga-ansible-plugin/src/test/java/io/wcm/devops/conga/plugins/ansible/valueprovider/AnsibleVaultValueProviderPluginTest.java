@@ -19,15 +19,16 @@
  */
 package io.wcm.devops.conga.plugins.ansible.valueprovider;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Map;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.slf4j.Logger;
 
 import com.google.common.collect.ImmutableMap;
@@ -41,7 +42,7 @@ import io.wcm.devops.conga.generator.util.PluginManager;
 import io.wcm.devops.conga.generator.util.PluginManagerImpl;
 import io.wcm.devops.conga.plugins.ansible.util.AnsibleVaultPassword;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class AnsibleVaultValueProviderPluginTest {
 
   @Mock
@@ -52,7 +53,7 @@ public class AnsibleVaultValueProviderPluginTest {
   private ValueProviderContext context;
   private ValueProviderPlugin underTest;
 
-  @Before
+  @BeforeEach
   public void setUp() {
     PluginManager pluginManager = new PluginManagerImpl();
     pluginContextOptions = new PluginContextOptions()
@@ -68,16 +69,20 @@ public class AnsibleVaultValueProviderPluginTest {
     System.setProperty(AnsibleVaultPassword.SYSTEM_PROPERTY_PASSWORD_FILE, "src/test/resources/vault-sample/passwordFile");
   }
 
-  @Test(expected = GeneratorException.class)
+  @Test
   public void testNoConfig() {
-    underTest.resolve("var1", context);
+    assertThrows(GeneratorException.class, () -> {
+      underTest.resolve("var1", context);
+    });
   }
 
-  @Test(expected = GeneratorException.class)
+  @Test
   public void testInvalidFile() {
     pluginContextOptions.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleVaultValueProviderPlugin.NAME,
         ImmutableMap.<String, Object>of(AnsibleVaultValueProviderPlugin.PARAM_FILE, "src/test/resources/nonexisting-file")));
-    underTest.resolve("var1", context);
+    assertThrows(GeneratorException.class, () -> {
+      underTest.resolve("var1", context);
+    });
   }
 
   @Test

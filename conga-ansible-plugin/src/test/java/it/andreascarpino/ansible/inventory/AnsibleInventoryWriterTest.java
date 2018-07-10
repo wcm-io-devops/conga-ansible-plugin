@@ -18,8 +18,9 @@
 //CHECKSTYLE:OFF
 package it.andreascarpino.ansible.inventory;
 
-import org.junit.Assert;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
 
 import it.andreascarpino.ansible.inventory.type.AnsibleGroup;
 import it.andreascarpino.ansible.inventory.type.AnsibleHost;
@@ -62,7 +63,7 @@ public class AnsibleInventoryWriterTest {
 
     String inventoryText = AnsibleInventoryWriter.write(inventory);
 
-    Assert.assertEquals(
+    assertEquals(
         "mail.example.com\n[webservers]\nfoo.example.com\nbar.example.com\n[dbservers]\none.example.com\ntwo.example.com\nthree.example.com\n",
         inventoryText);
   }
@@ -92,7 +93,7 @@ public class AnsibleInventoryWriterTest {
 
     String inventoryText = AnsibleInventoryWriter.write(inventory);
 
-    Assert.assertEquals(
+    assertEquals(
         "[atlanta]\nhost1 http_port=80 maxRequestsPerChild=808\nhost2 http_port=303 maxRequestsPerChild=909\n",
         inventoryText);
   }
@@ -117,7 +118,7 @@ public class AnsibleInventoryWriterTest {
 
     String inventoryText = AnsibleInventoryWriter.write(inventory);
 
-    Assert.assertEquals(
+    assertEquals(
         "[atlanta]\nhost1\nhost2\n[atlanta:vars]\nntp_server=ntp.atlanta.example.com\nproxy=proxy.atlanta.example.com\n",
         inventoryText);
   }
@@ -166,7 +167,7 @@ public class AnsibleInventoryWriterTest {
 
     String inventoryText = AnsibleInventoryWriter.write(inventory);
 
-    Assert.assertEquals(
+    assertEquals(
         "[atlanta]\nhost1\nhost2\n" +
             "[raleigh]\nhost2\nhost3\n" +
             "[southeast:children]\nraleigh\natlanta\n" +

@@ -19,8 +19,9 @@
  */
 package io.wcm.devops.conga.plugins.ansible.urlfile;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,8 +29,8 @@ import java.io.InputStream;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import io.wcm.devops.conga.generator.UrlFileManager;
 import io.wcm.devops.conga.generator.spi.context.PluginContextOptions;
@@ -43,7 +44,7 @@ public class AnsibleVaultUrlFilePluginTest {
   private UrlFilePluginContext context;
   private UrlFileManager urlFileManager;
 
-  @Before
+  @BeforeEach
   public void setUp() {
     PluginManager pluginManager = new PluginManagerImpl();
     PluginContextOptions pluginContextOptions = new PluginContextOptions()
@@ -64,9 +65,11 @@ public class AnsibleVaultUrlFilePluginTest {
     }
   }
 
-  @Test(expected = IOException.class)
+  @Test
   public void testInvalidFile() throws Exception {
-    urlFileManager.getFile("ansible-vault:classpath:/vault-sample/nonexisting-file");
+    assertThrows(IOException.class, () -> {
+      urlFileManager.getFile("ansible-vault:classpath:/vault-sample/nonexisting-file");
+    });
   }
 
   @Test
