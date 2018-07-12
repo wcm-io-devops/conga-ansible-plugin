@@ -21,7 +21,9 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,6 +47,23 @@ public class VaultHandlerTest {
 
     byte[] encryptedTest = VaultHandler.encrypt(TEST_STRING.getBytes(), TEST_PASSWORD);
     logger.debug("Encrypted vault:\n{}", new String(encryptedTest));
+    byte[] decryptedTest = VaultHandler.decrypt(encryptedTest, TEST_PASSWORD);
+    logger.debug("Decrypted vault:\n{}", new String(decryptedTest));
+    assertEquals(TEST_STRING, new String(decryptedTest));
+  }
+
+  @Test
+  public void testByteArrayValidVault_CarriageReturns() throws Exception {
+    logger.info("Testing Byte Array decryption - Valid Password");
+
+    byte[] encryptedTest = VaultHandler.encrypt(TEST_STRING.getBytes(), TEST_PASSWORD);
+    logger.debug("Encrypted vault:\n{}", new String(encryptedTest));
+
+    // replace \n with \r\n to simulate new lines on windows file systems
+    String encryptedString = new String(encryptedTest, StandardCharsets.UTF_8);
+    encryptedString = StringUtils.replace(encryptedString, "\n", "\r\n");
+    encryptedTest = encryptedString.getBytes(StandardCharsets.UTF_8);
+
     byte[] decryptedTest = VaultHandler.decrypt(encryptedTest, TEST_PASSWORD);
     logger.debug("Decrypted vault:\n{}", new String(decryptedTest));
     assertEquals(TEST_STRING, new String(decryptedTest));

@@ -27,6 +27,9 @@
       <action type="update" dev="sseifert">
         Add YamlConstructorPlugin for Ansible Vault tags in YAML files.
       </action>
+      <action type="fix" dev="sseifert">
+        Fix reading encrypted Ansible Vault files with windows line endings.
+      </action>
     </release>
 
     <release version="1.1.0" date="2018-05-04">

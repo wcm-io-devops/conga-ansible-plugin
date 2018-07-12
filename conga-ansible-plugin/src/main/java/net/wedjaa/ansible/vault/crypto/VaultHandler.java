@@ -23,6 +23,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.ArrayUtils;
 
 import net.wedjaa.ansible.vault.crypto.data.Util;
 import net.wedjaa.ansible.vault.crypto.data.VaultInfo;
@@ -69,8 +70,9 @@ public class VaultHandler {
   }
 
   public static byte[] decrypt(byte[] encrypted, String password) throws IOException {
+    byte[] encryptedProcessed = stripCarriageReturns(encrypted);
 
-    VaultInfo vaultInfo = Util.getVaultInfo(encrypted);
+    VaultInfo vaultInfo = Util.getVaultInfo(encryptedProcessed);
     if (!vaultInfo.isEncryptedVault()) {
       throw new IOException("File is not an Ansible Encrypted Vault");
     }
@@ -79,9 +81,18 @@ public class VaultHandler {
       throw new IOException("The vault is not a format we can handle - check the cypher.");
     }
 
-    byte[] encryptedData = Util.getVaultData(encrypted);
+    byte[] encryptedData = Util.getVaultData(encryptedProcessed);
 
     return vaultInfo.getCypher().decrypt(encryptedData, password);
+  }
+
+  /**
+   * Strip \r characters from encrypted data that may slip in on windows file systems.
+   * @param data Data
+   * @return Data without \r chars
+   */
+  private static byte[] stripCarriageReturns(byte[] data) {
+    return ArrayUtils.removeAllOccurences(data, (byte)0xD);
   }
 
 }
