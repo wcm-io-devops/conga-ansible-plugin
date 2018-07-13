@@ -21,10 +21,8 @@ package io.wcm.devops.conga.plugins.ansible.valueprovider;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import io.wcm.devops.conga.generator.GeneratorException;
@@ -32,6 +30,7 @@ import io.wcm.devops.conga.generator.spi.ValueProviderPlugin;
 import io.wcm.devops.conga.generator.spi.context.ValueProviderContext;
 import io.wcm.devops.conga.generator.util.FileUtil;
 import io.wcm.devops.conga.plugins.ansible.util.AnsibleVaultPassword;
+import io.wcm.devops.conga.plugins.ansible.util.FileScriptLoader;
 import net.wedjaa.ansible.vault.Manager;
 
 /**
@@ -100,7 +99,7 @@ public class AnsibleVaultValueProviderPlugin implements ValueProviderPlugin {
     }
 
     try {
-      String encryptedContent = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
+      String encryptedContent = FileScriptLoader.readFileToString(file);
       content = (Map<String, Object>)new Manager().getFromVault(Map.class, encryptedContent, password);
 
       // put to cache

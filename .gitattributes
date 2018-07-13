@@ -5,6 +5,7 @@
 *.dtd text eol=lf
 *.esp text eol=lf
 *.ecma text eol=lf
+*.groovy text eol=lf
 *.hbrs text eol=lf
 *.hbs text eol=lf
 *.htm text eol=lf
@@ -23,6 +24,7 @@
 *.project text eol=lf
 *.properties text eol=lf
 *.props text eol=lf
+*.py text eol=lf
 *.sass text eol=lf
 *.scss text eol=lf
 *.sh text eol=lf

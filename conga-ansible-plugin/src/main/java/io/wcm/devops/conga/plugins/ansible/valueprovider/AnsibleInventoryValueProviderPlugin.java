@@ -21,14 +21,12 @@ package io.wcm.devops.conga.plugins.ansible.valueprovider;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.collect.ImmutableMap;
@@ -42,6 +40,7 @@ import io.wcm.devops.conga.generator.GeneratorException;
 import io.wcm.devops.conga.generator.spi.ValueProviderPlugin;
 import io.wcm.devops.conga.generator.spi.context.ValueProviderContext;
 import io.wcm.devops.conga.generator.util.FileUtil;
+import io.wcm.devops.conga.plugins.ansible.util.FileScriptLoader;
 import it.andreascarpino.ansible.inventory.type.AnsibleGroup;
 import it.andreascarpino.ansible.inventory.type.AnsibleInventory;
 import it.andreascarpino.ansible.inventory.util.AnsibleInventoryReader;
@@ -96,7 +95,7 @@ public class AnsibleInventoryValueProviderPlugin implements ValueProviderPlugin 
     }
 
     try {
-      String inventoryContent = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
+      String inventoryContent = FileScriptLoader.readFileToString(file);
 
       // try to read as JSON
       content = tryReadJsonStyle(inventoryContent, file, context);
