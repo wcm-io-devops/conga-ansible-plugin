@@ -55,7 +55,7 @@ public final class AnsibleVaultPassword {
   /**
    * Get Ansible Vault password.
    * @return Ansible Vault password.
-   * @throws AnsibleVaultPasswordMissing if no password is set
+   * @throws io.wcm.devops.conga.plugins.ansible.util.AnsibleVaultPasswordMissing if no password is set
    */
   public static String get() {
     String password = getInternal();
