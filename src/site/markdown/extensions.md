@@ -2,7 +2,10 @@
 
 The CONGA Ansible Plugin extends CONGA using its [extensibility model][conga-extensibility].
 
-The plugin implementations only support static files. Ansible supports reading dynamic files (e.g. Python scripts) for inventories, password files etc. - but this CONGA plugin implementation only supports files that contain the result without executing them.
+Ansible supports reading dynamic files (executable scripts) for inventories, password files etc. - the CONGA Ansible plugin supports the following files/scripts:
+
+* Static files
+* Python scripts (`.py` extension)
 
 
 ### Provided Plugins
