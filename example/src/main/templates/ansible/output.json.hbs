@@ -7,6 +7,12 @@
     {{/unless~}}
     {{~/each}}
   },
+  "hostsFiltered": [
+    {{#each hostNamesFiltered ~}}
+    "{{this}}"{{#unless @last}},
+    {{/unless~}}
+    {{~/each}}
+  ],
   "passwords": {
     "password1": "{{password1}}",
     "password2": "{{password2}}",

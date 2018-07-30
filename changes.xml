@@ -27,6 +27,9 @@
       <action type="add" dev="sseifert">
         Add support for dynamic pyhton scripts as input for Ansible Inventory and Ansible Vault files.
       </action>
+      <action type="add" dev="sseifert">
+        Add support for using JsonPath expressions to get values from JSON-style Ansible inventories.
+      </action>
     </release>
 
     <release version="1.2.0" date="2018-07-13">
