@@ -35,6 +35,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
+import com.jayway.jsonpath.JsonPath;
+import com.jayway.jsonpath.ReadContext;
 
 import io.wcm.devops.conga.generator.GeneratorException;
 import io.wcm.devops.conga.generator.spi.ValueProviderPlugin;
@@ -69,15 +71,26 @@ public class AnsibleInventoryValueProviderPlugin implements ValueProviderPlugin 
 
   @Override
   public Object resolve(String variableName, ValueProviderContext context) {
-    Map<String, List<String>> content = getInventoryContent(context);
-    return content.get(variableName);
+    InventoryContent content = getInventoryContent(context);
+    return resolveVariableOrJsonPath(content, variableName);
   }
 
-  private Map<String, List<String>> getInventoryContent(ValueProviderContext context) {
+  private Object resolveVariableOrJsonPath(InventoryContent content, String variableName) {
+    if (StringUtils.startsWith(variableName, "$")) {
+      if (content.getJsonpathReadContext() != null) {
+        return content.getJsonpathReadContext().read(variableName, List.class);
+      }
+      else {
+        return null;
+      }
+    }
+    return content.getMap().get(variableName);
+  }
+
+  private InventoryContent getInventoryContent(ValueProviderContext context) {
 
     // try to get from cache
-    @SuppressWarnings("unchecked")
-    Map<String, List<String>> content = (Map<String, List<String>>)context.getValueProviderCache();
+    InventoryContent content = (InventoryContent)context.getValueProviderCache();
     if (content != null) {
       return content;
     }
@@ -107,7 +120,7 @@ public class AnsibleInventoryValueProviderPlugin implements ValueProviderPlugin 
 
       // fallback to empty map
       if (content == null) {
-        content = ImmutableMap.of();
+        content = new InventoryContent(ImmutableMap.of());
       }
 
       // put to cache
@@ -119,11 +132,12 @@ public class AnsibleInventoryValueProviderPlugin implements ValueProviderPlugin 
     }
   }
 
-  private Map<String, List<String>> tryReadJsonStyle(String inventoryContent, File file, ValueProviderContext context) {
+  private InventoryContent tryReadJsonStyle(String inventoryContent, File file, ValueProviderContext context) {
     try {
       JsonElement root = jsonParser.parse(inventoryContent);
       if (root instanceof JsonObject) {
-        return jsonToConfig((JsonObject)root);
+        ReadContext jsonpathReadContext = JsonPath.parse(inventoryContent);
+        return new InventoryContent(jsonToConfig((JsonObject)root), jsonpathReadContext);
       }
     }
     catch (JsonSyntaxException ex) {
@@ -161,9 +175,9 @@ public class AnsibleInventoryValueProviderPlugin implements ValueProviderPlugin 
     return content;
   }
 
-  private Map<String, List<String>> tryReadInitStyle(String inventoryContent) {
+  private InventoryContent tryReadInitStyle(String inventoryContent) {
     AnsibleInventory inventory = AnsibleInventoryReader.read(inventoryContent);
-    return inventoryToConfig(inventory);
+    return new InventoryContent(inventoryToConfig(inventory));
   }
 
   /**
@@ -179,6 +193,30 @@ public class AnsibleInventoryValueProviderPlugin implements ValueProviderPlugin 
           .collect(Collectors.toList()));
     }
     return config;
+  }
+
+  private static class InventoryContent {
+
+    private final Map<String, List<String>> map;
+    private final ReadContext jsonpathReadContext;
+
+    InventoryContent(Map<String, List<String>> content) {
+      this(content, null);
+    }
+
+    InventoryContent(Map<String, List<String>> content, ReadContext jsonpathReadContext) {
+      this.map = content;
+      this.jsonpathReadContext = jsonpathReadContext;
+    }
+
+    public Map<String, List<String>> getMap() {
+      return this.map;
+    }
+
+    public ReadContext getJsonpathReadContext() {
+      return this.jsonpathReadContext;
+    }
+
   }
 
 }

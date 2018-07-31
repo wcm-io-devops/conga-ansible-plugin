@@ -113,4 +113,14 @@ public class AnsibleInventoryValueProviderPluginTest {
     assertEquals(ImmutableList.of("host-02", "host-03"), underTest.resolve("aem-publish", context));
   }
 
+  @Test
+  public void testInventoryJsonStyleMeta() {
+    pluginContextOptions.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleInventoryValueProviderPlugin.NAME,
+        ImmutableMap.<String, Object>of(AnsibleInventoryValueProviderPlugin.PARAM_FILE, "src/test/resources/inventory-sample/inventory-json-style-meta.json")));
+
+    assertEquals(ImmutableList.of("192.168.100.1"), underTest.resolve("tag_Name_dev_aem", context));
+    // use jsonpath query
+    assertEquals(ImmutableList.of("127.0.100.1"), underTest.resolve("$._meta.hostvars..[?(@.ec2_tag_Name=='dev_aem')].ec2_private_ip_address", context));
+  }
+
 }

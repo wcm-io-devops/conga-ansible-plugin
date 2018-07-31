@@ -1,15 +1,56 @@
-[test-group]
-host-01 conga_node=aem-author
-host-02 conga_node=aem-publish
-host-03 conga_node=aem-publish
-host-04 conga_node=aem-publish
-host-05 conga_node=aem-publish
-
-[aem-author]
-host-01
-
-[aem-publish]
-host-02
-host-03
-host-04
-host-05
+{
+  "_meta": {
+    "hostvars": {
+      "host-01": {
+        "conga_node": "aem-author",
+        "ec2_private_ip_address": "127.0.100.1", 
+        "ec2_tag_Name": "tag1"
+      },
+      "host-02": {
+        "conga_node": "aem-publish",
+        "ec2_private_ip_address": "127.0.100.2", 
+        "ec2_tag_Name": "tag2"
+      },
+      "host-03": {
+        "conga_node": "aem-publish",
+        "ec2_private_ip_address": "127.0.100.3", 
+        "ec2_tag_Name": "tag2"
+      },
+      "host-04": {
+        "conga_node": "aem-publish",
+        "ec2_private_ip_address": "127.0.100.3", 
+        "ec2_tag_Name": "tag3"
+      },
+      "host-05": {
+        "conga_node": "aem-publish",
+        "ec2_private_ip_address": "127.0.100.2", 
+        "ec2_tag_Name": "tag3"
+      }
+    }
+  },
+  "test-group": {
+    "hosts": [
+      "host-01",
+      "host-02",
+      "host-03",
+      "host-04",
+      "host-05"
+    ],
+    "vars": {
+      "param1": "value1"
+    },
+    "children": [
+      "aem-author",
+      "aem-publish"
+    ]
+  },
+  "aem-author": [
+    "host-01"
+  ],
+  "aem-publish": [
+    "host-02",
+    "host-03",
+    "host-04",
+    "host-05"
+  ]
+}
