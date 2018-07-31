@@ -140,7 +140,7 @@ Example:
 
 The implementation supports both the "INI-style" inventory format as shown above, as well as JSON-style inventories as [documented here][ansible-inventory-developing].
 
-If JSON-style inventories are used it's also possible to use a JsonPath expression for fetching data from the inventory. This example returns an array of matching values in the JSON data:
+If JSON-style inventories are used it's also possible to use a [JsonPath][json-path] expression for fetching data from the inventory. This example returns an array of matching values in the JSON data:
 
 ```
 ${ansible-inventory::$._meta.hostvars..[?(@.ec2_tag_Name == 'tag2')].ec2_private_ip_address}
@@ -154,3 +154,4 @@ ${ansible-inventory::$._meta.hostvars..[?(@.ec2_tag_Name == 'tag2')].ec2_private
 [conga-maven-plugin]: http://devops.wcm.io/conga/tooling/conga-maven-plugin/plugin-info.html
 [conga-maven-plugin-valueprovider]: http://devops.wcm.io/conga/tooling/conga-maven-plugin/generate-mojo.html#valueProvider
 [jce-policy]: http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html
+[json-path]: https://github.com/json-path/JsonPath
