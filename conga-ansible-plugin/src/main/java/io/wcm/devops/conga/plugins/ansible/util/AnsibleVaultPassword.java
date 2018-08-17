@@ -21,9 +21,7 @@ package io.wcm.devops.conga.plugins.ansible.util;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import io.wcm.devops.conga.generator.util.FileUtil;
@@ -110,7 +108,7 @@ public final class AnsibleVaultPassword {
       throw new AnsibleVaultPasswordMissing("Ansible Vault password file does not exist: " + FileUtil.getCanonicalPath(passwordFile));
     }
     try {
-      return FileUtils.readFileToString(passwordFile, StandardCharsets.UTF_8).trim();
+      return FileScriptLoader.readFileToString(passwordFile).trim();
     }
     catch (IOException ex) {
       throw new AnsibleVaultPasswordMissing("Error reading Ansible Vault password file: " + FileUtil.getCanonicalPath(passwordFile), ex);

@@ -24,3 +24,4 @@ config:
   password1: ${ansible-vault::pwd1}
   password2: ${ansible-vault::group1.pwd2}
   password3: ${ansible-vault::group1.pwd3}
+  hostNamesFiltered: ${ansible-inventory::$._meta.hostvars..[?(@.ec2_tag_Name == 'tag2')].ec2_private_ip_address}
