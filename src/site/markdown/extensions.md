@@ -109,10 +109,12 @@ Ansible Inventory files are expected in a special format as used by the Ansible 
 Example inventory:
 
 ```
-[test-group]
-host-01 conga_node=aem-author
-host-02 conga_node=aem-publish
-host-03 conga_node=aem-publish
+[aem-author]
+host-01
+
+[aem-publish]
+host-02
+host-03
 ```
 
 Using the value provider plugin for Ansible Inventory you can reference the list of host names for each group.
