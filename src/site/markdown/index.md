@@ -34,9 +34,9 @@ This plugins uses (and embeds) code from the following projects:
 ### Further Resources
 
 * [wcm.io CONGA training material with exercises](http://training.wcm.io/conga/)
-* [adaptTo() 2015 Talk: CONGA - Configuration generation for Sling and AEM](https://adapt.to/2015/en/schedule/conga---configuration-generation-for-sling-and-aem.html)
-* [adaptTo() 2017 Talk: Automate AEM Deployment with Ansible and wcm.io CONGA](https://adapt.to/2017/en/schedule/automate-aem-deployment-with-ansible-and-wcm-io-conga.html)
-
+* [adaptTo() 2015 Talk: CONGA - Configuration generation for Sling and AEM][adaptto-talk-2015-conga]
+* [adaptTo() 2017 Talk: Automate AEM Deployment with Ansible and wcm.io CONGA][adaptto-talk-2017-aem-ansible]
+* [adaptTo() 2018 Talk: Maven Archetypes for AEM][adaptto-talk-2018-aem-archetypes]
 
 
 [usage]: usage.html
@@ -50,3 +50,6 @@ This plugins uses (and embeds) code from the following projects:
 [ansible-vault]: https://docs.ansible.com/ansible/latest/vault.html
 [ansible-vault-java]: https://github.com/Wedjaa/JavaAnsibleVault
 [jce-policy]: http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html
+[adaptto-talk-2015-conga]: https://adapt.to/2015/en/schedule/conga---configuration-generation-for-sling-and-aem.html
+[adaptto-talk-2017-aem-ansible]: https://adapt.to/2017/en/schedule/automate-aem-deployment-with-ansible-and-wcm-io-conga.html
+[adaptto-talk-2018-aem-archetypes]: https://adapt.to/2018/en/schedule/maven-archetypes-for-aem.html
