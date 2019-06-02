@@ -149,11 +149,11 @@ ${ansible-inventory::$._meta.hostvars..[?(@.ec2_tag_Name == 'tag2')].ec2_private
 ```
 
 
-[conga-extensibility]: http://devops.wcm.io/conga/extensibility.html
+[conga-extensibility]: https://devops.wcm.io/conga/extensibility.html
 [ansible-inventory]: http://docs.ansible.com/ansible/latest/intro_inventory.html
 [ansible-inventory-developing]: http://docs.ansible.com/ansible/latest/dev_guide/developing_inventory.html
 [ansible-vault]: https://docs.ansible.com/ansible/latest/vault.html
-[conga-maven-plugin]: http://devops.wcm.io/conga/tooling/conga-maven-plugin/plugin-info.html
-[conga-maven-plugin-valueprovider]: http://devops.wcm.io/conga/tooling/conga-maven-plugin/generate-mojo.html#valueProvider
+[conga-maven-plugin]: https://devops.wcm.io/conga/tooling/conga-maven-plugin/plugin-info.html
+[conga-maven-plugin-valueprovider]: https://devops.wcm.io/conga/tooling/conga-maven-plugin/generate-mojo.html#valueProvider
 [jce-policy]: http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html
 [json-path]: https://github.com/json-path/JsonPath
