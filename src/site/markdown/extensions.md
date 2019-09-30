@@ -89,7 +89,7 @@ Example:
 
 #### Reading and decrypting Ansible Vault-encrypted files
 
-The URL File plugin for Ansible Vault allows to access (and decrypt) Ansible Vault-encrpyted files anywhere in CONGA where a URL path to a file can be given - e.g. in file definitions for roles. This can be combined with other URL file plugins, e.g. getting an encrypted file from classpath, HTTP or other sources and then decrypting it.
+The URL File plugin for Ansible Vault allows to access (and decrypt) Ansible Vault-encrpyted files anywhere in CONGA where a URL path to a file can be given - e.g. in file definitions for roles. This can be combined with other URL file plugins, e.g. getting an encrypted file from classpath, HTTP URL or other sources and then decrypting it.
 
 Example:
 
