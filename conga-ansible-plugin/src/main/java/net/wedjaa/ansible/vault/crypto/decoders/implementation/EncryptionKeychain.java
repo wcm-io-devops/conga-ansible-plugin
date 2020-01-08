@@ -67,7 +67,7 @@ public class EncryptionKeychain {
       return keys;
     }
     catch (Exception ex) {
-      throw new IOException("Cryptofailure: " + ex.getMessage());
+      throw new IOException("Cryptofailure: " + ex.getMessage(), ex);
     }
 
   }

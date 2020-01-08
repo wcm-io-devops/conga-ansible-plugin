@@ -97,7 +97,9 @@ public class CypherAES256 implements CypherInterface {
       return 0;
     }
 
-    logger.debug("Padding length: {}", decrypted[decrypted.length - 1]);
+    if (logger.isDebugEnabled()) {
+      logger.debug("Padding length: {}", decrypted[decrypted.length - 1]);
+    }
     return decrypted[decrypted.length - 1];
   }
 
@@ -106,7 +108,7 @@ public class CypherAES256 implements CypherInterface {
     return Arrays.copyOfRange(decrypted, 0, length);
   }
 
-  public byte[] pad(byte[] cleartext) {
+  public byte[] pad(byte[] cleartext) throws IOException {
     byte[] padded = null;
 
     try {
@@ -123,7 +125,7 @@ public class CypherAES256 implements CypherInterface {
 
     }
     catch (Exception ex) {
-      new IOException("Error calculating padding for " + CYPHER_ALGO + ": " + ex.getMessage());
+      throw new IOException("Error calculating padding for " + CYPHER_ALGO + ": " + ex.getMessage(), ex);
     }
 
     return padded;
@@ -213,6 +215,7 @@ public class CypherAES256 implements CypherInterface {
   }
 
   @Override
+  @SuppressWarnings("PMD.AvoidReassigningParameters")
   public byte[] encrypt(byte[] data, String password) throws IOException {
     EncryptionKeychain keys = new EncryptionKeychain(SALT_LENGTH, password, KEYLEN, IVLEN, ITERATIONS, KEYGEN_ALGO);
     keys.createKeys();

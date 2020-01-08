@@ -27,9 +27,9 @@ public class VaultContent {
 
   private static final Logger logger = LoggerFactory.getLogger(VaultContent.class);
 
-  private byte[] salt;
-  private byte[] hmac;
-  private byte[] data;
+  private final byte[] salt;
+  private final byte[] hmac;
+  private final byte[] data;
 
   public VaultContent(byte[] encryptedVault) throws IOException {
     byte[][] vaultContents = splitData(encryptedVault);
@@ -50,7 +50,9 @@ public class VaultContent {
 
   @Override
   public String toString() {
-    logger.debug("Salt: {} - HMAC: {} - Data: {} - TargetLen: {}", salt.length, hmac.length, data.length, (salt.length + hmac.length + data.length) * 2);
+    if (logger.isDebugEnabled()) {
+      logger.debug("Salt: {} - HMAC: {} - Data: {} - TargetLen: {}", salt.length, hmac.length, data.length, (salt.length + hmac.length + data.length) * 2);
+    }
     String saltString = Util.hexit(salt);
     logger.debug("Salt String Length: {}", saltString.length());
     String hmacString = Util.hexit(hmac);
