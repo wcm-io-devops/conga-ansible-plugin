@@ -38,6 +38,7 @@ import com.google.gson.JsonSyntaxException;
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.ReadContext;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.wcm.devops.conga.generator.GeneratorException;
 import io.wcm.devops.conga.generator.spi.ValueProviderPlugin;
 import io.wcm.devops.conga.generator.spi.context.ValueProviderContext;
@@ -87,6 +88,7 @@ public class AnsibleInventoryValueProviderPlugin implements ValueProviderPlugin 
     return content.getMap().get(variableName);
   }
 
+  @SuppressFBWarnings("RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE")
   private InventoryContent getInventoryContent(ValueProviderContext context) {
 
     // try to get from cache

@@ -27,6 +27,8 @@ import de.rtner.security.auth.spi.PBKDF2Parameters;
 
 public class EncryptionKeychain {
 
+  private static final Random RANDOM = new Random();
+
   private final String password;
   private final byte[] salt;
   private final int keylen;
@@ -96,7 +98,7 @@ public class EncryptionKeychain {
 
   private byte[] generateSalt(int length) {
     byte[] thesalt = new byte[length];
-    new Random().nextBytes(thesalt);
+    RANDOM.nextBytes(thesalt);
     return thesalt;
   }
 
