@@ -6,7 +6,8 @@
 Documentation: https://devops.wcm.io/conga/plugins/ansible/<br/>
 Issues: https://wcm-io.atlassian.net/projects/WDCONGA<br/>
 Wiki: https://wcm-io.atlassian.net/wiki/<br/>
-Continuous Integration: https://travis-ci.org/conga-ansible-plugin
+Continuous Integration: https://travis-ci.org/conga-ansible-plugin<br/>
+Commercial support: https://wcm.io/commercial-support.html
 
 
 ## Build from sources
