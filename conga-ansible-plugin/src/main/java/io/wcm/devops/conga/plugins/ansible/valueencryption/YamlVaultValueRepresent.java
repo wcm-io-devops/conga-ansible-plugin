@@ -32,8 +32,7 @@ class YamlVaultValueRepresent implements Represent {
   @Override
   public Node representData(Object data) {
     YamlVaultValue vaultValue = (YamlVaultValue)data;
-    return new ScalarNode(new Tag(VAULT_TAG), vaultValue.getValue(), null, null,
-        ScalarStyle.LITERAL.getChar());
+    return new ScalarNode(new Tag(VAULT_TAG), vaultValue.getValue(), null, null, ScalarStyle.LITERAL);
   }
 
 }

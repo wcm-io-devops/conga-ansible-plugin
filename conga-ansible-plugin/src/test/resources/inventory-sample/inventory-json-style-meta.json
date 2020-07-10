@@ -2,32 +2,32 @@
   "_meta": {
     "hostvars": {
       "192.168.100.1": {
-        "ansible_host": "192.168.10.1", 
-        "ec2_private_ip_address": "127.0.100.1", 
-        "ec2_public_dns_name": "ec2-127-0-100-1.eu-west-1.compute.amazonaws.com", 
-        "ec2_tag_Env": "dev", 
-        "ec2_tag_Name": "dev_aem", 
-        "ec2_tag_Project": "pvrnd-cma", 
-        "ec2_tag_Role": "aem", 
+        "ansible_host": "192.168.10.1",
+        "ec2_private_ip_address": "127.0.100.1",
+        "ec2_public_dns_name": "ec2-127-0-100-1.eu-west-1.compute.amazonaws.com",
+        "ec2_tag_Env": "dev",
+        "ec2_tag_Name": "dev_aem",
+        "ec2_tag_Project": "pvrnd-cma",
+        "ec2_tag_Role": "aem",
         "ec2_tag_conga_nodes": [
-          "author-dev.website1.com", 
+          "author-dev.website1.com",
           "dev.website1.com"
-        ], 
+        ],
         "ec2_tag_conga_roles": [
-          "aem-cms", 
+          "aem-cms",
           "aem-dispatcher"
-        ], 
+        ],
         "ec2_tag_conga_variant_node_mapping": [
-          "aem-author=author-dev.website1.com", 
+          "aem-author=author-dev.website1.com",
           "aem-publish=dev.website1.com"
-        ], 
+        ],
         "ec2_tag_conga_variants": [
-          "aem-author", 
+          "aem-author",
           "aem-publish"
         ]
       }
     }
-  }, 
+  },
   "tag_Name_dev_aem": [
     "192.168.100.1"
   ]

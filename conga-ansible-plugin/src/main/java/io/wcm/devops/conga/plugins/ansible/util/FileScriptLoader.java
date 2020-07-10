@@ -89,7 +89,7 @@ public final class FileScriptLoader {
     catch (ExecuteException ex) {
       throw new IOException("Python script execution of '" + FileUtil.getCanonicalPath(file) + "' failed "
           + "with error code " + ex.getExitValue() + ":\n"
-          + osError.toString(StandardCharsets.UTF_8.name()));
+          + osError.toString(StandardCharsets.UTF_8.name()), ex);
     }
   }
 

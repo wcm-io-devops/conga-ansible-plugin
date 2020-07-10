@@ -34,7 +34,7 @@ import net.wedjaa.ansible.vault.crypto.decoders.inter.CypherInterface;
 /**
  * Created by mrwho on 03/06/15.
  */
-public class VaultHandler {
+public final class VaultHandler {
 
   public final static String DEFAULT_CYPHER = CypherAES256.CYPHER_ID;
 
@@ -42,6 +42,10 @@ public class VaultHandler {
    * Character encoding
    */
   public final static Charset CHAR_ENCODING = StandardCharsets.UTF_8;
+
+  private VaultHandler() {
+    // static methods only
+  }
 
   public static byte[] encrypt(byte[] cleartext, String password, String cypher) throws IOException {
     CypherInterface cypherInstance = CypherFactory.getCypher(cypher);

@@ -28,7 +28,7 @@ import it.andreascarpino.ansible.inventory.type.AnsibleVariable;
 /**
  * @author Andrea Scarpino
  */
-public class AnsibleInventoryReader {
+public final class AnsibleInventoryReader {
 
   private AnsibleInventoryReader() {
   }

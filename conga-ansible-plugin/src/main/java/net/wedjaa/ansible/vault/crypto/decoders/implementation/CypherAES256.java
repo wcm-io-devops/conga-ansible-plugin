@@ -55,7 +55,7 @@ public class CypherAES256 implements CypherInterface {
     boolean canCrypt = false;
     try {
       int maxKeyLen = Cipher.getMaxAllowedKeyLength(CYPHER_ALGO);
-      logger.debug("Available keylen: {}", maxKeyLen);
+      logger.trace("Available keylen: {}", maxKeyLen);
       if (maxKeyLen >= AES_KEYLEN) {
         canCrypt = true;
       }
@@ -93,11 +93,13 @@ public class CypherAES256 implements CypherInterface {
 
   public int paddingLength(byte[] decrypted) {
     if (decrypted.length == 0) {
-      logger.debug("Empty decoded text has no padding.");
+      logger.trace("Empty decoded text has no padding.");
       return 0;
     }
 
-    logger.debug("Padding length: {}", decrypted[decrypted.length - 1]);
+    if (logger.isTraceEnabled()) {
+      logger.trace("Padding length: {}", decrypted[decrypted.length - 1]);
+    }
     return decrypted[decrypted.length - 1];
   }
 
@@ -106,12 +108,12 @@ public class CypherAES256 implements CypherInterface {
     return Arrays.copyOfRange(decrypted, 0, length);
   }
 
-  public byte[] pad(byte[] cleartext) {
+  public byte[] pad(byte[] cleartext) throws IOException {
     byte[] padded = null;
 
     try {
       int blockSize = Cipher.getInstance(CYPHER_ALGO).getBlockSize();
-      logger.debug("Padding to block size: {}", blockSize);
+      logger.trace("Padding to block size: {}", blockSize);
       int padding_length = (blockSize - (cleartext.length % blockSize));
       if (padding_length == 0) {
         padding_length = blockSize;
@@ -123,7 +125,7 @@ public class CypherAES256 implements CypherInterface {
 
     }
     catch (Exception ex) {
-      new IOException("Error calculating padding for " + CYPHER_ALGO + ": " + ex.getMessage());
+      throw new IOException("Error calculating padding for " + CYPHER_ALGO + ": " + ex.getMessage(), ex);
     }
 
     return padded;
@@ -171,24 +173,24 @@ public class CypherAES256 implements CypherInterface {
     byte[] salt = vaultContent.getSalt();
     byte[] hmac = vaultContent.getHmac();
     byte[] cypher = vaultContent.getData();
-    logger.debug("Salt: {} - {}", salt.length, Util.hexit(salt, 100));
-    logger.debug("HMAC: {} - {}", hmac.length, Util.hexit(hmac, 100));
-    logger.debug("Data: {} - {}", cypher.length, Util.hexit(cypher, 100));
+    logger.trace("Salt: {} - {}", salt.length, Util.hexit(salt, 100));
+    logger.trace("HMAC: {} - {}", hmac.length, Util.hexit(hmac, 100));
+    logger.trace("Data: {} - {}", cypher.length, Util.hexit(cypher, 100));
 
     EncryptionKeychain keys = new EncryptionKeychain(salt, password, KEYLEN, IVLEN, ITERATIONS, KEYGEN_ALGO);
     keys.createKeys();
 
     byte[] cypherKey = keys.getEncryptionKey();
-    logger.debug("Key 1: {} - {}", cypherKey.length, Util.hexit(cypherKey, 100));
+    logger.trace("Key 1: {} - {}", cypherKey.length, Util.hexit(cypherKey, 100));
     byte[] hmacKey = keys.getHmacKey();
-    logger.debug("Key 2: {} - {}", hmacKey.length, Util.hexit(hmacKey, 100));
+    logger.trace("Key 2: {} - {}", hmacKey.length, Util.hexit(hmacKey, 100));
     byte[] iv = keys.getIv();
-    logger.debug("IV: {} - {}", iv.length, Util.hexit(iv, 100));
+    logger.trace("IV: {} - {}", iv.length, Util.hexit(iv, 100));
 
     if (verifyHMAC(hmac, hmacKey, cypher)) {
-      logger.debug("Signature matches - decrypting");
+      logger.trace("Signature matches - decrypting");
       decrypted = decryptAES(cypher, cypherKey, iv);
-      logger.debug("Decoded:\n{}", new String(decrypted, CHAR_ENCODING));
+      logger.trace("Decoded:\n{}", new String(decrypted, CHAR_ENCODING));
     }
     else {
       throw new IOException("HMAC Digest doesn't match - possibly it's the wrong password.");
@@ -213,18 +215,19 @@ public class CypherAES256 implements CypherInterface {
   }
 
   @Override
+  @SuppressWarnings("PMD.AvoidReassigningParameters")
   public byte[] encrypt(byte[] data, String password) throws IOException {
     EncryptionKeychain keys = new EncryptionKeychain(SALT_LENGTH, password, KEYLEN, IVLEN, ITERATIONS, KEYGEN_ALGO);
     keys.createKeys();
     byte[] cypherKey = keys.getEncryptionKey();
-    logger.debug("Key 1: {} - {}", cypherKey.length, Util.hexit(cypherKey, 100));
+    logger.trace("Key 1: {} - {}", cypherKey.length, Util.hexit(cypherKey, 100));
     byte[] hmacKey = keys.getHmacKey();
-    logger.debug("Key 2: {} - {}", hmacKey.length, Util.hexit(hmacKey, 100));
+    logger.trace("Key 2: {} - {}", hmacKey.length, Util.hexit(hmacKey, 100));
     byte[] iv = keys.getIv();
-    logger.debug("IV: {} - {}", iv.length, Util.hexit(iv, 100));
-    logger.debug("Original data length: {}", data.length);
+    logger.trace("IV: {} - {}", iv.length, Util.hexit(iv, 100));
+    logger.trace("Original data length: {}", data.length);
     data = pad(data);
-    logger.debug("Padded data length: {}", data.length);
+    logger.trace("Padded data length: {}", data.length);
     byte[] encrypted = encryptAES(data, keys.getEncryptionKey(), keys.getIv());
     byte[] hmacHash = calculateHMAC(keys.getHmacKey(), encrypted);
     VaultContent vaultContent = new VaultContent(keys.getSalt(), hmacHash, encrypted);

@@ -45,7 +45,7 @@ public class VaultInfo {
   }
 
   public VaultInfo(String infoLine) {
-    logger.debug("Ansible Vault info: {}", infoLine);
+    logger.trace("Ansible Vault info: {}", infoLine);
 
     String[] infoParts = infoLine.split(INFO_SEPARATOR);
     if (infoParts.length == INFO_ELEMENTS) {

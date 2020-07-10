@@ -20,12 +20,16 @@ import static net.wedjaa.ansible.vault.crypto.VaultHandler.CHAR_ENCODING;
 
 import java.util.Arrays;
 
-public class Util {
+public final class Util {
 
   private static final int DEFAULT_LINE_LENGTH = 80;
 
-  final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
-  final protected static String LINE_BREAK = "\n";
+  final static char[] hexArray = "0123456789ABCDEF".toCharArray();
+  final static String LINE_BREAK = "\n";
+
+  private Util() {
+    // static methods only
+  }
 
   public static String join(String[] datalines) {
     return String.join("", Arrays.asList(datalines));
@@ -46,18 +50,18 @@ public class Util {
   }
 
   public static String hexit(byte[] unhexed, int lineLength) {
-    String result = "";
+    StringBuilder result = new StringBuilder();
     int colIdx = 0;
     for (byte val : unhexed) {
-      result += String.format("%02x", val);
+      result.append(String.format("%02x", val));
       colIdx++;
       if (lineLength > 0 && colIdx >= lineLength / 2) {
-        result += LINE_BREAK;
+        result.append(LINE_BREAK);
         colIdx = 0;
       }
     }
 
-    return result;
+    return result.toString();
   }
 
   public static VaultInfo getVaultInfo(String vaultData) {

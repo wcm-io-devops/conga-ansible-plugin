@@ -135,7 +135,6 @@ public class AnsibleVariable {
                 buf.append(", ");
             } catch (IllegalArgumentException | IllegalAccessException e) {
                 // Silently ignore errors
-                e.printStackTrace();
             }
         }
         buf.replace(buf.length() - 2, buf.length(), "");

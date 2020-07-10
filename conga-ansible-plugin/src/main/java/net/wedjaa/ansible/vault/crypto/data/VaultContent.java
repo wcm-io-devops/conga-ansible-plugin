@@ -27,9 +27,9 @@ public class VaultContent {
 
   private static final Logger logger = LoggerFactory.getLogger(VaultContent.class);
 
-  private byte[] salt;
-  private byte[] hmac;
-  private byte[] data;
+  private final byte[] salt;
+  private final byte[] hmac;
+  private final byte[] data;
 
   public VaultContent(byte[] encryptedVault) throws IOException {
     byte[][] vaultContents = splitData(encryptedVault);
@@ -50,17 +50,19 @@ public class VaultContent {
 
   @Override
   public String toString() {
-    logger.debug("Salt: {} - HMAC: {} - Data: {} - TargetLen: {}", salt.length, hmac.length, data.length, (salt.length + hmac.length + data.length) * 2);
+    if (logger.isTraceEnabled()) {
+      logger.trace("Salt: {} - HMAC: {} - Data: {} - TargetLen: {}", salt.length, hmac.length, data.length, (salt.length + hmac.length + data.length) * 2);
+    }
     String saltString = Util.hexit(salt);
-    logger.debug("Salt String Length: {}", saltString.length());
+    logger.trace("Salt String Length: {}", saltString.length());
     String hmacString = Util.hexit(hmac);
-    logger.debug("HMAC String Length: {}", hmacString.length());
+    logger.trace("HMAC String Length: {}", hmacString.length());
     String dataString = Util.hexit(data, -1);
-    logger.debug("DATA String Length: {}", dataString.length());
+    logger.trace("DATA String Length: {}", dataString.length());
     String complete = saltString + "\n" + hmacString + "\n" + dataString;
-    logger.debug("Complete: {} \n{}", complete.length(), complete);
+    logger.trace("Complete: {} \n{}", complete.length(), complete);
     String result = Util.hexit(complete.getBytes(CHAR_ENCODING), 80);
-    logger.debug("Result: [{}] {}\n{}", complete.length() * 2, result.length(), result);
+    logger.trace("Result: [{}] {}\n{}", complete.length() * 2, result.length(), result);
     return result;
   }
 
