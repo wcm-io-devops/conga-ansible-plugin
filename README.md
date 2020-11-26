@@ -1,6 +1,6 @@
 <img src="https://wcm.io/images/favicon-16@2x.png"/> CONGA Plugin for Ansible
 ======
-[![Build Status](https://travis-ci.org/wcm-io-devops/conga-ansible-plugin.png?branch=develop)](https://travis-ci.org/wcm-io-devops/conga-ansible-plugin)
+[![Build Status](https://travis-ci.com/wcm-io-devops/conga-ansible-plugin.png?branch=develop)](https://travis-ci.com/wcm-io-devops/conga-ansible-plugin)
 [![Code Coverage](https://codecov.io/gh/wcm-io-devops/conga-ansible-plugin/branch/develop/graph/badge.svg)](https://codecov.io/gh/wcm-io-devops/conga-ansible-plugin)
 
 Documentation: https://devops.wcm.io/conga/plugins/ansible/<br/>
