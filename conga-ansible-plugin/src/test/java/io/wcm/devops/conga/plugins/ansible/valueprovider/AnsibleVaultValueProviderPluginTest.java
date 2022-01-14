@@ -43,7 +43,7 @@ import io.wcm.devops.conga.generator.util.PluginManagerImpl;
 import io.wcm.devops.conga.plugins.ansible.util.AnsibleVaultPassword;
 
 @ExtendWith(MockitoExtension.class)
-public class AnsibleVaultValueProviderPluginTest {
+class AnsibleVaultValueProviderPluginTest {
 
   @Mock
   private Logger logger;
@@ -54,7 +54,7 @@ public class AnsibleVaultValueProviderPluginTest {
   private ValueProviderPlugin underTest;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     PluginManager pluginManager = new PluginManagerImpl();
     pluginContextOptions = new PluginContextOptions()
         .pluginManager(pluginManager)
@@ -70,14 +70,14 @@ public class AnsibleVaultValueProviderPluginTest {
   }
 
   @Test
-  public void testNoConfig() {
+  void testNoConfig() {
     assertThrows(GeneratorException.class, () -> {
       underTest.resolve("var1", context);
     });
   }
 
   @Test
-  public void testInvalidFile() {
+  void testInvalidFile() {
     pluginContextOptions.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleVaultValueProviderPlugin.NAME,
         ImmutableMap.<String, Object>of(AnsibleVaultValueProviderPlugin.PARAM_FILE, "src/test/resources/nonexisting-file")));
     assertThrows(GeneratorException.class, () -> {
@@ -86,7 +86,7 @@ public class AnsibleVaultValueProviderPluginTest {
   }
 
   @Test
-  public void testWithPassword() {
+  void testWithPassword() {
     pluginContextOptions.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleVaultValueProviderPlugin.NAME,
         ImmutableMap.<String, Object>of(AnsibleVaultValueProviderPlugin.PARAM_FILE, "src/test/resources/vault-sample/test-encrypted.yml")));
 

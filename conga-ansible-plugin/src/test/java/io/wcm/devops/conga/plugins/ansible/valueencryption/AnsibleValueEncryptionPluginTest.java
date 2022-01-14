@@ -39,7 +39,7 @@ import io.wcm.devops.conga.generator.util.PluginManagerImpl;
 import io.wcm.devops.conga.plugins.ansible.util.AnsibleVaultPassword;
 import net.wedjaa.ansible.vault.crypto.VaultHandler;
 
-public class AnsibleValueEncryptionPluginTest {
+class AnsibleValueEncryptionPluginTest {
 
   @Mock
   private Logger logger;
@@ -51,7 +51,7 @@ public class AnsibleValueEncryptionPluginTest {
   private static final String SAMPLE_VALUE = "myValue1";
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     PluginManager pluginManager = new PluginManagerImpl();
     pluginContextOptions = new PluginContextOptions()
         .pluginManager(pluginManager)
@@ -64,12 +64,12 @@ public class AnsibleValueEncryptionPluginTest {
   }
 
   @Test
-  public void testEnabled() {
+  void testEnabled() {
     assertTrue(underTest.isEnabled());
   }
 
   @Test
-  public void testEncrypt() throws IOException {
+  void testEncrypt() throws IOException {
     Object encrypted = underTest.encrypt("xyz", SAMPLE_VALUE, context);
     assertNotEquals(SAMPLE_VALUE, encrypted.toString());
 

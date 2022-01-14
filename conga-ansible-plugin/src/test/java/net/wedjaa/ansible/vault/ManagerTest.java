@@ -26,7 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-public class ManagerTest {
+class ManagerTest {
 
   Logger logger = LoggerFactory.getLogger(ManagerTest.class);
 
@@ -36,7 +36,7 @@ public class ManagerTest {
   final static String WRONG_PASS_EX = "HMAC Digest doesn't match - possibly it's the wrong password.";
 
   @Test
-  public void testValidYamlVault() {
+  void testValidYamlVault() {
     Manager manager = new Manager();
     logger.info("Testing valid password");
     ProvisioningInfo provisioningInfo = new ProvisioningInfo();
@@ -57,7 +57,7 @@ public class ManagerTest {
   }
 
   @Test
-  public void testInvalidYamlVault() {
+  void testInvalidYamlVault() {
     Manager manager = new Manager();
     logger.info("Testing invalid password");
     ProvisioningInfo provisioningInfo = new ProvisioningInfo();
