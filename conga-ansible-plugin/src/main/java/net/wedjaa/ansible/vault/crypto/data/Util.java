@@ -24,8 +24,8 @@ public final class Util {
 
   private static final int DEFAULT_LINE_LENGTH = 80;
 
-  final static char[] hexArray = "0123456789ABCDEF".toCharArray();
-  final static String LINE_BREAK = "\n";
+  static final char[] hexArray = "0123456789ABCDEF".toCharArray();
+  static final String LINE_BREAK = "\n";
 
   private Util() {
     // static methods only

@@ -36,12 +36,12 @@ import net.wedjaa.ansible.vault.crypto.decoders.inter.CypherInterface;
  */
 public final class VaultHandler {
 
-  public final static String DEFAULT_CYPHER = CypherAES256.CYPHER_ID;
+  public static final String DEFAULT_CYPHER = CypherAES256.CYPHER_ID;
 
   /**
    * Character encoding
    */
-  public final static Charset CHAR_ENCODING = StandardCharsets.UTF_8;
+  public static final Charset CHAR_ENCODING = StandardCharsets.UTF_8;
 
   private VaultHandler() {
     // static methods only
@@ -96,7 +96,7 @@ public final class VaultHandler {
    * @return Data without \r chars
    */
   private static byte[] stripCarriageReturns(byte[] data) {
-    return ArrayUtils.removeAllOccurences(data, (byte)0xD);
+    return ArrayUtils.removeAllOccurrences(data, (byte)0xD);
   }
 
 }
