@@ -26,7 +26,7 @@ import java.io.File;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
-public class FileScriptLoaderTest {
+class FileScriptLoaderTest {
 
   private static final String EXPECTED_CONTENT = "[test-group]\n"
       + "host-01 conga_node=aem-author\n"
@@ -41,13 +41,13 @@ public class FileScriptLoaderTest {
       + "host-03";
 
   @Test
-  public void testFile() throws Exception {
+  void testFile() throws Exception {
     String content = FileScriptLoader.readFileToString(new File("src/test/resources/inventory-sample/inventory-ini-style"));
     assertEquals(EXPECTED_CONTENT, cleanup(content));
   }
 
   @Test
-  public void testPythonScript() throws Exception {
+  void testPythonScript() throws Exception {
     String content = FileScriptLoader.readFileToString(new File("src/test/resources/inventory-sample/inventory-ini-style.py"));
     assertEquals(EXPECTED_CONTENT, cleanup(content));
   }

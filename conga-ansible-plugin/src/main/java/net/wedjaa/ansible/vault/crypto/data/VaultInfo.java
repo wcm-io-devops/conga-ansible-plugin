@@ -26,34 +26,31 @@ public class VaultInfo {
 
   private static final Logger logger = LoggerFactory.getLogger(VaultInfo.class);
 
-  public final static String INFO_SEPARATOR = ";";
-  public final static int INFO_ELEMENTS = 3;
-  public final static int MAGIC_PART = 0;
-  public final static int VERSION_PART = 1;
-  public final static int CYPHER_PART = 2;
+  public static final String INFO_SEPARATOR = ";";
+  public static final int INFO_ELEMENTS = 3;
+  public static final int MAGIC_PART = 0;
+  public static final int VERSION_PART = 1;
+  public static final int CYPHER_PART = 2;
 
-  public final static String VAULT_MAGIC = "$ANSIBLE_VAULT";
-  public final static String VAULT_VERSION = "1.1";
+  public static final String VAULT_MAGIC = "$ANSIBLE_VAULT";
+  public static final String VAULT_VERSION = "1.1";
 
   private boolean validVault;
   private String vaultVersion;
   private String vaultCypher;
 
   public static String vaultInfoForCypher(String vaultCypher) {
-    String infoLine = VAULT_MAGIC + ";" + VAULT_VERSION + ";" + vaultCypher;
-    return infoLine;
+    return VAULT_MAGIC + ";" + VAULT_VERSION + ";" + vaultCypher;
   }
 
   public VaultInfo(String infoLine) {
     logger.trace("Ansible Vault info: {}", infoLine);
 
     String[] infoParts = infoLine.split(INFO_SEPARATOR);
-    if (infoParts.length == INFO_ELEMENTS) {
-      if (infoParts[MAGIC_PART].equals(VAULT_MAGIC)) {
-        validVault = true;
-        vaultVersion = infoParts[VERSION_PART];
-        vaultCypher = infoParts[CYPHER_PART];
-      }
+    if (infoParts.length == INFO_ELEMENTS && VAULT_MAGIC.equals(infoParts[MAGIC_PART])) {
+      validVault = true;
+      vaultVersion = infoParts[VERSION_PART];
+      vaultCypher = infoParts[CYPHER_PART];
     }
   }
 

@@ -39,17 +39,17 @@ public class CypherAES256 implements CypherInterface {
 
   private static final Logger logger = LoggerFactory.getLogger(CypherAES256.class);
 
-  public final static String CYPHER_ID = "AES256";
-  public final static int AES_KEYLEN = 256;
-  public final static String KEYGEN_ALGO = "HmacSHA256";
-  public final static String CYPHER_KEY_ALGO = "AES";
+  public static final String CYPHER_ID = "AES256";
+  public static final int AES_KEYLEN = 256;
+  public static final String KEYGEN_ALGO = "HmacSHA256";
+  public static final String CYPHER_KEY_ALGO = "AES";
   public static final String CYPHER_ALGO = "AES/CTR/NoPadding";
   private static final String JDK8_UPF_URL = "http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html";
 
   private static final int SALT_LENGTH = 32;
-  public final static int KEYLEN = 32;
-  public final static int IVLEN = 16;
-  public final static int ITERATIONS = 10000;
+  public static final int KEYLEN = 32;
+  public static final int IVLEN = 16;
+  public static final int ITERATIONS = 10000;
 
   private boolean hasValidAESProvider() {
     boolean canCrypt = false;
@@ -114,13 +114,13 @@ public class CypherAES256 implements CypherInterface {
     try {
       int blockSize = Cipher.getInstance(CYPHER_ALGO).getBlockSize();
       logger.trace("Padding to block size: {}", blockSize);
-      int padding_length = (blockSize - (cleartext.length % blockSize));
-      if (padding_length == 0) {
-        padding_length = blockSize;
+      int paddingLength = (blockSize - (cleartext.length % blockSize));
+      if (paddingLength == 0) {
+        paddingLength = blockSize;
       }
-      padded = Arrays.copyOf(cleartext, cleartext.length + padding_length);
-      for (int i = 1; i <= padding_length; i++) {
-        padded[padded.length - i] = (byte)padding_length;
+      padded = Arrays.copyOf(cleartext, cleartext.length + paddingLength);
+      for (int i = 1; i <= paddingLength; i++) {
+        padded[padded.length - i] = (byte)paddingLength;
       }
 
     }
@@ -173,24 +173,34 @@ public class CypherAES256 implements CypherInterface {
     byte[] salt = vaultContent.getSalt();
     byte[] hmac = vaultContent.getHmac();
     byte[] cypher = vaultContent.getData();
-    logger.trace("Salt: {} - {}", salt.length, Util.hexit(salt, 100));
-    logger.trace("HMAC: {} - {}", hmac.length, Util.hexit(hmac, 100));
-    logger.trace("Data: {} - {}", cypher.length, Util.hexit(cypher, 100));
+    if (logger.isTraceEnabled()) {
+      logger.trace("Salt: {} - {}", salt.length, Util.hexit(salt, 100));
+      logger.trace("HMAC: {} - {}", hmac.length, Util.hexit(hmac, 100));
+      logger.trace("Data: {} - {}", cypher.length, Util.hexit(cypher, 100));
+    }
 
     EncryptionKeychain keys = new EncryptionKeychain(salt, password, KEYLEN, IVLEN, ITERATIONS, KEYGEN_ALGO);
     keys.createKeys();
 
     byte[] cypherKey = keys.getEncryptionKey();
-    logger.trace("Key 1: {} - {}", cypherKey.length, Util.hexit(cypherKey, 100));
+    if (logger.isTraceEnabled()) {
+      logger.trace("Key 1: {} - {}", cypherKey.length, Util.hexit(cypherKey, 100));
+    }
     byte[] hmacKey = keys.getHmacKey();
-    logger.trace("Key 2: {} - {}", hmacKey.length, Util.hexit(hmacKey, 100));
+    if (logger.isTraceEnabled()) {
+      logger.trace("Key 2: {} - {}", hmacKey.length, Util.hexit(hmacKey, 100));
+    }
     byte[] iv = keys.getIv();
-    logger.trace("IV: {} - {}", iv.length, Util.hexit(iv, 100));
+    if (logger.isTraceEnabled()) {
+      logger.trace("IV: {} - {}", iv.length, Util.hexit(iv, 100));
+    }
 
     if (verifyHMAC(hmac, hmacKey, cypher)) {
       logger.trace("Signature matches - decrypting");
       decrypted = decryptAES(cypher, cypherKey, iv);
-      logger.trace("Decoded:\n{}", new String(decrypted, CHAR_ENCODING));
+      if (logger.isTraceEnabled()) {
+        logger.trace("Decoded:\n{}", new String(decrypted, CHAR_ENCODING));
+      }
     }
     else {
       throw new IOException("HMAC Digest doesn't match - possibly it's the wrong password.");
@@ -220,12 +230,18 @@ public class CypherAES256 implements CypherInterface {
     EncryptionKeychain keys = new EncryptionKeychain(SALT_LENGTH, password, KEYLEN, IVLEN, ITERATIONS, KEYGEN_ALGO);
     keys.createKeys();
     byte[] cypherKey = keys.getEncryptionKey();
-    logger.trace("Key 1: {} - {}", cypherKey.length, Util.hexit(cypherKey, 100));
+    if (logger.isTraceEnabled()) {
+      logger.trace("Key 1: {} - {}", cypherKey.length, Util.hexit(cypherKey, 100));
+    }
     byte[] hmacKey = keys.getHmacKey();
-    logger.trace("Key 2: {} - {}", hmacKey.length, Util.hexit(hmacKey, 100));
+    if (logger.isTraceEnabled()) {
+      logger.trace("Key 2: {} - {}", hmacKey.length, Util.hexit(hmacKey, 100));
+    }
     byte[] iv = keys.getIv();
-    logger.trace("IV: {} - {}", iv.length, Util.hexit(iv, 100));
-    logger.trace("Original data length: {}", data.length);
+    if (logger.isTraceEnabled()) {
+      logger.trace("IV: {} - {}", iv.length, Util.hexit(iv, 100));
+      logger.trace("Original data length: {}", data.length);
+    }
     data = pad(data);
     logger.trace("Padded data length: {}", data.length);
     byte[] encrypted = encryptAES(data, keys.getEncryptionKey(), keys.getIv());

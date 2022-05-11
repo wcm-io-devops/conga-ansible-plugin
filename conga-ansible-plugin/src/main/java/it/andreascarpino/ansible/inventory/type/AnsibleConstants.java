@@ -39,27 +39,9 @@ public class AnsibleConstants {
   public static final String ANSIBLE_HOST = "ansible_host";
 
   /**
-   * Ansible 2.0 has deprecated the "ssh" keyword.
-   *
-   * @deprecated
-   *
-   */
-  @Deprecated
-  public static final String ANSIBLE_SSH_HOST = "ansible_ssh_host";
-
-  /**
    * The ssh port number, if not 22.
    */
   public static final String ANSIBLE_PORT = "ansible_port";
-
-  /**
-   * Ansible 2.0 has deprecated the "ssh" keyword.
-   *
-   * @deprecated
-   *
-   */
-  @Deprecated
-  public static final String ANSIBLE_SSH_PORT = "ansible_ssh_port";
 
   /**
    * The default ssh user name to use.
@@ -67,28 +49,10 @@ public class AnsibleConstants {
   public static final String ANSIBLE_USER = "ansible_user";
 
   /**
-   * Ansible 2.0 has deprecated the "ssh" keyword.
-   *
-   * @deprecated
-   *
-   */
-  @Deprecated
-  public static final String ANSIBLE_SSH_USER = "ansible_ssh_user";
-
-  /**
    * The user password to use (this is insecure, we strongly recommend using
    * <code>--ask-pass</code> or SSH keys).
    */
   public static final String ANSIBLE_PASSWORD = "ansible_password";
-
-  /**
-   * Ansible 2.0 has deprecated the "ssh" keyword.
-   *
-   * @deprecated
-   *
-   */
-  @Deprecated
-  public static final String ANSIBLE_SSH_PASS = "ansible_ssh_pass";
 
   /**
    * Private key file used by ssh. Useful if using multiple keys and you don't
@@ -131,18 +95,6 @@ public class AnsibleConstants {
   public static final String ANSIBLE_BECOME = "ansible_become";
 
   /**
-   * @deprecated
-   */
-  @Deprecated
-  public static final String ANSIBLE_SUDO = "ansible_sudo";
-
-  /**
-   * @deprecated
-   */
-  @Deprecated
-  public static final String ANSIBLE_SU = "ansible_su";
-
-  /**
    * Allows to set privilege escalation method.
    */
   public static final String ANSIBLE_BECOME_METHOD = "ansible_become_method";
@@ -155,35 +107,11 @@ public class AnsibleConstants {
   public static final String ANSIBLE_BECOME_USER = "ansible_become_user";
 
   /**
-   * @deprecated
-   */
-  @Deprecated
-  public static final String ANSIBLE_SUDO_USER = "ansible_sudo_user";
-
-  /**
-   * @deprecated
-   */
-  @Deprecated
-  public static final String ANSIBLE_SU_USER = "ansible_su_user";
-
-  /**
    * Equivalent to <code>ansible_sudo_pass</code> or
    * <code>ansible_su_pass</code>, allows you to set the privilege escalation
    * password.
    */
   public static final String ANSIBLE_BECOME_PASS = "ansible_become_pass";
-
-  /**
-   * @deprecated
-   */
-  @Deprecated
-  public static final String ANSIBLE_SUDO_PASS = "ansible_sudo_pass";
-
-  /**
-   * @deprecated
-   */
-  @Deprecated
-  public static final String ANSIBLE_SU_PASS = "ansible_su_pass";
 
   /**
    * The shell type of the target system. Commands are formatted using

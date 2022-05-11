@@ -43,7 +43,7 @@ import io.wcm.devops.conga.generator.util.PluginManager;
 import io.wcm.devops.conga.generator.util.PluginManagerImpl;
 
 @ExtendWith(MockitoExtension.class)
-public class AnsibleInventoryValueProviderPluginTest {
+class AnsibleInventoryValueProviderPluginTest {
 
   @Mock
   private Logger logger;
@@ -54,7 +54,7 @@ public class AnsibleInventoryValueProviderPluginTest {
   private ValueProviderPlugin underTest;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     PluginManager pluginManager = new PluginManagerImpl();
     pluginContextOptions = new PluginContextOptions()
         .pluginManager(pluginManager)
@@ -68,14 +68,14 @@ public class AnsibleInventoryValueProviderPluginTest {
   }
 
   @Test
-  public void testNoConfig() {
+  void testNoConfig() {
     assertThrows(GeneratorException.class, () -> {
       underTest.resolve("var1", context);
     });
   }
 
   @Test
-  public void testInvalidFile() {
+  void testInvalidFile() {
     pluginContextOptions.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleInventoryValueProviderPlugin.NAME,
         ImmutableMap.<String, Object>of(AnsibleInventoryValueProviderPlugin.PARAM_FILE, "src/test/resources/nonexisting-file")));
     assertThrows(GeneratorException.class, () -> {
@@ -84,7 +84,7 @@ public class AnsibleInventoryValueProviderPluginTest {
   }
 
   @Test
-  public void testInventoryIniStyle() {
+  void testInventoryIniStyle() {
     pluginContextOptions.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleInventoryValueProviderPlugin.NAME,
         ImmutableMap.<String, Object>of(AnsibleInventoryValueProviderPlugin.PARAM_FILE, "src/test/resources/inventory-sample/inventory-ini-style")));
 
@@ -94,7 +94,7 @@ public class AnsibleInventoryValueProviderPluginTest {
   }
 
   @Test
-  public void testInventoryIniStyle_PyhtonScript() {
+  void testInventoryIniStyle_PyhtonScript() {
     pluginContextOptions.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleInventoryValueProviderPlugin.NAME,
         ImmutableMap.<String, Object>of(AnsibleInventoryValueProviderPlugin.PARAM_FILE, "src/test/resources/inventory-sample/inventory-ini-style.py")));
 
@@ -104,7 +104,7 @@ public class AnsibleInventoryValueProviderPluginTest {
   }
 
   @Test
-  public void testInventoryJsonStyle() {
+  void testInventoryJsonStyle() {
     pluginContextOptions.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleInventoryValueProviderPlugin.NAME,
         ImmutableMap.<String, Object>of(AnsibleInventoryValueProviderPlugin.PARAM_FILE, "src/test/resources/inventory-sample/inventory-json-style.json")));
 
@@ -114,7 +114,7 @@ public class AnsibleInventoryValueProviderPluginTest {
   }
 
   @Test
-  public void testInventoryJsonStyleMeta() {
+  void testInventoryJsonStyleMeta() {
     pluginContextOptions.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleInventoryValueProviderPlugin.NAME,
         ImmutableMap.<String, Object>of(AnsibleInventoryValueProviderPlugin.PARAM_FILE, "src/test/resources/inventory-sample/inventory-json-style-meta.json")));
 

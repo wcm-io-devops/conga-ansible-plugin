@@ -51,6 +51,7 @@ Ansible Vault files are files encrypted with [Ansible Vault][ansible-vault]. Ans
   `-Dansible.vault.password=mypassword`
 * Setting the password via the system property pointing to a password file:<br/>
   `-Dansible.vault.password.file=/path/to/password-file`
+* Setting the system environment variable `ANSIBLE_VAULT_PASSWORD`.
 * Setting the system environment variable `ANSIBLE_VAULT_PASSWORD_FILE` pointing to the vault password file. This variable is used by Ansible itself as well.
 
 

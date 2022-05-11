@@ -82,18 +82,15 @@ public class EncryptionKeychain {
   }
 
   private byte[] getEncryptionKey(byte[] keys) {
-    byte[] result = Arrays.copyOfRange(keys, 0, keylen);
-    return result;
+    return Arrays.copyOfRange(keys, 0, keylen);
   }
 
   private byte[] getHMACKey(byte[] keys) {
-    byte[] result = Arrays.copyOfRange(keys, keylen, keylen * 2);
-    return result;
+    return Arrays.copyOfRange(keys, keylen, keylen * 2);
   }
 
   private byte[] getIV(byte[] keys) {
-    byte[] result = Arrays.copyOfRange(keys, keylen * 2, keylen * 2 + ivlen);
-    return result;
+    return Arrays.copyOfRange(keys, keylen * 2, keylen * 2 + ivlen);
   }
 
   private byte[] generateSalt(int length) {

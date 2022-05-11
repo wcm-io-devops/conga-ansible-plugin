@@ -39,13 +39,13 @@ import io.wcm.devops.conga.generator.util.PluginManager;
 import io.wcm.devops.conga.generator.util.PluginManagerImpl;
 import io.wcm.devops.conga.plugins.ansible.util.AnsibleVaultPassword;
 
-public class AnsibleVaultUrlFilePluginTest {
+class AnsibleVaultUrlFilePluginTest {
 
   private UrlFilePluginContext context;
   private UrlFileManager urlFileManager;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     PluginManager pluginManager = new PluginManagerImpl();
     PluginContextOptions pluginContextOptions = new PluginContextOptions()
         .pluginManager(pluginManager);
@@ -57,7 +57,7 @@ public class AnsibleVaultUrlFilePluginTest {
   }
 
   @Test
-  public void testGetFile() throws Exception {
+  void testGetFile() throws Exception {
     try (InputStream is = urlFileManager.getFile("ansible-vault:classpath:/vault-sample/test-encrypted.yml")) {
       byte[] output = IOUtils.toByteArray(is);
       byte[] expected = FileUtils.readFileToByteArray(new File("src/test/resources/vault-sample/test-unencrypted.yml"));
@@ -66,14 +66,14 @@ public class AnsibleVaultUrlFilePluginTest {
   }
 
   @Test
-  public void testInvalidFile() throws Exception {
+  void testInvalidFile() throws Exception {
     assertThrows(IOException.class, () -> {
       urlFileManager.getFile("ansible-vault:classpath:/vault-sample/nonexisting-file");
     });
   }
 
   @Test
-  public void testGetFileName() throws Exception {
+  void testGetFileName() throws Exception {
     assertEquals("test-encrypted.yml", urlFileManager.getFileName("ansible-vault:classpath:/vault-sample/test-encrypted.yml"));
   }
 

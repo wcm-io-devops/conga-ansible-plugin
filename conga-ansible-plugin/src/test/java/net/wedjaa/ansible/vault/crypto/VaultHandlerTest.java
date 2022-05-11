@@ -28,7 +28,7 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class VaultHandlerTest {
+class VaultHandlerTest {
 
   private final static String TEST_STRING = "This is a test";
   private final static String TEST_PASSWORD = "password";
@@ -42,7 +42,7 @@ public class VaultHandlerTest {
   private final static Logger logger = LoggerFactory.getLogger(VaultHandlerTest.class);
 
   @Test
-  public void testByteArrayValidVault() throws Exception {
+  void testByteArrayValidVault() throws Exception {
     logger.info("Testing Byte Array decryption - Valid Password");
 
     byte[] encryptedTest = VaultHandler.encrypt(TEST_STRING.getBytes(), TEST_PASSWORD);
@@ -53,7 +53,7 @@ public class VaultHandlerTest {
   }
 
   @Test
-  public void testByteArrayValidVault_CarriageReturns() throws Exception {
+  void testByteArrayValidVault_CarriageReturns() throws Exception {
     logger.info("Testing Byte Array decryption - Valid Password");
 
     byte[] encryptedTest = VaultHandler.encrypt(TEST_STRING.getBytes(), TEST_PASSWORD);
@@ -70,7 +70,7 @@ public class VaultHandlerTest {
   }
 
   @Test
-  public void testByteArrayInvalidVault() {
+  void testByteArrayInvalidVault() {
     logger.info("Testing Byte Array decryption - Invalid Password");
     try {
       byte[] encryptedTest = VaultHandler.encrypt(TEST_STRING.getBytes(), TEST_PASSWORD);
@@ -85,7 +85,7 @@ public class VaultHandlerTest {
   }
 
   @Test
-  public void testStreamValidVault() throws Exception {
+  void testStreamValidVault() throws Exception {
     logger.info("Testing decoding vault Stream - Valid password ");
 
     ByteArrayOutputStream decodedStream = new ByteArrayOutputStream();
@@ -96,7 +96,7 @@ public class VaultHandlerTest {
   }
 
   @Test
-  public void testStreamInvalidVault() {
+  void testStreamInvalidVault() {
     logger.info("Testing decoding vault Stream - Invalid password ");
     try {
       ByteArrayOutputStream decodedStream = new ByteArrayOutputStream();

@@ -45,6 +45,7 @@ import io.wcm.devops.conga.generator.spi.context.ValueProviderContext;
 import io.wcm.devops.conga.generator.util.FileUtil;
 import io.wcm.devops.conga.plugins.ansible.util.FileScriptLoader;
 import it.andreascarpino.ansible.inventory.type.AnsibleGroup;
+import it.andreascarpino.ansible.inventory.type.AnsibleHost;
 import it.andreascarpino.ansible.inventory.type.AnsibleInventory;
 import it.andreascarpino.ansible.inventory.util.AnsibleInventoryReader;
 
@@ -62,8 +63,6 @@ public class AnsibleInventoryValueProviderPlugin implements ValueProviderPlugin 
    * Parameter: Path to inventory file
    */
   public static final String PARAM_FILE = "file";
-
-  private final JsonParser jsonParser = new JsonParser();
 
   @Override
   public String getName() {
@@ -136,7 +135,7 @@ public class AnsibleInventoryValueProviderPlugin implements ValueProviderPlugin 
 
   private InventoryContent tryReadJsonStyle(String inventoryContent, File file, ValueProviderContext context) {
     try {
-      JsonElement root = jsonParser.parse(inventoryContent);
+      JsonElement root = JsonParser.parseString(inventoryContent);
       if (root instanceof JsonObject) {
         ReadContext jsonpathReadContext = JsonPath.parse(inventoryContent);
         return new InventoryContent(jsonToConfig((JsonObject)root), jsonpathReadContext);
@@ -191,7 +190,7 @@ public class AnsibleInventoryValueProviderPlugin implements ValueProviderPlugin 
     Map<String, List<String>> config = new HashMap<>();
     for (AnsibleGroup group : inventory.getGroups()) {
       config.put(group.getName(), group.getHosts().stream()
-          .map(host -> host.getName())
+          .map(AnsibleHost::getName)
           .collect(Collectors.toList()));
     }
     return config;

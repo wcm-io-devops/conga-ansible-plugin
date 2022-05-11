@@ -44,7 +44,7 @@ public class Manager {
     }
   }
 
-  public Object getFromVault(Class objectClass, String yaml, String password) throws IOException {
+  public Object getFromVault(Class<?> objectClass, String yaml, String password) throws IOException {
     byte[] clearYaml = VaultHandler.decrypt(yaml.getBytes(CHAR_ENCODING), password);
     return getFromYaml(objectClass, new String(clearYaml, CHAR_ENCODING));
   }

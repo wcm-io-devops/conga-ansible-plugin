@@ -31,10 +31,10 @@ import it.andreascarpino.ansible.inventory.util.AnsibleInventoryReader;
 /**
  * @author Andrea Scarpino
  */
-public class AnsibleInventoryReaderTest {
+class AnsibleInventoryReaderTest {
 
   @Test
-  public void testReadSimple() {
+  void testReadSimple() {
     String inventoryText = "[group1]\nhost1 var1=value1\n";
 
     AnsibleInventory inventory = AnsibleInventoryReader.read(inventoryText);
@@ -84,7 +84,7 @@ public class AnsibleInventoryReaderTest {
   }
 
   @Test
-  public void testReadNoGroup() {
+  void testReadNoGroup() {
     final String inventoryText = "host1 var1=value1\n";
 
     AnsibleInventory inventory = AnsibleInventoryReader.read(inventoryText);
@@ -93,7 +93,7 @@ public class AnsibleInventoryReaderTest {
   }
 
   @Test
-  public void testReadSkipComments() {
+  void testReadSkipComments() {
     final String inventoryText = ";I'm a comment\nhost1 var1=value1\n";
 
     AnsibleInventory inventory = AnsibleInventoryReader.read(inventoryText);
@@ -102,7 +102,7 @@ public class AnsibleInventoryReaderTest {
   }
 
   @Test
-  public void testReadNoHosts() {
+  void testReadNoHosts() {
     final String inventoryText = "[group1]\n";
 
     AnsibleInventory inventory = AnsibleInventoryReader.read(inventoryText);
@@ -112,7 +112,7 @@ public class AnsibleInventoryReaderTest {
   }
 
   @Test
-  public void testReadSubgroup() {
+  void testReadSubgroup() {
     final String inventoryText = "[subgroup1]\nhost1\n[subgroup2]\nhost2\n[group1:children]\nsubgroup1\nsubgroup2\n";
 
     AnsibleInventory inventory = AnsibleInventoryReader.read(inventoryText);
@@ -127,7 +127,7 @@ public class AnsibleInventoryReaderTest {
   }
 
   @Test
-  public void testReadGroupVars() {
+  void testReadGroupVars() {
     final String inventoryText = "[subgroup1]\nhost1\n[subgroup2]\nhost2\n[group1:children]\nsubgroup1\nsubgroup2\n[group1:vars]\nvar1=value1\n";
 
     AnsibleInventory inventory = AnsibleInventoryReader.read(inventoryText);
@@ -145,7 +145,7 @@ public class AnsibleInventoryReaderTest {
   }
 
   @Test
-  public void testReadAnsibleExample() {
+  void testReadAnsibleExample() {
     final String inventoryText = "[atlanta]\nhost1\nhost2\n\n[raleigh]\nhost2\nhost3\n\n[southeast:children]\n"
         + "atlanta\nraleigh\n\n[southeast:vars]\nsome_server=foo.southeast.example.com\nhalon_system_timeout=30"
         + "\nself_destruct_countdown=60\nescape_pods=2\n\n[usa:children]\nsoutheast\nnortheast\nsouthwest\n"

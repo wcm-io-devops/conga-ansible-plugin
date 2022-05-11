@@ -31,10 +31,10 @@ import it.andreascarpino.ansible.inventory.util.AnsibleInventoryWriter;
 /**
  * @author Andrea Scarpino
  */
-public class AnsibleInventoryWriterTest {
+class AnsibleInventoryWriterTest {
 
   @Test
-  public void testWriteHostAndGroups() {
+  void testWriteHostAndGroups() {
     AnsibleInventory inventory = new AnsibleInventory();
 
     AnsibleHost mail = new AnsibleHost("mail.example.com");
@@ -69,7 +69,7 @@ public class AnsibleInventoryWriterTest {
   }
 
   @Test
-  public void testWriteHostVariables() {
+  void testWriteHostVariables() {
     AnsibleInventory inventory = new AnsibleInventory();
 
     AnsibleGroup atlanta = new AnsibleGroup("atlanta");
@@ -99,7 +99,7 @@ public class AnsibleInventoryWriterTest {
   }
 
   @Test
-  public void testWriteGroupVariables() {
+  void testWriteGroupVariables() {
     AnsibleInventory inventory = new AnsibleInventory();
 
     AnsibleGroup atlanta = new AnsibleGroup("atlanta");
@@ -124,7 +124,7 @@ public class AnsibleInventoryWriterTest {
   }
 
   @Test
-  public void testWriteSubGroupsAndGroupsVars() {
+  void testWriteSubGroupsAndGroupsVars() {
     AnsibleInventory inventory = new AnsibleInventory();
 
     AnsibleGroup atlanta = new AnsibleGroup("atlanta");
