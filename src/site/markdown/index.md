@@ -2,7 +2,7 @@
 
 wcm.io DevOps CONGA Plugin for [Ansible][ansible].
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.wcm.devops.conga.plugins/io.wcm.devops.conga.plugins.ansible/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.wcm.devops.conga.plugins/io.wcm.devops.conga.plugins.ansible)
+[![Maven Central](https://img.shields.io/maven-central/v/io.wcm.devops.conga.plugins/io.wcm.devops.conga.plugins.ansible)](https://repo1.maven.org/maven2/io/wcm/devops/conga/plugins/io.wcm.devops.conga.plugins.ansible)
 
 
 ### Documentation
