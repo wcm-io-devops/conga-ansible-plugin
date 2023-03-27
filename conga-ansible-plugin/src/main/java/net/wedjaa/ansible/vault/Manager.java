@@ -21,15 +21,19 @@ import static net.wedjaa.ansible.vault.crypto.VaultHandler.CHAR_ENCODING;
 import java.io.IOException;
 import java.io.StringWriter;
 
+import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
+import org.yaml.snakeyaml.inspector.TrustedTagInspector;
 
 import net.wedjaa.ansible.vault.crypto.VaultHandler;
 
 public class Manager {
 
   public Object getFromYaml(Class<?> objectClass, String yaml) {
-    Yaml reader = new Yaml(new Constructor(objectClass));
+    LoaderOptions options = new LoaderOptions();
+    options.setTagInspector(new TrustedTagInspector());
+    Yaml reader = new Yaml(new Constructor(objectClass, options));
     return reader.load(yaml);
   }
 

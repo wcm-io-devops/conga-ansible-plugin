@@ -23,6 +23,15 @@
     xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/plugins/maven-changes-plugin/xsd/changes-1.0.0.xsd">
   <body>
 
+    <release version="1.4.2" date="2023-03-27">
+      <action type="update" dev="sseifert">
+        Switch to Java 11 as minimum version.
+      </action>
+      <action type="update" dev="sseifert">
+        Update to SnakeYAML 2.0, use TrustedTagInspector.
+      </action>
+    </release>
+
     <release version="1.4.0" date="2022-05-11">
       <action type="add" dev="trichter">
         Support retrieving Ansible vault password from ANSIBLE_VAULT_PASSWORD environment variable.

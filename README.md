@@ -1,11 +1,11 @@
 <img src="https://wcm.io/images/favicon-16@2x.png"/> CONGA Plugin for Ansible
 ======
 [![Build](https://github.com/wcm-io-devops/conga-ansible-plugin/workflows/Build/badge.svg?branch=develop)](https://github.com/wcm-io-devops/conga-ansible-plugin/actions?query=workflow%3ABuild+branch%3Adevelop)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.wcm.devops.conga.plugins/io.wcm.devops.conga.plugins.ansible/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.wcm.devops.conga.plugins/io.wcm.devops.conga.plugins.ansible)
+[![Maven Central](https://img.shields.io/maven-central/v/io.wcm.devops.conga.plugins/io.wcm.devops.conga.plugins.ansible)](https://repo1.maven.org/maven2/io/wcm/devops/conga/plugins/io.wcm.devops.conga.plugins.ansible)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=wcm-io-devops_conga-ansible-plugin&metric=coverage)](https://sonarcloud.io/summary/new_code?id=wcm-io-devops_conga-ansible-plugin)
 
 Documentation: https://devops.wcm.io/conga/plugins/ansible/<br/>
-Issues: https://wcm-io.atlassian.net/projects/WDCONGA<br/>
+Issues: https://github.com/wcm-io-devops/conga-ansible-plugin/issues<br/>
 Wiki: https://wcm-io.atlassian.net/wiki/<br/>
 Continuous Integration: https://github.com/wcm-io-devops/conga-ansible-plugin/actions<br/>
 Commercial support: https://wcm.io/commercial-support.html
