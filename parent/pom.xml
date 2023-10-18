@@ -25,13 +25,13 @@
   <parent>
     <groupId>io.wcm.devops</groupId>
     <artifactId>io.wcm.devops.parent_toplevel</artifactId>
-    <version>1.4.0</version>
+    <version>1.4.2</version>
     <relativePath />
   </parent>
 
   <groupId>io.wcm.devops.conga.plugins</groupId>
   <artifactId>io.wcm.devops.conga.plugins.ansible.parent</artifactId>
-  <version>1.4.4</version>
+  <version>1.4.6</version>
   <packaging>pom</packaging>
 
   <name>CONGA Ansible Plugin</name>
@@ -43,7 +43,7 @@
 
   <issueManagement>
     <system>GitHub</system>
-    <url>https://github.com/wcm-io/conga-ansible-plugin/issues/</url>
+    <url>https://github.com/wcm-io-devops/conga-ansible-plugin/issues/</url>
   </issueManagement>
 
   <build>
