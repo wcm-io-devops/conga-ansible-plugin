@@ -22,6 +22,7 @@ package io.wcm.devops.conga.plugins.ansible.valueprovider;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -30,9 +31,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.slf4j.Logger;
-
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 
 import io.wcm.devops.conga.generator.GeneratorException;
 import io.wcm.devops.conga.generator.spi.ValueProviderPlugin;
@@ -76,8 +74,8 @@ class AnsibleInventoryValueProviderPluginTest {
 
   @Test
   void testInvalidFile() {
-    pluginContextOptions.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleInventoryValueProviderPlugin.NAME,
-        ImmutableMap.<String, Object>of(AnsibleInventoryValueProviderPlugin.PARAM_FILE, "src/test/resources/nonexisting-file")));
+    pluginContextOptions.valueProviderConfig(Map.<String, Map<String, Object>>of(AnsibleInventoryValueProviderPlugin.NAME,
+        Map.<String, Object>of(AnsibleInventoryValueProviderPlugin.PARAM_FILE, "src/test/resources/nonexisting-file")));
     assertThrows(GeneratorException.class, () -> {
       underTest.resolve("var1", context);
     });
@@ -85,42 +83,42 @@ class AnsibleInventoryValueProviderPluginTest {
 
   @Test
   void testInventoryIniStyle() {
-    pluginContextOptions.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleInventoryValueProviderPlugin.NAME,
-        ImmutableMap.<String, Object>of(AnsibleInventoryValueProviderPlugin.PARAM_FILE, "src/test/resources/inventory-sample/inventory-ini-style")));
+    pluginContextOptions.valueProviderConfig(Map.<String, Map<String, Object>>of(AnsibleInventoryValueProviderPlugin.NAME,
+        Map.<String, Object>of(AnsibleInventoryValueProviderPlugin.PARAM_FILE, "src/test/resources/inventory-sample/inventory-ini-style")));
 
-    assertEquals(ImmutableList.of("host-01", "host-02", "host-03"), underTest.resolve("test-group", context));
-    assertEquals(ImmutableList.of("host-01"), underTest.resolve("aem-author", context));
-    assertEquals(ImmutableList.of("host-02", "host-03"), underTest.resolve("aem-publish", context));
+    assertEquals(List.of("host-01", "host-02", "host-03"), underTest.resolve("test-group", context));
+    assertEquals(List.of("host-01"), underTest.resolve("aem-author", context));
+    assertEquals(List.of("host-02", "host-03"), underTest.resolve("aem-publish", context));
   }
 
   @Test
   void testInventoryIniStyle_PyhtonScript() {
-    pluginContextOptions.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleInventoryValueProviderPlugin.NAME,
-        ImmutableMap.<String, Object>of(AnsibleInventoryValueProviderPlugin.PARAM_FILE, "src/test/resources/inventory-sample/inventory-ini-style.py")));
+    pluginContextOptions.valueProviderConfig(Map.<String, Map<String, Object>>of(AnsibleInventoryValueProviderPlugin.NAME,
+        Map.<String, Object>of(AnsibleInventoryValueProviderPlugin.PARAM_FILE, "src/test/resources/inventory-sample/inventory-ini-style.py")));
 
-    assertEquals(ImmutableList.of("host-01", "host-02", "host-03"), underTest.resolve("test-group", context));
-    assertEquals(ImmutableList.of("host-01"), underTest.resolve("aem-author", context));
-    assertEquals(ImmutableList.of("host-02", "host-03"), underTest.resolve("aem-publish", context));
+    assertEquals(List.of("host-01", "host-02", "host-03"), underTest.resolve("test-group", context));
+    assertEquals(List.of("host-01"), underTest.resolve("aem-author", context));
+    assertEquals(List.of("host-02", "host-03"), underTest.resolve("aem-publish", context));
   }
 
   @Test
   void testInventoryJsonStyle() {
-    pluginContextOptions.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleInventoryValueProviderPlugin.NAME,
-        ImmutableMap.<String, Object>of(AnsibleInventoryValueProviderPlugin.PARAM_FILE, "src/test/resources/inventory-sample/inventory-json-style.json")));
+    pluginContextOptions.valueProviderConfig(Map.<String, Map<String, Object>>of(AnsibleInventoryValueProviderPlugin.NAME,
+        Map.<String, Object>of(AnsibleInventoryValueProviderPlugin.PARAM_FILE, "src/test/resources/inventory-sample/inventory-json-style.json")));
 
-    assertEquals(ImmutableList.of("host-01", "host-02", "host-03"), underTest.resolve("test-group", context));
-    assertEquals(ImmutableList.of("host-01"), underTest.resolve("aem-author", context));
-    assertEquals(ImmutableList.of("host-02", "host-03"), underTest.resolve("aem-publish", context));
+    assertEquals(List.of("host-01", "host-02", "host-03"), underTest.resolve("test-group", context));
+    assertEquals(List.of("host-01"), underTest.resolve("aem-author", context));
+    assertEquals(List.of("host-02", "host-03"), underTest.resolve("aem-publish", context));
   }
 
   @Test
   void testInventoryJsonStyleMeta() {
-    pluginContextOptions.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleInventoryValueProviderPlugin.NAME,
-        ImmutableMap.<String, Object>of(AnsibleInventoryValueProviderPlugin.PARAM_FILE, "src/test/resources/inventory-sample/inventory-json-style-meta.json")));
+    pluginContextOptions.valueProviderConfig(Map.<String, Map<String, Object>>of(AnsibleInventoryValueProviderPlugin.NAME,
+        Map.<String, Object>of(AnsibleInventoryValueProviderPlugin.PARAM_FILE, "src/test/resources/inventory-sample/inventory-json-style-meta.json")));
 
-    assertEquals(ImmutableList.of("192.168.100.1"), underTest.resolve("tag_Name_dev_aem", context));
+    assertEquals(List.of("192.168.100.1"), underTest.resolve("tag_Name_dev_aem", context));
     // use jsonpath query
-    assertEquals(ImmutableList.of("127.0.100.1"), underTest.resolve("$._meta.hostvars..[?(@.ec2_tag_Name=='dev_aem')].ec2_private_ip_address", context));
+    assertEquals(List.of("127.0.100.1"), underTest.resolve("$._meta.hostvars..[?(@.ec2_tag_Name=='dev_aem')].ec2_private_ip_address", context));
   }
 
 }

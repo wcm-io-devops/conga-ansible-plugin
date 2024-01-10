@@ -31,8 +31,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.slf4j.Logger;
 
-import com.google.common.collect.ImmutableMap;
-
 import io.wcm.devops.conga.generator.GeneratorException;
 import io.wcm.devops.conga.generator.spi.ValueProviderPlugin;
 import io.wcm.devops.conga.generator.spi.context.PluginContextOptions;
@@ -78,8 +76,8 @@ class AnsibleVaultValueProviderPluginTest {
 
   @Test
   void testInvalidFile() {
-    pluginContextOptions.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleVaultValueProviderPlugin.NAME,
-        ImmutableMap.<String, Object>of(AnsibleVaultValueProviderPlugin.PARAM_FILE, "src/test/resources/nonexisting-file")));
+    pluginContextOptions.valueProviderConfig(Map.<String, Map<String, Object>>of(AnsibleVaultValueProviderPlugin.NAME,
+        Map.<String, Object>of(AnsibleVaultValueProviderPlugin.PARAM_FILE, "src/test/resources/nonexisting-file")));
     assertThrows(GeneratorException.class, () -> {
       underTest.resolve("var1", context);
     });
@@ -87,11 +85,11 @@ class AnsibleVaultValueProviderPluginTest {
 
   @Test
   void testWithPassword() {
-    pluginContextOptions.valueProviderConfig(ImmutableMap.<String, Map<String, Object>>of(AnsibleVaultValueProviderPlugin.NAME,
-        ImmutableMap.<String, Object>of(AnsibleVaultValueProviderPlugin.PARAM_FILE, "src/test/resources/vault-sample/test-encrypted.yml")));
+    pluginContextOptions.valueProviderConfig(Map.<String, Map<String, Object>>of(AnsibleVaultValueProviderPlugin.NAME,
+        Map.<String, Object>of(AnsibleVaultValueProviderPlugin.PARAM_FILE, "src/test/resources/vault-sample/test-encrypted.yml")));
 
     assertEquals("abc", underTest.resolve("pwd1", context));
-    assertEquals(ImmutableMap.of("pwd2", "def", "pwd3", "ghi"), underTest.resolve("group1", context));
+    assertEquals(Map.of("pwd2", "def", "pwd3", "ghi"), underTest.resolve("group1", context));
   }
 
 }

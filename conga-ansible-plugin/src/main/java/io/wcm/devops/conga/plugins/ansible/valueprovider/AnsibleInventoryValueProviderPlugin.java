@@ -29,7 +29,6 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.google.common.collect.ImmutableMap;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -121,7 +120,7 @@ public class AnsibleInventoryValueProviderPlugin implements ValueProviderPlugin 
 
       // fallback to empty map
       if (content == null) {
-        content = new InventoryContent(ImmutableMap.of());
+        content = new InventoryContent(Map.of());
       }
 
       // put to cache
