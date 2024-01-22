@@ -28,6 +28,7 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@SuppressWarnings("java:S5783")
 class VaultHandlerTest {
 
   private final static String TEST_STRING = "This is a test";
@@ -104,7 +105,6 @@ class VaultHandlerTest {
       VaultHandler.decrypt(encodedStream, decodedStream, TEST_WRONG_PASSWORD);
       new String(decodedStream.toByteArray());
       fail("Should not be able to decrypt text with the wrong password");
-
     }
     catch (Exception ex) {
       assertEquals(WRONG_PASS_EX, ex.getMessage());
