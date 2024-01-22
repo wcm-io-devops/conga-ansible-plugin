@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
+@SuppressWarnings("java:S5783")
 class ManagerTest {
 
   Logger logger = LoggerFactory.getLogger(ManagerTest.class);

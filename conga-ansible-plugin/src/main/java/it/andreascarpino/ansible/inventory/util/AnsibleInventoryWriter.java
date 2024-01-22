@@ -76,6 +76,7 @@ public final class AnsibleInventoryWriter {
     stream.write("\n".getBytes());
   }
 
+  @SuppressWarnings("java:S3776") // ignore complexity
   public static String write(AnsibleInventory inventory) {
     final StringBuilder builder = new StringBuilder();
 
@@ -120,6 +121,7 @@ public final class AnsibleInventoryWriter {
     return builder.toString();
   }
 
+  @SuppressWarnings("java:S3776") // ignore complexity
   public static void write(AnsibleInventory inventory, OutputStream stream) throws IOException {
     for (AnsibleHost host : inventory.getHosts()) {
       printHost(host, stream);

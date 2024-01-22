@@ -38,14 +38,11 @@ public class Manager {
     return reader.load(yaml);
   }
 
-  public String writeToYaml(Object object) {
+  public String writeToYaml(Object object) throws IOException {
     try (StringWriter resultWriter = new StringWriter()) {
       Yaml writer = new Yaml();
       writer.dump(object, resultWriter);
       return resultWriter.getBuffer().toString();
-    }
-    catch (IOException ex) {
-      throw new RuntimeException(ex);
     }
   }
 

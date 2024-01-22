@@ -118,11 +118,6 @@ public class AnsibleInventoryValueProviderPlugin implements ValueProviderPlugin 
         content = tryReadInitStyle(inventoryContent);
       }
 
-      // fallback to empty map
-      if (content == null) {
-        content = new InventoryContent(Map.of());
-      }
-
       // put to cache
       context.setValueProviderCache(content);
       return content;
@@ -147,6 +142,7 @@ public class AnsibleInventoryValueProviderPlugin implements ValueProviderPlugin 
     return null;
   }
 
+  @SuppressWarnings("java:S3776") // ignore complexity
   private Map<String, List<String>> jsonToConfig(JsonObject root) {
     Map<String, List<String>> content = new HashMap<>();
     for (Map.Entry<String, JsonElement> entry : root.entrySet()) {

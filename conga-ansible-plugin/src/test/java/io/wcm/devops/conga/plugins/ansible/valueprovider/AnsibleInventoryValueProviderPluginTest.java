@@ -40,6 +40,7 @@ import io.wcm.devops.conga.generator.spi.context.ValueProviderGlobalContext;
 import io.wcm.devops.conga.generator.util.PluginManager;
 import io.wcm.devops.conga.generator.util.PluginManagerImpl;
 
+@SuppressWarnings("java:S5976")
 @ExtendWith(MockitoExtension.class)
 class AnsibleInventoryValueProviderPluginTest {
 

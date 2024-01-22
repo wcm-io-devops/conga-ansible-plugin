@@ -152,8 +152,7 @@ public class CypherAES256 implements CypherInterface {
     try {
       Cipher cipher = Cipher.getInstance(CYPHER_ALGO);
       cipher.init(Cipher.ENCRYPT_MODE, keySpec, ivSpec);
-      byte[] encrypted = cipher.doFinal(cleartext);
-      return encrypted;
+      return cipher.doFinal(cleartext);
     }
     catch (Exception ex) {
       throw new IOException("Failed to encrypt data: " + ex.getMessage(), ex);
