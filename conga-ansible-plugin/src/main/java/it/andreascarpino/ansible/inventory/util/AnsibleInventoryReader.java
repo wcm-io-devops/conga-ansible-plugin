@@ -33,6 +33,7 @@ public final class AnsibleInventoryReader {
   private AnsibleInventoryReader() {
   }
 
+  @SuppressWarnings({ "java:S3776", "java:S135", "java:S6541" }) // ignore complexity
   public static AnsibleInventory read(String text) {
     final AnsibleInventory inventory = new AnsibleInventory();
 
