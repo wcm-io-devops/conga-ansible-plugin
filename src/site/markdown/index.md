@@ -44,7 +44,7 @@ This plugins uses (and embeds) code from the following projects:
 [usage]: usage.html
 [extensions]: extensions.html
 [apidocs]: conga-ansible-plugin/apidocs/
-[changelog]: changes-report.html
+[changelog]: changes.html
 [conga]: https://devops.wcm.io/conga/
 [ansible]: https://www.ansible.com/
 [ansible-inventory]: http://docs.ansible.com/ansible/latest/intro_inventory.html
