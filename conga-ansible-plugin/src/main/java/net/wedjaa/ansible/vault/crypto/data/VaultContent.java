@@ -23,7 +23,7 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class VaultContent {
+public final class VaultContent {
 
   private static final Logger logger = LoggerFactory.getLogger(VaultContent.class);
 

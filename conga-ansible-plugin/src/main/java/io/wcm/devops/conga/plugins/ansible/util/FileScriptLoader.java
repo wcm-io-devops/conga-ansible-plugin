@@ -73,7 +73,7 @@ public final class FileScriptLoader {
     PumpStreamHandler streamHeandler = new PumpStreamHandler(osOutput, osError);
 
     // execute script
-    DefaultExecutor executor = new DefaultExecutor();
+    DefaultExecutor executor = DefaultExecutor.builder().get();
     executor.setStreamHandler(streamHeandler);
     try {
       int exitValue = executor.execute(cmd);

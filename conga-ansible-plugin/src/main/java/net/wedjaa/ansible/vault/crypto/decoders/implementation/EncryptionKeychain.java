@@ -65,8 +65,7 @@ public class EncryptionKeychain {
       PBKDF2Parameters params = new PBKDF2Parameters(algo, CHAR_ENCODING.name(), salt, iterations);
       int keylength = ivlen + 2 * keylen;
       PBKDF2Engine pbkdf2Engine = new PBKDF2Engine(params);
-      byte[] keys = pbkdf2Engine.deriveKey(password, keylength);
-      return keys;
+      return pbkdf2Engine.deriveKey(password, keylength);
     }
     catch (Exception ex) {
       throw new IOException("Cryptofailure: " + ex.getMessage(), ex);
@@ -99,7 +98,6 @@ public class EncryptionKeychain {
     return thesalt;
   }
 
-
   public byte[] getSalt() {
     return salt;
   }
@@ -108,11 +106,12 @@ public class EncryptionKeychain {
     return encryptionKey;
   }
 
-
+  @SuppressWarnings("java:S1845") // naming
   public byte[] getHmacKey() {
     return hmacKey;
   }
 
+  @SuppressWarnings("java:S1845") // naming
   public byte[] getIv() {
     return iv;
   }

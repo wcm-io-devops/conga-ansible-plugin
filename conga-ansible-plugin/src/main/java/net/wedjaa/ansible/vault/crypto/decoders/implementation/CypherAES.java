@@ -22,6 +22,7 @@ import java.io.OutputStream;
 import net.wedjaa.ansible.vault.crypto.data.VaultInfo;
 import net.wedjaa.ansible.vault.crypto.decoders.inter.CypherInterface;
 
+@SuppressWarnings("java:S1192") // duplicate string literal
 public class CypherAES implements CypherInterface {
 
   public static final String CYPHER_ID = "AES";

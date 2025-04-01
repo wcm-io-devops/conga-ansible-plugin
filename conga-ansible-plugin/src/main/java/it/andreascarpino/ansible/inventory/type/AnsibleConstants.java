@@ -21,7 +21,7 @@ package it.andreascarpino.ansible.inventory.type;
 /**
  * @author Andrea Scarpino
  */
-public class AnsibleConstants {
+public final class AnsibleConstants {
 
   /**
    * Connection type to the host. Candidates are <code>local</code>,
