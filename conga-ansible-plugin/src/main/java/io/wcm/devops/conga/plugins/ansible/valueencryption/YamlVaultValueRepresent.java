@@ -27,6 +27,9 @@ import org.yaml.snakeyaml.representer.Represent;
 
 class YamlVaultValueRepresent implements Represent {
 
+  /**
+   * Vault tag
+   */
   public static final String VAULT_TAG = "!vault";
 
   @Override

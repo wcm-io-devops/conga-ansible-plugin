@@ -30,10 +30,10 @@ class ManagerTest {
 
   Logger logger = LoggerFactory.getLogger(ManagerTest.class);
 
-  final static String API_USER = "Secret User";
-  final static String API_CLIENT = "ClientID";
-  final static String API_PASSWORD = "VerySuperSecretPassword";
-  final static String WRONG_PASS_EX = "HMAC Digest doesn't match - possibly it's the wrong password.";
+  static final String API_USER = "Secret User";
+  static final String API_CLIENT = "ClientID";
+  static final String API_PASSWORD = "VerySuperSecretPassword";
+  static final String WRONG_PASS_EX = "HMAC Digest doesn't match - possibly it's the wrong password.";
 
   @Test
   void testValidYamlVault() {
@@ -48,7 +48,7 @@ class ManagerTest {
       String provisioningVault = manager.writeToVault(provisioningInfo, "password");
       logger.debug("Created vault:\n{}", provisioningVault);
       ProvisioningInfo backtoYa = (ProvisioningInfo)manager.getFromVault(provisioningInfo.getClass(), provisioningVault, "password");
-      logger.debug("Read Back:\n{}", backtoYa.toString());
+      logger.debug("Read Back:\n{}", backtoYa);
       assertEquals(provisioningInfo.toString(), backtoYa.toString());
     }
     catch (IOException e) {
@@ -69,7 +69,7 @@ class ManagerTest {
       String provisioningVault = manager.writeToVault(provisioningInfo, "password");
       logger.debug("Created vault:\n{}", provisioningVault);
       ProvisioningInfo backtoYa = (ProvisioningInfo)manager.getFromVault(provisioningInfo.getClass(), provisioningVault, "wrong_password");
-      logger.debug("Read Back:\n{}", backtoYa.toString());
+      logger.debug("Read Back:\n{}", backtoYa);
       fail("Exception while testing invalid password vault- correct value obtained: " + backtoYa.toString());
     }
     catch (IOException e) {
