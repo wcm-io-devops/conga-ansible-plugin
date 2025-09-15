@@ -23,7 +23,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,7 +62,7 @@ class VaultHandlerTest {
 
     // replace \n with \r\n to simulate new lines on windows file systems
     String encryptedString = new String(encryptedTest, StandardCharsets.UTF_8);
-    encryptedString = StringUtils.replace(encryptedString, "\n", "\r\n");
+    encryptedString = Strings.CS.replace(encryptedString, "\n", "\r\n");
     encryptedTest = encryptedString.getBytes(StandardCharsets.UTF_8);
 
     byte[] decryptedTest = VaultHandler.decrypt(encryptedTest, TEST_PASSWORD);

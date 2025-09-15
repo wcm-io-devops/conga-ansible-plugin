@@ -16,7 +16,7 @@
 //CHECKSTYLE:OFF
 package net.wedjaa.ansible.vault.crypto.decoders;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 
 import net.wedjaa.ansible.vault.crypto.decoders.implementation.CypherAES;
 import net.wedjaa.ansible.vault.crypto.decoders.implementation.CypherAES256;
@@ -29,11 +29,11 @@ public final class CypherFactory {
   }
 
   public static CypherInterface getCypher(String cypherName) {
-    if (StringUtils.equals(cypherName, CypherAES.CYPHER_ID)) {
+    if (Strings.CS.equals(cypherName, CypherAES.CYPHER_ID)) {
       return new CypherAES();
     }
 
-    if (StringUtils.equals(cypherName, CypherAES256.CYPHER_ID)) {
+    if (Strings.CS.equals(cypherName, CypherAES256.CYPHER_ID)) {
       return new CypherAES256();
     }
 

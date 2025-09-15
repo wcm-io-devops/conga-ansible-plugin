@@ -24,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.io.File;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.junit.jupiter.api.Test;
 
 class FileScriptLoaderTest {
@@ -53,7 +54,7 @@ class FileScriptLoaderTest {
   }
 
   private String cleanup(String content) {
-    return StringUtils.remove(StringUtils.trim(content), "\r");
+    return Strings.CS.remove(StringUtils.trim(content), "\r");
   }
 
 }
