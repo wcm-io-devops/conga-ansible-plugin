@@ -175,7 +175,7 @@ public class AnsibleVariable {
                 if (v != null) {
                     buf.append('\'').append(o.getKey()).append('\'');
                     if (ClassUtils.isPrimitiveOrWrapper(v.getClass()) || v instanceof String) {
-                        buf.append("'" + v + "'");
+                      buf.append("'").append(v.toString()).append("'");
                     } else {
                         buf.append(valueToString(v));
                     }

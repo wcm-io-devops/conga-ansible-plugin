@@ -23,7 +23,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 
 /**
  * @author Andrea Scarpino
@@ -83,7 +83,7 @@ public class AnsibleHost {
     Iterator<AnsibleVariable> variableIterator = variables.iterator();
     while (variableIterator.hasNext()) {
       AnsibleVariable v = variableIterator.next();
-      if (StringUtils.equals(v.getName(), variableName)) {
+      if (Strings.CS.equals(v.getName(), variableName)) {
         variableIterator.remove();
       }
     }

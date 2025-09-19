@@ -25,6 +25,7 @@ import java.io.InputStream;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 
 import io.wcm.devops.conga.generator.spi.UrlFilePlugin;
 import io.wcm.devops.conga.generator.spi.context.UrlFilePluginContext;
@@ -50,7 +51,7 @@ public class AnsibleVaultUrlFilePlugin implements UrlFilePlugin {
 
   @Override
   public boolean accepts(String url, UrlFilePluginContext context) {
-    return StringUtils.startsWith(url, PREFIX);
+    return Strings.CS.startsWith(url, PREFIX);
   }
 
   @Override

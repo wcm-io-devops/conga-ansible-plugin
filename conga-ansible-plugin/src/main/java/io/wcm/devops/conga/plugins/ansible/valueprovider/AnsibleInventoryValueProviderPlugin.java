@@ -28,6 +28,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -37,7 +38,6 @@ import com.google.gson.JsonSyntaxException;
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.ReadContext;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.wcm.devops.conga.generator.GeneratorException;
 import io.wcm.devops.conga.generator.spi.ValueProviderPlugin;
 import io.wcm.devops.conga.generator.spi.context.ValueProviderContext;
@@ -75,7 +75,7 @@ public class AnsibleInventoryValueProviderPlugin implements ValueProviderPlugin 
   }
 
   private Object resolveVariableOrJsonPath(InventoryContent content, String variableName) {
-    if (StringUtils.startsWith(variableName, "$")) {
+    if (Strings.CS.startsWith(variableName, "$")) {
       if (content.getJsonpathReadContext() != null) {
         return content.getJsonpathReadContext().read(variableName, List.class);
       }
@@ -86,7 +86,6 @@ public class AnsibleInventoryValueProviderPlugin implements ValueProviderPlugin 
     return content.getMap().get(variableName);
   }
 
-  @SuppressFBWarnings("RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE")
   private InventoryContent getInventoryContent(ValueProviderContext context) {
 
     // try to get from cache
@@ -146,7 +145,7 @@ public class AnsibleInventoryValueProviderPlugin implements ValueProviderPlugin 
   private Map<String, List<String>> jsonToConfig(JsonObject root) {
     Map<String, List<String>> content = new HashMap<>();
     for (Map.Entry<String, JsonElement> entry : root.entrySet()) {
-      if (!StringUtils.equals(entry.getKey(), "_meta")) {
+      if (!Strings.CS.equals(entry.getKey(), "_meta")) {
         JsonArray hostNamesArray = null;
         if (entry.getValue() instanceof JsonArray) {
           hostNamesArray = (JsonArray)entry.getValue();

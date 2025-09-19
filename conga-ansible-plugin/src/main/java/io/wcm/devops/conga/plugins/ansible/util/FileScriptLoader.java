@@ -29,7 +29,7 @@ import org.apache.commons.exec.DefaultExecutor;
 import org.apache.commons.exec.ExecuteException;
 import org.apache.commons.exec.PumpStreamHandler;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 
 import io.wcm.devops.conga.generator.util.FileUtil;
 
@@ -59,7 +59,7 @@ public final class FileScriptLoader {
   }
 
   private static boolean isPythonScript(File file) {
-    return StringUtils.endsWith(file.getName(), ".py");
+    return Strings.CS.endsWith(file.getName(), ".py");
   }
 
   private static String executePyhtonScript(File file) throws IOException {

@@ -23,7 +23,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,11 +31,11 @@ import org.slf4j.LoggerFactory;
 @SuppressWarnings("java:S5783")
 class VaultHandlerTest {
 
-  private final static String TEST_STRING = "This is a test";
-  private final static String TEST_PASSWORD = "password";
-  private final static String TEST_WRONG_PASSWORD = "not_this_one";
-  private final static String WRONG_PASS_EX = "HMAC Digest doesn't match - possibly it's the wrong password.";
-  private final static String DECODED_VAULT = "!net.wedjaa.ansible.vault.ProvisioningInfo\n"
+  private static final String TEST_STRING = "This is a test";
+  private static final String TEST_PASSWORD = "password";
+  private static final String TEST_WRONG_PASSWORD = "not_this_one";
+  private static final String WRONG_PASS_EX = "HMAC Digest doesn't match - possibly it's the wrong password.";
+  private static final String DECODED_VAULT = "!net.wedjaa.ansible.vault.ProvisioningInfo\n"
       + "apiClientId: The provisioner ClientId\n"
       + "apiPassword: The secret password\n"
       + "apiUser: Secret User\n";
@@ -62,7 +62,7 @@ class VaultHandlerTest {
 
     // replace \n with \r\n to simulate new lines on windows file systems
     String encryptedString = new String(encryptedTest, StandardCharsets.UTF_8);
-    encryptedString = StringUtils.replace(encryptedString, "\n", "\r\n");
+    encryptedString = Strings.CS.replace(encryptedString, "\n", "\r\n");
     encryptedTest = encryptedString.getBytes(StandardCharsets.UTF_8);
 
     byte[] decryptedTest = VaultHandler.decrypt(encryptedTest, TEST_PASSWORD);

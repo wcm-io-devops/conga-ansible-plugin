@@ -210,7 +210,7 @@ public final class AnsibleConstants {
   /**
    * @author Andrea Scarpino
    */
-  public static class AnsibleConnection {
+  public static final class AnsibleConnection {
 
     public static final String LOCAL = "local";
 
@@ -230,7 +230,7 @@ public final class AnsibleConstants {
   /**
    * @author Andrea Scarpino
    */
-  public static class AnsibleWinRMScheme {
+  public static final class AnsibleWinRMScheme {
 
     public static final String HTTP = "http";
 
@@ -244,7 +244,7 @@ public final class AnsibleConstants {
   /**
    * @author Andrea Scarpino
    */
-  public static class AnsibleWinRMTransport {
+  public static final class AnsibleWinRMTransport {
 
     public static final String NTLM = "ntlm";
 
@@ -259,7 +259,7 @@ public final class AnsibleConstants {
   /**
    * @author Andrea Scarpino
    */
-  public static class AnsibleWinRMServerCertValidation {
+  public static final class AnsibleWinRMServerCertValidation {
 
     public static final String IGNORE = "ignore";
 
