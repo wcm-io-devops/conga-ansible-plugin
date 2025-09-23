@@ -22,10 +22,6 @@ public class ProvisioningInfo {
   String apiClientId;
   String apiPassword;
 
-  public ProvisioningInfo() {
-
-  }
-
   public String getApiUser() {
     return apiUser;
   }

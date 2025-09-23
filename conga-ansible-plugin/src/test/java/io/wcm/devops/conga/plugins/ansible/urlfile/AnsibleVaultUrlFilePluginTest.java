@@ -66,7 +66,7 @@ class AnsibleVaultUrlFilePluginTest {
   }
 
   @Test
-  void testInvalidFile() throws Exception {
+  void testInvalidFile() {
     assertThrows(IOException.class, () -> {
       urlFileManager.getFile("ansible-vault:classpath:/vault-sample/nonexisting-file");
     });

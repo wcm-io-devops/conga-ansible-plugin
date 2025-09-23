@@ -62,15 +62,17 @@ class AnsibleInventoryReaderTest {
 
     for (AnsibleHost h : group.getHosts()) {
       switch (h.getName()) {
-      case "host1":
+        case "host1":
           assertEquals(3, h.getVariables().size());
-        break;
-      case "host2":
+          break;
+        case "host2":
           assertEquals(0, h.getVariables().size());
-        break;
-      case "host3":
+          break;
+        case "host3":
           assertEquals(1, h.getVariables().size());
-        break;
+          break;
+        default:
+          // ignore
       }
     }
 
@@ -146,10 +148,31 @@ class AnsibleInventoryReaderTest {
 
   @Test
   void testReadAnsibleExample() {
-    final String inventoryText = "[atlanta]\nhost1\nhost2\n\n[raleigh]\nhost2\nhost3\n\n[southeast:children]\n"
-        + "atlanta\nraleigh\n\n[southeast:vars]\nsome_server=foo.southeast.example.com\nhalon_system_timeout=30"
-        + "\nself_destruct_countdown=60\nescape_pods=2\n\n[usa:children]\nsoutheast\nnortheast\nsouthwest\n"
-        + "northwest\n";
+    final String inventoryText = """
+        [atlanta]
+        host1
+        host2
+
+        [raleigh]
+        host2
+        host3
+
+        [southeast:children]
+        atlanta
+        raleigh
+
+        [southeast:vars]
+        some_server=foo.southeast.example.com
+        halon_system_timeout=30
+        nself_destruct_countdown=60
+        escape_pods=2
+
+        [usa:children]
+        southeast
+        northeast
+        southwest
+        northwest
+        """;
 
     AnsibleInventory inventory = AnsibleInventoryReader.read(inventoryText);
 

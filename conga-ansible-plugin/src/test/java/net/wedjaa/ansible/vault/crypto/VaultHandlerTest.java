@@ -35,12 +35,14 @@ class VaultHandlerTest {
   private static final String TEST_PASSWORD = "password";
   private static final String TEST_WRONG_PASSWORD = "not_this_one";
   private static final String WRONG_PASS_EX = "HMAC Digest doesn't match - possibly it's the wrong password.";
-  private static final String DECODED_VAULT = "!net.wedjaa.ansible.vault.ProvisioningInfo\n"
-      + "apiClientId: The provisioner ClientId\n"
-      + "apiPassword: The secret password\n"
-      + "apiUser: Secret User\n";
+  private static final String DECODED_VAULT = """
+      !net.wedjaa.ansible.vault.ProvisioningInfo
+      apiClientId: The provisioner ClientId
+      apiPassword: The secret password
+      apiUser: Secret User
+      """;
 
-  private final static Logger logger = LoggerFactory.getLogger(VaultHandlerTest.class);
+  private static final Logger logger = LoggerFactory.getLogger(VaultHandlerTest.class);
 
   @Test
   void testByteArrayValidVault() throws Exception {

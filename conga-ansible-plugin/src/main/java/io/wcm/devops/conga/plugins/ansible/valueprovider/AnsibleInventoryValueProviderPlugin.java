@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Strings;
@@ -129,9 +128,9 @@ public class AnsibleInventoryValueProviderPlugin implements ValueProviderPlugin 
   private InventoryContent tryReadJsonStyle(String inventoryContent, File file, ValueProviderContext context) {
     try {
       JsonElement root = JsonParser.parseString(inventoryContent);
-      if (root instanceof JsonObject) {
+      if (root instanceof JsonObject jsonObject) {
         ReadContext jsonpathReadContext = JsonPath.parse(inventoryContent);
-        return new InventoryContent(jsonToConfig((JsonObject)root), jsonpathReadContext);
+        return new InventoryContent(jsonToConfig(jsonObject), jsonpathReadContext);
       }
     }
     catch (JsonSyntaxException ex) {
@@ -147,14 +146,13 @@ public class AnsibleInventoryValueProviderPlugin implements ValueProviderPlugin 
     for (Map.Entry<String, JsonElement> entry : root.entrySet()) {
       if (!Strings.CS.equals(entry.getKey(), "_meta")) {
         JsonArray hostNamesArray = null;
-        if (entry.getValue() instanceof JsonArray) {
-          hostNamesArray = (JsonArray)entry.getValue();
+        if (entry.getValue() instanceof JsonArray entryArray) {
+          hostNamesArray = entryArray;
         }
-        else if (entry.getValue() instanceof JsonObject) {
-          JsonObject entryObject = (JsonObject)entry.getValue();
+        else if (entry.getValue() instanceof JsonObject entryObject) {
           JsonElement hostsElement = entryObject.get("hosts");
-          if (hostsElement instanceof JsonArray) {
-            hostNamesArray = (JsonArray)hostsElement;
+          if (hostsElement instanceof JsonArray hostsArray) {
+            hostNamesArray = hostsArray;
           }
         }
 
@@ -185,7 +183,7 @@ public class AnsibleInventoryValueProviderPlugin implements ValueProviderPlugin 
     for (AnsibleGroup group : inventory.getGroups()) {
       config.put(group.getName(), group.getHosts().stream()
           .map(AnsibleHost::getName)
-          .collect(Collectors.toList()));
+          .toList());
     }
     return config;
   }

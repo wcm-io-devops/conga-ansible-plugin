@@ -63,8 +63,16 @@ class AnsibleInventoryWriterTest {
 
     String inventoryText = AnsibleInventoryWriter.write(inventory);
 
-    assertEquals(
-        "mail.example.com\n[webservers]\nfoo.example.com\nbar.example.com\n[dbservers]\none.example.com\ntwo.example.com\nthree.example.com\n",
+    assertEquals("""
+        mail.example.com
+        [webservers]
+        foo.example.com
+        bar.example.com
+        [dbservers]
+        one.example.com
+        two.example.com
+        three.example.com
+        """,
         inventoryText);
   }
 
