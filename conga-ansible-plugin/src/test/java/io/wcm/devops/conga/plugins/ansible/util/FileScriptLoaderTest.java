@@ -29,17 +29,18 @@ import org.junit.jupiter.api.Test;
 
 class FileScriptLoaderTest {
 
-  private static final String EXPECTED_CONTENT = "[test-group]\n"
-      + "host-01 conga_node=aem-author\n"
-      + "host-02 conga_node=aem-publish\n"
-      + "host-03 conga_node=aem-publish\n"
-      + "\n"
-      + "[aem-author]\n"
-      + "host-01\n"
-      + "\n"
-      + "[aem-publish]\n"
-      + "host-02\n"
-      + "host-03";
+  private static final String EXPECTED_CONTENT = """
+      [test-group]
+      host-01 conga_node=aem-author
+      host-02 conga_node=aem-publish
+      host-03 conga_node=aem-publish
+
+      [aem-author]
+      host-01
+
+      [aem-publish]
+      host-02
+      host-03""";
 
   @Test
   void testFile() throws Exception {
