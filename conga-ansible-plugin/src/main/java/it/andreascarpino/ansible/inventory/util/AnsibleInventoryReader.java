@@ -1,4 +1,25 @@
 /*
+ * #%L
+ * wcm.io
+ * %%
+ * Copyright (C) 2016 wcm.io
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package it.andreascarpino.ansible.inventory.util;
+
+/*
  * The MIT License (MIT)
  * Copyright (c) 2016 Andrea Scarpino <me@andreascarpino.it>
  *
@@ -16,7 +37,6 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 //CHECKSTYLE:OFF
-package it.andreascarpino.ansible.inventory.util;
 
 import java.util.StringTokenizer;
 
@@ -30,10 +50,11 @@ import it.andreascarpino.ansible.inventory.type.AnsibleVariable;
  */
 public final class AnsibleInventoryReader {
 
-  private AnsibleInventoryReader() {
-  }
+  private AnsibleInventoryReader() {}
 
-  @SuppressWarnings({ "java:S3776", "java:S135", "java:S6541" }) // ignore complexity
+  @SuppressWarnings({
+      "java:S3776", "java:S135", "java:S6541"
+  }) // ignore complexity
   public static AnsibleInventory read(String text) {
     final AnsibleInventory inventory = new AnsibleInventory();
 
@@ -84,23 +105,27 @@ public final class AnsibleInventoryReader {
           if ("vars".equals(g[1])) {
             isVarsBlock = true;
             group = inventory.getGroup(groupName);
-          } else if ("children".equals(g[1])) {
+          }
+          else if ("children".equals(g[1])) {
             isChildrenBlock = true;
             group = new AnsibleGroup(groupName);
             inventory.addGroup(group);
           }
-        } else {
+        }
+        else {
           group = new AnsibleGroup(groupName);
           inventory.addGroup(group);
         }
-      } else if (token.contains("=")) {
+      }
+      else if (token.contains("=")) {
         final String[] v = token.split("=");
         // Replace YAML backslashes escapes
         final AnsibleVariable variable = new AnsibleVariable(v[0], v[1].replace("\\\\", "\\"));
 
         if (host != null) {
           host.addVariable(variable);
-        } else if (isVarsBlock && group != null) {
+        }
+        else if (isVarsBlock && group != null) {
           for (AnsibleGroup s : group.getSubgroups()) {
             for (AnsibleHost h : s.getHosts()) {
               h.addVariable(variable);
@@ -110,18 +135,22 @@ public final class AnsibleInventoryReader {
             h.addVariable(variable);
           }
         }
-      } else {
+      }
+      else {
         if (group == null) {
           host = new AnsibleHost(token);
           inventory.addHost(host);
-        } else if (isChildrenBlock) {
+        }
+        else if (isChildrenBlock) {
           final AnsibleGroup g = inventory.getGroup(token);
           if (g != null) {
             group.addSubgroup(g);
-          } else {
+          }
+          else {
             group.addSubgroup(new AnsibleGroup(token));
           }
-        } else {
+        }
+        else {
           host = new AnsibleHost(token);
           group.addHost(host);
         }

@@ -182,8 +182,8 @@ public class AnsibleInventoryValueProviderPlugin implements ValueProviderPlugin 
     Map<String, List<String>> config = new HashMap<>();
     for (AnsibleGroup group : inventory.getGroups()) {
       config.put(group.getName(), group.getHosts().stream()
-          .map(AnsibleHost::getName)
-          .toList());
+        .map(AnsibleHost::getName)
+        .toList());
     }
     return config;
   }

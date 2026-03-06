@@ -55,13 +55,13 @@ class AnsibleVaultValueProviderPluginTest {
   void setUp() {
     PluginManager pluginManager = new PluginManagerImpl();
     pluginContextOptions = new PluginContextOptions()
-        .pluginManager(pluginManager)
-        .logger(logger);
+      .pluginManager(pluginManager)
+      .logger(logger);
     globalContext = new ValueProviderGlobalContext()
-        .pluginContextOptions(pluginContextOptions);
+      .pluginContextOptions(pluginContextOptions);
     context = new ValueProviderContext()
-        .valueProviderGlobalContext(globalContext)
-        .valueProviderName(AnsibleVaultValueProviderPlugin.NAME);
+      .valueProviderGlobalContext(globalContext)
+      .valueProviderName(AnsibleVaultValueProviderPlugin.NAME);
     underTest = pluginManager.get(AnsibleVaultValueProviderPlugin.NAME, ValueProviderPlugin.class);
 
     System.setProperty(AnsibleVaultPassword.SYSTEM_PROPERTY_PASSWORD_FILE, "src/test/resources/vault-sample/passwordFile");

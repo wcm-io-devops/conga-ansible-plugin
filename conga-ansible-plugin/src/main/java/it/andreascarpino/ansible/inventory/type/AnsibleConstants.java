@@ -1,4 +1,25 @@
 /*
+ * #%L
+ * wcm.io
+ * %%
+ * Copyright (C) 2016 wcm.io
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package it.andreascarpino.ansible.inventory.type;
+
+/*
  * The MIT License (MIT)
  * Copyright (c) 2016 Andrea Scarpino <me@andreascarpino.it>
  *
@@ -16,7 +37,6 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 //CHECKSTYLE:OFF
-package it.andreascarpino.ansible.inventory.type;
 
 /**
  * @author Andrea Scarpino
@@ -204,8 +224,7 @@ public final class AnsibleConstants {
    */
   public static final String ALL_GROUP = "all";
 
-  private AnsibleConstants() {
-  }
+  private AnsibleConstants() {}
 
   /**
    * @author Andrea Scarpino
@@ -222,8 +241,7 @@ public final class AnsibleConstants {
 
     public static final String WINRM = "winrm";
 
-    private AnsibleConnection() {
-    }
+    private AnsibleConnection() {}
 
   }
 
@@ -236,8 +254,7 @@ public final class AnsibleConstants {
 
     public static final String HTTPS = "https";
 
-    private AnsibleWinRMScheme() {
-    }
+    private AnsibleWinRMScheme() {}
 
   }
 
@@ -252,8 +269,7 @@ public final class AnsibleConstants {
 
     public static final String PLAINTEXT = "plaintext";
 
-    private AnsibleWinRMTransport() {
-    }
+    private AnsibleWinRMTransport() {}
   }
 
   /**
@@ -265,8 +281,7 @@ public final class AnsibleConstants {
 
     public static final String VALIDATE = "validate";
 
-    private AnsibleWinRMServerCertValidation() {
-    }
+    private AnsibleWinRMServerCertValidation() {}
 
   }
 

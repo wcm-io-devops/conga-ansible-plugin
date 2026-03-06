@@ -1,4 +1,25 @@
 /*
+ * #%L
+ * wcm.io
+ * %%
+ * Copyright (C) 2016 wcm.io
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package it.andreascarpino.ansible.inventory.type;
+
+/*
  * The MIT License (MIT)
  * Copyright (c) 2016 Andrea Scarpino <me@andreascarpino.it>
  *
@@ -16,7 +37,6 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 //CHECKSTYLE:OFF
-package it.andreascarpino.ansible.inventory.type;
 
 import java.lang.reflect.Field;
 import java.util.Collection;
@@ -77,117 +97,127 @@ public class AnsibleVariable {
     if (getClass() != obj.getClass()) {
       return false;
     }
-    AnsibleVariable other = (AnsibleVariable) obj;
+    AnsibleVariable other = (AnsibleVariable)obj;
     if (name == null) {
       if (other.name != null) {
         return false;
       }
-    } else if (!name.equals(other.name)) {
+    }
+    else if (!name.equals(other.name)) {
       return false;
     }
     return true;
   }
 
   @Override
-    public String toString() {
-        if (this.value == null) {
-            return "";
-        }
-
-        return this.name + "=" + valueToString(this.value);
+  public String toString() {
+    if (this.value == null) {
+      return "";
     }
 
-    public String valueToString(Object value) {
-        if (value == null) {
-            return "";
-        }
+    return this.name + "=" + valueToString(this.value);
+  }
 
-        final Class<?> vClass = value.getClass();
-
-        String str;
-        if (Collection.class.isAssignableFrom(vClass)) {
-            str = listToString((Collection<?>) value);
-        } else if (Map.class.isAssignableFrom(vClass)) {
-            str = mapToString((Map<?, ?>) value);
-        } else if (ClassUtils.isPrimitiveOrWrapper(vClass) || value instanceof String) {
-            str = value.toString();
-        } else {
-            str = objToString(value);
-        }
-
-        // Use double backslash because of YAML syntax
-        return str.replace("\\", "\\\\");
+  public String valueToString(Object value) {
+    if (value == null) {
+      return "";
     }
 
-    @SuppressWarnings({ "PMD.AvoidAccessibilityAlteration", "java:S3011" })
-    public String objToString(Object value) {
-        final StringBuilder buf = new StringBuilder();
+    final Class<?> vClass = value.getClass();
 
-        for (Field f : value.getClass().getDeclaredFields()) {
-            f.setAccessible(true);
-
-            try {
-                buf.append('\'').append(f.getName()).append("': ");
-                if (ClassUtils.isPrimitiveOrWrapper(value.getClass()) || value instanceof String) {
-                    buf.append('\'').append(value).append('\'');
-                } else {
-                    buf.append(valueToString(f.get(value)));
-                }
-                buf.append(", ");
-            } catch (IllegalArgumentException | IllegalAccessException e) {
-                // Silently ignore errors
-            }
-        }
-        buf.replace(buf.length() - 2, buf.length(), "");
-
-        return buf.toString();
+    String str;
+    if (Collection.class.isAssignableFrom(vClass)) {
+      str = listToString((Collection<?>)value);
+    }
+    else if (Map.class.isAssignableFrom(vClass)) {
+      str = mapToString((Map<?, ?>)value);
+    }
+    else if (ClassUtils.isPrimitiveOrWrapper(vClass) || value instanceof String) {
+      str = value.toString();
+    }
+    else {
+      str = objToString(value);
     }
 
-    public String listToString(Collection<?> list) {
-        final StringBuilder buf = new StringBuilder();
-        buf.append("'[");
+    // Use double backslash because of YAML syntax
+    return str.replace("\\", "\\\\");
+  }
 
-        if (!list.isEmpty()) {
-            for (Object o : list) {
-                if (ClassUtils.isPrimitiveOrWrapper(o.getClass()) || o instanceof String) {
-                    buf.append('\'').append(o).append('\'');
-                } else {
-                    buf.append(valueToString(o));
-                }
-                buf.append(", ");
-            }
-            buf.replace(buf.length() - 2, buf.length(), "");
+  @SuppressWarnings({
+      "PMD.AvoidAccessibilityAlteration", "java:S3011"
+  })
+  public String objToString(Object value) {
+    final StringBuilder buf = new StringBuilder();
+
+    for (Field f : value.getClass().getDeclaredFields()) {
+      f.setAccessible(true);
+
+      try {
+        buf.append('\'').append(f.getName()).append("': ");
+        if (ClassUtils.isPrimitiveOrWrapper(value.getClass()) || value instanceof String) {
+          buf.append('\'').append(value).append('\'');
         }
+        else {
+          buf.append(valueToString(f.get(value)));
+        }
+        buf.append(", ");
+      }
+      catch (IllegalArgumentException | IllegalAccessException e) {
+        // Silently ignore errors
+      }
+    }
+    buf.replace(buf.length() - 2, buf.length(), "");
 
-        buf.append("]'");
+    return buf.toString();
+  }
 
-        return buf.toString();
+  public String listToString(Collection<?> list) {
+    final StringBuilder buf = new StringBuilder();
+    buf.append("'[");
+
+    if (!list.isEmpty()) {
+      for (Object o : list) {
+        if (ClassUtils.isPrimitiveOrWrapper(o.getClass()) || o instanceof String) {
+          buf.append('\'').append(o).append('\'');
+        }
+        else {
+          buf.append(valueToString(o));
+        }
+        buf.append(", ");
+      }
+      buf.replace(buf.length() - 2, buf.length(), "");
     }
 
-    public String mapToString(Map<?, ?> map) {
-        final StringBuilder buf = new StringBuilder();
-        buf.append("{");
+    buf.append("]'");
 
-        if (!map.isEmpty()) {
-            for (Entry<?, ?> o : map.entrySet()) {
-                final Object v = o.getValue();
+    return buf.toString();
+  }
 
-                if (v != null) {
-                    buf.append('\'').append(o.getKey()).append('\'');
-                    if (ClassUtils.isPrimitiveOrWrapper(v.getClass()) || v instanceof String) {
-                      buf.append("'").append(v.toString()).append("'");
-                    } else {
-                        buf.append(valueToString(v));
-                    }
-                    buf.append(", ");
-                }
-            }
-            buf.replace(buf.length() - 2, buf.length(), "");
+  public String mapToString(Map<?, ?> map) {
+    final StringBuilder buf = new StringBuilder();
+    buf.append("{");
+
+    if (!map.isEmpty()) {
+      for (Entry<?, ?> o : map.entrySet()) {
+        final Object v = o.getValue();
+
+        if (v != null) {
+          buf.append('\'').append(o.getKey()).append('\'');
+          if (ClassUtils.isPrimitiveOrWrapper(v.getClass()) || v instanceof String) {
+            buf.append("'").append(v.toString()).append("'");
+          }
+          else {
+            buf.append(valueToString(v));
+          }
+          buf.append(", ");
         }
-
-        buf.append("}");
-
-        return buf.toString();
+      }
+      buf.replace(buf.length() - 2, buf.length(), "");
     }
+
+    buf.append("}");
+
+    return buf.toString();
+  }
 
 }
