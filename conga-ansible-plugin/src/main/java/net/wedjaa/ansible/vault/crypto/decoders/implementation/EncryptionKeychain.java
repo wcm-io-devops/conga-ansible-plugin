@@ -45,6 +45,7 @@ import java.util.Random;
 import de.rtner.security.auth.spi.PBKDF2Engine;
 import de.rtner.security.auth.spi.PBKDF2Parameters;
 
+@SuppressWarnings("PMD")
 public class EncryptionKeychain {
 
   private static final Random RANDOM = new Random();

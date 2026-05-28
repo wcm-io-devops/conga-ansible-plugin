@@ -55,6 +55,7 @@ import net.wedjaa.ansible.vault.crypto.data.VaultContent;
 import net.wedjaa.ansible.vault.crypto.data.VaultInfo;
 import net.wedjaa.ansible.vault.crypto.decoders.inter.CypherInterface;
 
+@SuppressWarnings("PMD")
 public class CypherAES256 implements CypherInterface {
 
   private static final Logger logger = LoggerFactory.getLogger(CypherAES256.class);
