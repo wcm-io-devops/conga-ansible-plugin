@@ -23,6 +23,7 @@ package io.wcm.devops.conga.plugins.ansible.util;
  * Exception is throws when the Ansible Vault password is not set.
  */
 public class AnsibleVaultPasswordMissing extends RuntimeException {
+
   private static final long serialVersionUID = 1L;
 
   /**

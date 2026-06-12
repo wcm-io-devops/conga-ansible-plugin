@@ -56,13 +56,13 @@ class AnsibleInventoryValueProviderPluginTest {
   void setUp() {
     PluginManager pluginManager = new PluginManagerImpl();
     pluginContextOptions = new PluginContextOptions()
-        .pluginManager(pluginManager)
-        .logger(logger);
+      .pluginManager(pluginManager)
+      .logger(logger);
     globalContext = new ValueProviderGlobalContext()
-        .pluginContextOptions(pluginContextOptions);
+      .pluginContextOptions(pluginContextOptions);
     context = new ValueProviderContext()
-        .valueProviderGlobalContext(globalContext)
-        .valueProviderName(AnsibleInventoryValueProviderPlugin.NAME);
+      .valueProviderGlobalContext(globalContext)
+      .valueProviderName(AnsibleInventoryValueProviderPlugin.NAME);
     underTest = pluginManager.get(AnsibleInventoryValueProviderPlugin.NAME, ValueProviderPlugin.class);
   }
 

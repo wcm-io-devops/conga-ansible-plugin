@@ -54,10 +54,10 @@ class AnsibleValueEncryptionPluginTest {
   void setUp() {
     PluginManager pluginManager = new PluginManagerImpl();
     pluginContextOptions = new PluginContextOptions()
-        .pluginManager(pluginManager)
-        .logger(logger);
+      .pluginManager(pluginManager)
+      .logger(logger);
     context = new ValueEncryptionContext()
-        .pluginContextOptions(pluginContextOptions);
+      .pluginContextOptions(pluginContextOptions);
     underTest = pluginManager.get(AnsibleValueEncryptionPlugin.NAME, ValueEncryptionPlugin.class);
 
     System.setProperty(AnsibleVaultPassword.SYSTEM_PROPERTY_PASSWORD_FILE, "src/test/resources/vault-sample/passwordFile");
